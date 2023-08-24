@@ -20,7 +20,6 @@ fun PoseListContent(database: AppDatabase) {
     LaunchedEffect(database) {
         val poses = database.poseDao().getAll()
         poseList = poses
-        Log.d("a78sdhs71", poseList.toString())
     }
 
     // Display the list when data is available

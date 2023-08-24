@@ -2,6 +2,7 @@
 buildscript {
     extra.apply {
         set("room_version", "2.5.2")
+        set("compose_version", "1.5.0")
     }
 }
 

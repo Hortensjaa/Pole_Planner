@@ -1,12 +1,9 @@
 package com.example.poleplanner.navbar
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.SavedScreen
@@ -24,7 +21,7 @@ sealed class Screen(val route: String) {
 fun Navigation(database: AppDatabase, navController: NavHostController){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
-            MainScreen(navController = navController)
+            MainScreen()
         }
         composable(route = Screen.AllPosesScreen.route) {
             PoseListContent(database = database)

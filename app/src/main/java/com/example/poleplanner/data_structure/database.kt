@@ -16,11 +16,18 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             GlobalScope.launch {
                 val poseDao = it.poseDao()
                 val initialPoses = listOf(
-                    Pose(name = "Pose 1", description = "Description 1", difficulty = 1),
-                    Pose(name = "Pose 2", description = "Description 2", difficulty = 2),
-                    Pose(name = "Pose 3", difficulty = 3),
-                    Pose(name = "Pose 4", description = "Description 4"),
-                    Pose(name = "Pose 5"),
+                    Pose(name = "Gemini", description = "Description 1", difficulty = 1),
+                    Pose(name = "Aysha", description = "Description 2", difficulty = 2),
+                    Pose(name = "Fireman spin", difficulty = 3),
+                    Pose(name = "Ballerina", description = "Description 4"),
+                    Pose(name = "Brass Monkey"),
+                    Pose(name = "Invert"),
+                    Pose(name = "Jade"),
+                    Pose(name = "Scorpio"),
+                    Pose(name = "Iron X"),
+                    Pose(name = "Pole sit"),
+                    Pose(name = "Reverse grab spin"),
+                    Pose(name = "Russian Layback"),
                 )
                 poseDao.insertAll(initialPoses)
             }
@@ -28,7 +35,7 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
     }
 }
 
-// TODO: allow user to add pose with name
+// future: allow user to add pose with name
 // source: https://stackoverflow.com/questions/45912619/using-room-as-singleton-in-kotlin
 open class SingletonHolder<T, A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator

@@ -5,23 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.navbar.NavDrawer
 import com.example.poleplanner.navbar.Navigation
-import com.example.poleplanner.navbar.Screen
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen() {
     Text("Witaj w naszej aplikacji")
-    Button(onClick = {
-        navController.navigate(Screen.AllPosesScreen.route)
-    }) {
-        Text(text = "idz do katalogu")
-    }
 }
 
 

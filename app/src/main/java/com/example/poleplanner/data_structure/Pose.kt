@@ -36,6 +36,9 @@ interface PoseDao {
     @Query("SELECT * FROM pose WHERE id = :id1")
     suspend fun getId(id1: Int): Pose?
 
+    @Query("SELECT * FROM pose WHERE saved = :isSaved")
+    suspend fun getSaved(isSaved: Boolean = true): List<Pose>
+
     @Insert
     suspend fun insert(pose: Pose)
 
@@ -62,6 +65,5 @@ interface PoseDao {
             update(pose)
         }
     }
-    
-    // Add other operations like update and delete as needed
+
 }

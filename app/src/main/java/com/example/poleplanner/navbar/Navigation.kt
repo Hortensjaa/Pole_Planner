@@ -8,7 +8,7 @@ import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.SavedScreen
 import com.example.poleplanner.data_structure.AppDatabase
-import com.example.poleplanner.posecomposables.PoseListContent
+import com.example.poleplanner.AllScreen
 
 sealed class Screen(val route: String) {
     object MainScreen : Screen("main_screen")
@@ -24,10 +24,10 @@ fun Navigation(database: AppDatabase, navController: NavHostController){
             MainScreen()
         }
         composable(route = Screen.AllPosesScreen.route) {
-            PoseListContent(database = database)
+            AllScreen(database = database)
         }
         composable(route = Screen.SavedScreen.route) {
-            SavedScreen()
+            SavedScreen(database = database)
         }
         composable(route = Screen.ComboMakerScreen.route) {
             ComboMakerScreen()

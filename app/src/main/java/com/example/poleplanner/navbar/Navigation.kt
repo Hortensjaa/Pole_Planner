@@ -21,8 +21,7 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun Navigation(database: AppDatabase){
-    val navController = rememberNavController()
+fun Navigation(database: AppDatabase, navController: NavHostController){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
             MainScreen(navController = navController)

@@ -1,6 +1,5 @@
 package com.example.poleplanner
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
-import com.example.poleplanner.navbar.NavBar
+import com.example.poleplanner.navbar.NavDrawer
 import com.example.poleplanner.navbar.Navigation
 import com.example.poleplanner.navbar.Screen
 
@@ -25,6 +24,8 @@ fun MainScreen(navController: NavController) {
     }
 }
 
+
+
 class MainActivity : ComponentActivity() {
     private val database by lazy {
         AppDatabase.getInstance(this)
@@ -33,11 +34,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NavBar{ modifier ->
+            val navController = rememberNavController()
+            NavDrawer (navController) { modifier ->
                 Column(
                     modifier = modifier
                 ) {
-                    Navigation(database)
+                    Navigation(database, navController)
                 }
             }
         }

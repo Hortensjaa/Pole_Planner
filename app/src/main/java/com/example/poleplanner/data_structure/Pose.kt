@@ -1,13 +1,7 @@
 package com.example.poleplanner.data_structure
 
-import androidx.room.Dao
 import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
 import com.example.poleplanner.R
 
 @Entity
@@ -22,9 +16,31 @@ data class Pose(
         "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt " +
         "in culpa qui officia deserunt mollit anim id est laborum.",
     val photoResId: Int = R.drawable.pd, // future: opcja dodania własnego zdjęcia zamiast rysunku
-    val difficulty: Int = 0, // 0 - 2
+    val difficulty: Difficulty = Difficulty.BEGGINER,
+//    val tags: List<Tag> = emptyList(), todo: tutaj musza byc relacje
     var saved: Boolean = false,
-    var progress: Int = 0
-    // future: dodać hasztagi np. szpagat, odwrócone itd
+    var progress: Progress = Progress.JESZCZE_NIE
 )
+
+enum class Progress {
+    JESZCZE_NIE,
+    PRAWIE,
+    ZROBIONE,
+    IDEALNIE
+}
+
+enum class Difficulty {
+    BEGGINER,
+    INTERMEDIATE,
+    ADVANCED
+}
+
+enum class Tag {
+    STATYCZNE,
+    DYNAMICZNE,
+    SZPAGATY,
+    INVERTY,
+    SPINY,
+    DUETY
+}
 

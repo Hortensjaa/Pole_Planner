@@ -17,16 +17,30 @@ interface PoseDao {
 
     // sortowania
     @Query("SELECT * FROM pose ORDER BY name ASC")
-    fun getByName(): Flow<List<Pose>>
+    fun sortByName(): Flow<List<Pose>>
 
        @Query("SELECT * FROM pose ORDER BY id ASC")
-    fun getByID(): Flow<List<Pose>>
+    fun sortByID(): Flow<List<Pose>>
 
     // filtrowanie
     @Query("SELECT * FROM pose " +
             "WHERE difficulty = :diff " +
             "ORDER BY name ASC ")
-    fun filterDifficulty(diff: Int): Flow<List<Pose>>
+    fun filterDifficulty(diff: Difficulty): Flow<List<Pose>>
+
+    @Query("SELECT * FROM pose " +
+            "WHERE progress = :prog " +
+            "ORDER BY name ASC ")
+    fun filterProgress(prog: Progress): Flow<List<Pose>>
+
+    @Query("SELECT * FROM pose " +
+            "WHERE progress = :prog " +
+            "AND difficulty = :diff " +
+            "ORDER BY name ASC ")
+    fun filterDifficultyAndProgress(
+        diff: Difficulty,
+        prog: Progress): Flow<List<Pose>>
+
 
     @Query("SELECT * FROM pose " +
             "WHERE saved = :isSaved " +
@@ -53,7 +67,7 @@ interface PoseDao {
     }
 
     @Transaction
-    suspend fun setProgress(poseId: Int, progress: Int) {
+    suspend fun setProgress(poseId: Int, progress: Progress) {
         val pose = getId(poseId)
         if (pose != null) {
             pose.progress = progress
@@ -68,7 +82,7 @@ interface PoseDao {
     }
 
     @Transaction
-    suspend fun setProgress(pose: Pose, progress: Int) {
+    suspend fun setProgress(pose: Pose, progress: Progress) {
         pose.progress = progress
         update(pose)
     }

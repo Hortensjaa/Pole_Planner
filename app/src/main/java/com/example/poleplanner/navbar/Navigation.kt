@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.poleplanner.AllScreen
+import com.example.poleplanner.all_poses_view.composables.AllScreen
 import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.SavedScreen
-import com.example.poleplanner.data_structure.AllPosesState
-import com.example.poleplanner.data_structure.PoseEvent
+import com.example.poleplanner.all_poses_view.AllPosesState
+import com.example.poleplanner.all_poses_view.PoseEvent
 import kotlin.reflect.KFunction1
 
 sealed class Screen(val route: String) {

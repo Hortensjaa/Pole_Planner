@@ -11,10 +11,8 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
 import com.example.poleplanner.data_structure.AppDatabase
-import com.example.poleplanner.data_structure.AppDatabaseCallback
-import com.example.poleplanner.data_structure.PoseViewModel
+import com.example.poleplanner.all_poses_view.PoseViewModel
 import com.example.poleplanner.navbar.NavDrawer
 import com.example.poleplanner.navbar.Navigation
 

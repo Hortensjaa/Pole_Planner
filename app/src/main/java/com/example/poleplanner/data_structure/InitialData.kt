@@ -4,9 +4,9 @@ object InitialData {
     val poses:
         List<Pose> =
             listOf(
-                Pose(name = "Gemini", description = "Description 1", difficulty = 1),
-                Pose(name = "Aysha", description = "Description 2", difficulty = 2),
-                Pose(name = "Fireman spin", difficulty = 3),
+                Pose(name = "Gemini", description = "Description 1", difficulty = Difficulty.INTERMEDIATE),
+                Pose(name = "Aysha", description = "Description 2", difficulty = Difficulty.INTERMEDIATE),
+                Pose(name = "Fireman spin", difficulty = Difficulty.ADVANCED),
                 Pose(name = "Ballerina", description = "Description 4"),
                 Pose(name = "Brass Monkey"),
                 Pose(name = "Invert"),

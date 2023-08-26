@@ -2,6 +2,7 @@ package com.example.poleplanner.data_structure
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -14,25 +15,31 @@ class PoseViewModel (
 ) : ViewModel() {
 
     private val _sortType = MutableStateFlow(SortType.NAME)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val _poses = _sortType
         .flatMapLatest {
             sortType ->
             when(sortType) {
-                SortType.NAME -> dao.getPosesByName()
+                SortType.NAME -> dao.getByName()
+                SortType.ID -> dao.getByID()
             }
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), InitialData.poses)
-    private val _state = MutableStateFlow(AppState())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    private val _state = MutableStateFlow(AllPosesState())
     val state = combine(_state, _sortType, _poses) {
         state, sortType, poses ->
         state.copy(
             poses = poses,
             sortType = sortType
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AppState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
+
 
     fun onEvent(event: PoseEvent) {
         when(event) {
+
             is PoseEvent.SavePose -> {
                 viewModelScope.launch {
                     dao.savePose(event.pose)

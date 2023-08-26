@@ -10,18 +10,30 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PoseDao {
-    @Query("SELECT * FROM pose")
-    suspend fun getAll(): List<Pose>
 
-    @Query("SELECT * FROM pose ORDER BY name ASC")
-    fun getPosesByName(): Flow<List<Pose>>
-
+    // pobranie po id
     @Query("SELECT * FROM pose WHERE id = :id1")
     suspend fun getId(id1: Int): Pose?
 
-    @Query("SELECT * FROM pose WHERE saved = :isSaved")
-    suspend fun getSaved(isSaved: Boolean = true): List<Pose>
+    // sortowania
+    @Query("SELECT * FROM pose ORDER BY name ASC")
+    fun getByName(): Flow<List<Pose>>
 
+       @Query("SELECT * FROM pose ORDER BY id ASC")
+    fun getByID(): Flow<List<Pose>>
+
+    // filtrowanie
+    @Query("SELECT * FROM pose " +
+            "WHERE difficulty = :diff " +
+            "ORDER BY name ASC ")
+    fun filterDifficulty(diff: Int): Flow<List<Pose>>
+
+    @Query("SELECT * FROM pose " +
+            "WHERE saved = :isSaved " +
+            "ORDER BY name ASC ")
+    fun filterSaved(isSaved: Boolean = true): Flow<List<Pose>>
+
+    // wstawianie
     @Insert
     suspend fun insert(pose: Pose)
 

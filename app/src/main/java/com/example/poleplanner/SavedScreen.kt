@@ -13,17 +13,7 @@ import com.example.poleplanner.posecomposables.PoseList
 
 // future: tworzenie kolekcji
 @Composable
-fun SavedScreen(database: AppDatabase) {
-    var poseList by remember { mutableStateOf<List<Pose>>(emptyList()) }
-
-    LaunchedEffect(database) {
-        val poses = database.poseDao().getSaved()
-        poseList = poses
-    }
-
-    if (poseList.isNotEmpty()) {
-        PoseList(poseList = poseList)
-    } else {
-        Text(text = "Nie masz jeszcze zapisanych żadnych figur.")
-    }
+fun SavedScreen() {
+        Text(text = "P L A C E H O L D E R\n" +
+                "Nie masz jeszcze zapisanych żadnych figur.")
 }

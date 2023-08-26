@@ -1,14 +1,17 @@
 package com.example.poleplanner.navbar
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.SavedScreen
-import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.AllScreen
+import com.example.poleplanner.data_structure.AppState
+import com.example.poleplanner.data_structure.PoseEvent
+import kotlin.reflect.KFunction1
 
 sealed class Screen(val route: String) {
     object MainScreen : Screen("main_screen")
@@ -18,16 +21,20 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun Navigation(database: AppDatabase, navController: NavHostController){
+fun Navigation(
+    navController: NavHostController,
+    state: AppState,
+    onEvent: KFunction1<PoseEvent, Unit>
+){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
             MainScreen()
         }
         composable(route = Screen.AllPosesScreen.route) {
-            AllScreen(database = database)
+            AllScreen(state, onEvent)
         }
         composable(route = Screen.SavedScreen.route) {
-            SavedScreen(database = database)
+            SavedScreen()
         }
         composable(route = Screen.ComboMakerScreen.route) {
             ComboMakerScreen()

@@ -26,7 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.poleplanner.MainActivity
+import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.PoseEvent
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.Pink40
 
@@ -61,7 +64,10 @@ fun PoseListItem(pose: Pose = Pose(name = "Brass Sit")) {
         Box (
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable{ /* todo: dodawanie polubienia */ }
+                .clickable {
+                /* todo: dodawanie polubienia */
+                    PoseEvent.SavePose(pose)
+                }
         ) {
             Icon(
                 imageVector = heart,

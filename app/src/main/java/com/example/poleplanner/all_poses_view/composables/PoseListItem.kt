@@ -30,7 +30,7 @@ import com.example.poleplanner.ui.theme.DarkPink
 
 @Composable
 fun PoseListItem(
-    pose: Pose = Pose(name = "Brass Sit"),
+    pose: Pose = Pose(poseName = "Brass Sit"),
     onEvent: (PoseEvent) -> Unit
 ) {
 
@@ -50,7 +50,7 @@ fun PoseListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AutoResizedText(
-                text = pose.name,
+                text = pose.poseName,
                 color = AlmostWhite,
                 modifier = Modifier
                     .fillMaxWidth(0.75f)

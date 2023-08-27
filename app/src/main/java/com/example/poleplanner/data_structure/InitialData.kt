@@ -1,30 +1,32 @@
 package com.example.poleplanner.data_structure
 
 object InitialData {
-    val poses:
-        List<Pose> =
-            listOf(
-                Pose(name = "Gemini", description = "Description 1", difficulty = Difficulty.INTERMEDIATE),
-                Pose(name = "Aysha", description = "Description 2", difficulty = Difficulty.INTERMEDIATE),
-                Pose(name = "Fireman spin", difficulty = Difficulty.ADVANCED),
-                Pose(name = "Ballerina", description = "Description 4"),
-                Pose(name = "Brass Monkey"),
-                Pose(name = "Invert"),
-                Pose(name = "Jade"),
-                Pose(name = "Scorpio"),
-                Pose(name = "Iron X"),
-                Pose(name = "Pole sit"),
-                Pose(name = "Reverse grab spin"),
-                Pose(name = "Russian Layback"),
-            )
+    val stat = Tag(tagName = "Statyczne")
+    val dyn = Tag(tagName = "Dynamiczne")
+    val split = Tag(tagName = "Szpagaty")
+    val inv = Tag(tagName = "Inverty")
+    val duet = Tag(tagName = "Duety")
+    val spin = Tag(tagName = "Spiny")
 
     val tags:
-            List<Tag> = listOf(
-                Tag(name = "Statyczne"),
-                Tag(name = "Dynamiczne"),
-                Tag(name = "Szpagaty"),
-                Tag(name = "Inverty"),
-                Tag(name = "Duety"),
-                Tag(name = "Spiny"),
+            List<Tag> = listOf(stat, dyn, split, inv, duet, spin)
+
+    val poses_with_tags:
+        Map<Pose, List<Tag>> =
+            mapOf(
+                Pose(poseName = "Gemini", description = "Description 1", difficulty = Difficulty.INTERMEDIATE)
+                    to listOf(stat),
+                Pose(poseName = "Aysha", description = "Description 2", difficulty = Difficulty.INTERMEDIATE)
+                        to listOf(dyn),
+                Pose(poseName = "Invert", difficulty = Difficulty.ADVANCED) to listOf(dyn, spin),
+                Pose(poseName = "Ballerina", description = "Description 4") to listOf(dyn),
+                Pose(poseName = "Brass Monkey") to listOf(stat),
+                Pose(poseName = "Fireman spin") to listOf(split, stat, duet),
+                Pose(poseName = "Jade") to listOf(stat),
+                Pose(poseName = "Scorpio") to listOf(dyn),
+                Pose(poseName = "Iron X") to listOf(stat, duet, duet),
+                Pose(poseName = "Pole sit") to listOf(stat, dyn, spin, duet),
+                Pose(poseName = "Reverse grab spin") to listOf(),
+                Pose(poseName = "Russian Layback") to listOf(stat),
             )
 }

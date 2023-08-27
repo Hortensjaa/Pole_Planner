@@ -12,38 +12,38 @@ import kotlinx.coroutines.flow.Flow
 interface PoseDao {
 
     // pobranie po id
-    @Query("SELECT * FROM pose WHERE poseId = :id1")
-    suspend fun getId(id1: Int): Pose?
+//    @Query("SELECT * FROM pose WHERE poseId = :id1")
+//    suspend fun getId(id1: Int): Pose?
 
     // sortowania
-    @Query("SELECT * FROM pose ORDER BY name ASC")
+    @Query("SELECT * FROM pose ORDER BY poseName ASC")
     fun sortByName(): Flow<List<Pose>>
 
-    @Query("SELECT * FROM pose ORDER BY poseId ASC")
-    fun sortByID(): Flow<List<Pose>>
+//    @Query("SELECT * FROM pose ORDER BY poseId ASC")
+//    fun sortByID(): Flow<List<Pose>>
 
     // filtrowanie
     @Query("SELECT * FROM pose " +
             "WHERE difficulty = :diff " +
-            "ORDER BY name ASC ")
+            "ORDER BY poseName ASC ")
     fun filterDifficulty(diff: Difficulty): Flow<List<Pose>>
 
     @Query("SELECT * FROM pose " +
             "WHERE progress = :prog " +
-            "ORDER BY name ASC ")
+            "ORDER BY poseName ASC ")
     fun filterProgress(prog: Progress): Flow<List<Pose>>
 
     @Query("SELECT * FROM pose " +
             "WHERE progress = :prog " +
             "AND difficulty = :diff " +
-            "ORDER BY name ASC ")
+            "ORDER BY poseName ASC ")
     fun filterDifficultyAndProgress(
         diff: Difficulty,
         prog: Progress): Flow<List<Pose>>
 
     @Query("SELECT * FROM pose " +
             "WHERE saved = :isSaved " +
-            "ORDER BY name ASC ")
+            "ORDER BY poseName ASC ")
     fun filterSaved(isSaved: Boolean = true): Flow<List<Pose>>
 
     // wstawianie
@@ -51,7 +51,7 @@ interface PoseDao {
     suspend fun insert(pose: Pose)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(poses: List<Pose>)
+    suspend fun insertAll(poses: Collection<Pose>)
 
     // aktualizacja
     @Update

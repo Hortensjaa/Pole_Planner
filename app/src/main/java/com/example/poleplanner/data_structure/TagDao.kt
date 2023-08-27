@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface TagDao {
 
     // sortowania
-    @Query("SELECT * FROM tag ORDER BY name ASC")
+    @Query("SELECT * FROM tag ORDER BY tagName ASC")
     fun sortByName(): Flow<List<Tag>>
 
     // wstawianie

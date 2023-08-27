@@ -15,25 +15,29 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
         val database = AppDatabase.getInstance(context)
         database.let {
             GlobalScope.launch {
-                val poseDao = it.poseDao
-                poseDao.insertAll(InitialData.poses)
 
-                val tagDao = it.tagDao
-                tagDao.insertAll(InitialData.tags)
+                val ptdao = it.poseTagDao
+                var i = 0
+                for ((pose, tags) in InitialData.poses_with_tags) {
+                    ptdao.insertPoseWithTags(pose, tags)
+                    Log.d("sfssf ${i}", pose.toString() + tags.toString())
+                    i++
+                }
 
-                Log.d("AppDatabaseCallback", "Initial data inserted")
+                Log.d("sfssf", it.poseTagDao.getTagsWithPoses().toString())
             }
         }
     }
 }
 
 @Database(
-    entities = [Pose::class, Tag::class],
+    entities = [Pose::class, Tag::class, PoseTagCrossRef::class],
     version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val poseDao: PoseDao
     abstract val tagDao: TagDao
+    abstract val poseTagDao: PoseTagDao
 
     companion object {
         @Volatile

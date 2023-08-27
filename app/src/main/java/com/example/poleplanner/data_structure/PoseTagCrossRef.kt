@@ -5,18 +5,18 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
 
-@Entity(primaryKeys = ["poseId", "tagId"])
+@Entity(primaryKeys = ["poseName", "tagName"])
 data class PoseTagCrossRef(
-    val poseId: Int,
-    val tagId: Int
+    val poseName: String,
+    val tagName: String
 )
 
 // lista tagów dla figury
 data class PoseWithTags(
     @Embedded val pose: Pose,
     @Relation(
-        parentColumn = "poseId",
-        entityColumn = "tagId",
+        parentColumn = "poseName",
+        entityColumn = "tagName",
         associateBy = Junction(PoseTagCrossRef::class)
     )
     val tags: List<Tag>
@@ -26,8 +26,8 @@ data class PoseWithTags(
 data class TagWithPoses(
     @Embedded val tag: Tag,
     @Relation(
-        parentColumn = "tagId",
-        entityColumn = "poseId",
+        parentColumn = "tagName",
+        entityColumn = "poseName",
         associateBy = Junction(PoseTagCrossRef::class)
     )
     val poses: List<Pose>

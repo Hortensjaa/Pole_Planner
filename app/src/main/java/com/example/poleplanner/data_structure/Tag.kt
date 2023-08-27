@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 // todo: dodawanie własnych hashtagów
 @Entity
 data class Tag (
-    @PrimaryKey(autoGenerate = true) val tagId: Int = 0,
-    val name: String = "Statyczne",
+//    @PrimaryKey(autoGenerate = true) val tagId: Int = 0,
+    @PrimaryKey val tagName: String = "Statyczne",
     val description: String =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
         "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis " +

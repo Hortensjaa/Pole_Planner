@@ -16,8 +16,8 @@ import com.example.poleplanner.data_structure.Pose
 
 @Preview
 @Composable
-fun PoseDetailView(pose: Pose = Pose(name = "Pose 1")) {
-    Text(text = pose.name, fontSize = 16.sp, modifier = Modifier.padding(16.dp))
+fun PoseDetailView(pose: Pose = Pose(poseName = "Pose 1")) {
+    Text(text = pose.poseName, fontSize = 16.sp, modifier = Modifier.padding(16.dp))
     Text(text = pose.description, fontSize = 14.sp, modifier = Modifier.padding(16.dp))
 
     val imageModifier = Modifier

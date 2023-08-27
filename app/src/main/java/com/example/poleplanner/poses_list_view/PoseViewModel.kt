@@ -66,12 +66,6 @@ class PoseViewModel (
                     _filter.value = null
                 }
             }
-            
-//            is PoseEvent.TagsForPose -> {
-//                viewModelScope.launch {
-//                    dao.getTagsForPose(event.pose)
-//                }
-//            }
         }
     }
 }

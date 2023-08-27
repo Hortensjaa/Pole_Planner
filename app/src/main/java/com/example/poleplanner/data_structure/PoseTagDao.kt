@@ -8,6 +8,8 @@ import androidx.room.Transaction
 
 @Dao
 interface PoseTagDao {
+
+    // gettery
     @Transaction
     @Query("SELECT * FROM pose")
     fun getPosesWithTags(): List<PoseWithTags>
@@ -16,27 +18,27 @@ interface PoseTagDao {
     @Query("SELECT * FROM tag")
     fun getTagsWithPoses(): List<TagWithPoses>
 
-    // Insert a pose into the Pose table
+    // wstawianie
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPose(pose: Pose)
 
-    // Insert a tag into the Tag table
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTag(tag: Tag)
 
-    // Insert a pose-tag relationship into the PoseTagCrossRef table
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPoseTagCrossRef(crossRef: PoseTagCrossRef)
 
     @Transaction
     suspend fun insertPoseWithTags(pose: Pose, tags: List<Tag>) {
-        insertPose(pose) // Insert the pose
-        tags.forEach { tag ->
-            insertTag(tag) // Insert each tag
-            insertPoseTagCrossRef(PoseTagCrossRef(pose.poseName, tag.tagName)) // Create the relationship
+        insertPose(pose)
+        tags.forEach {
+            tag ->
+            insertTag(tag)
+            insertPoseTagCrossRef(PoseTagCrossRef(pose.poseName, tag.tagName))
         }
     }
 
+    // pobranie tagów dla figury
     @Transaction
     @Query("SELECT * FROM tag " +
             "WHERE tagName IN " +
@@ -44,7 +46,4 @@ interface PoseTagDao {
             "WHERE poseName = :poseName)")
     suspend fun getTagsForPose(poseName: String): List<Tag>
 
-//    @Transaction
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertAllPosesWithTags(pose: Pose, tags: Collection<Tag>)
 }

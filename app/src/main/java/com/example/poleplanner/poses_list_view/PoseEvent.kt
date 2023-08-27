@@ -15,17 +15,5 @@ sealed interface PoseEvent {
 
     object ClearDiffFilter: PoseEvent
 
-//    data class TagsForPose(
-//        val pose: Pose
-//    ): PoseEvent
-
-
-//    data class FilterByProg(
-//        val prog: Progress
-//    ): PoseEvent
-//
-//    data class FilterByDiffAndProg(
-//        val diff: Difficulty,
-//        val prog: Progress
-//    ): PoseEvent
+    // future/todo: filtrowanie po progressie
 }

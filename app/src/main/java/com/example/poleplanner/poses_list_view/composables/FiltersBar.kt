@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseViewModel
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
-import com.example.poleplanner.ui.theme.PurpleGrey40
+import com.example.poleplanner.ui.theme.DarkPink
+import com.example.poleplanner.ui.theme.LightPink
 
 
 // source:
@@ -31,7 +32,6 @@ import com.example.poleplanner.ui.theme.PurpleGrey40
 fun FiltersBar(
     state: AllPosesState,
     viewModel: PoseViewModel
-//    onEvent: (PoseEvent) -> Unit
     ) {
     BottomSheetComposeTheme {
         val sheetState = rememberBottomSheetState(
@@ -48,7 +48,7 @@ fun FiltersBar(
             sheetContent = 
             {
                 Divider(
-                    color = Color.Black,
+                    color = LightPink,
                     thickness = (padding/2).dp)
                 Text(
                     text = "FILTRY",
@@ -58,7 +58,7 @@ fun FiltersBar(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = PurpleGrey40)
+                        .background(color = DarkPink)
                         .padding(padding.dp)
                     )
                 FiltersBarContent(state, viewModel)
@@ -68,6 +68,7 @@ fun FiltersBar(
             Column {
                 PoseList(state, viewModel)
             }
+            
         }
     }
 }

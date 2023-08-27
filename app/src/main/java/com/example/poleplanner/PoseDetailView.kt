@@ -21,13 +21,13 @@ fun PoseDetailView(pose: Pose = Pose(poseName = "Pose 1")) {
     Text(text = pose.description, fontSize = 14.sp, modifier = Modifier.padding(16.dp))
 
     val imageModifier = Modifier
-        .size(200.dp) // Adjust size as needed
+        .size(200.dp)
         .fillMaxWidth()
 
     Image(
-        painter = painterResource(id = pose.photoResId), // Use painterResource
-        contentDescription = null, // Add a meaningful description
+        painter = painterResource(id = pose.photoResId),
+        contentDescription = null,
         modifier = imageModifier,
-        contentScale = ContentScale.Crop // Adjust scaling as needed
+        contentScale = ContentScale.Crop
     )
 }

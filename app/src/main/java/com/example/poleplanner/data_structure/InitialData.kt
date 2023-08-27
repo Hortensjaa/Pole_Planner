@@ -17,4 +17,14 @@ object InitialData {
                 Pose(name = "Reverse grab spin"),
                 Pose(name = "Russian Layback"),
             )
+
+    val tags:
+            List<Tag> = listOf(
+                Tag(name = "Statyczne"),
+                Tag(name = "Dynamiczne"),
+                Tag(name = "Szpagaty"),
+                Tag(name = "Inverty"),
+                Tag(name = "Duety"),
+                Tag(name = "Spiny"),
+            )
 }

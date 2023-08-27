@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.example.poleplanner.all_poses_view.AllPosesState
 import com.example.poleplanner.all_poses_view.PoseEvent
 
+// future: wyszukiwarka
 @Composable
 fun AllScreen(
     state: AllPosesState,

@@ -28,7 +28,6 @@ import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.AutoResizedText
 import com.example.poleplanner.ui.theme.DarkPink
 
-//@Preview
 @Composable
 fun PoseListItem(
     pose: Pose = Pose(name = "Brass Sit"),

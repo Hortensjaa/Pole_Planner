@@ -17,6 +17,10 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             GlobalScope.launch {
                 val poseDao = it.poseDao
                 poseDao.insertAll(InitialData.poses)
+
+                val tagDao = it.tagDao
+                tagDao.insertAll(InitialData.tags)
+
                 Log.d("AppDatabaseCallback", "Initial data inserted")
             }
         }
@@ -24,11 +28,12 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
 }
 
 @Database(
-    entities = [Pose::class],
+    entities = [Pose::class, Tag::class],
     version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val poseDao: PoseDao
+    abstract val tagDao: TagDao
 
     companion object {
         @Volatile

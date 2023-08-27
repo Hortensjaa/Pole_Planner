@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.Flow
 interface PoseDao {
 
     // pobranie po id
-    @Query("SELECT * FROM pose WHERE id = :id1")
+    @Query("SELECT * FROM pose WHERE poseId = :id1")
     suspend fun getId(id1: Int): Pose?
 
     // sortowania
     @Query("SELECT * FROM pose ORDER BY name ASC")
     fun sortByName(): Flow<List<Pose>>
 
-    @Query("SELECT * FROM pose ORDER BY id ASC")
+    @Query("SELECT * FROM pose ORDER BY poseId ASC")
     fun sortByID(): Flow<List<Pose>>
 
     // filtrowanie

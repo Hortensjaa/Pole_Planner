@@ -1,4 +1,4 @@
-package com.example.poleplanner
+package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

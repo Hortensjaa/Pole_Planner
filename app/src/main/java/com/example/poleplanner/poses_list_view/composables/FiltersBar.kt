@@ -1,6 +1,7 @@
-package com.example.poleplanner.all_poses_view.composables
+package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomSheetScaffold
@@ -17,8 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.poleplanner.all_poses_view.AllPosesState
-import com.example.poleplanner.all_poses_view.PoseEvent
+import com.example.poleplanner.poses_list_view.AllPosesState
+import com.example.poleplanner.poses_list_view.PoseViewModel
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 import com.example.poleplanner.ui.theme.PurpleGrey40
 
@@ -29,7 +30,8 @@ import com.example.poleplanner.ui.theme.PurpleGrey40
 @Composable
 fun FiltersBar(
     state: AllPosesState,
-    onEvent: (PoseEvent) -> Unit
+    viewModel: PoseViewModel
+//    onEvent: (PoseEvent) -> Unit
     ) {
     BottomSheetComposeTheme {
         val sheetState = rememberBottomSheetState(
@@ -59,11 +61,13 @@ fun FiltersBar(
                         .background(color = PurpleGrey40)
                         .padding(padding.dp)
                     )
-                FiltersBarContent(state, onEvent)
+                FiltersBarContent(state, viewModel)
             },
             sheetPeekHeight = (height + 2.5 * padding).dp
         ) {
-            PoseList(state, onEvent)
+            Column {
+                PoseList(state, viewModel)
+            }
         }
     }
 }

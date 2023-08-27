@@ -1,9 +1,8 @@
-package com.example.poleplanner.all_poses_view.composables
+package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,15 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.all_poses_view.AllPosesState
-import com.example.poleplanner.all_poses_view.PoseEvent
 import com.example.poleplanner.data_structure.Difficulty
+import com.example.poleplanner.poses_list_view.AllPosesState
+import com.example.poleplanner.poses_list_view.PoseEvent
+import com.example.poleplanner.poses_list_view.PoseViewModel
 
 
 @Composable
 fun FiltersBarContent(
     state: AllPosesState,
-    onEvent: (PoseEvent) -> Unit
+    viewModel: PoseViewModel
+//    onEvent: (PoseEvent) -> Unit
     ) {
         Column(
         modifier = Modifier.background(color = Color.White).padding()
@@ -39,7 +40,7 @@ fun FiltersBarContent(
             Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
-                    onEvent(PoseEvent.ClearDiffFilter)
+                    viewModel.onEvent(PoseEvent.ClearDiffFilter)
                 }
             ) {
                 Text(text = "wyczyść")
@@ -56,7 +57,7 @@ fun FiltersBarContent(
                     RadioButton(
                         selected = state.diffFilter == diff,
                         onClick = {
-                            onEvent(PoseEvent.FilterByDiff(diff))
+                            viewModel.onEvent(PoseEvent.FilterByDiff(diff))
                         }
                     )
                     Text(text = diff.name, maxLines = 1)

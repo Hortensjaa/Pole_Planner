@@ -1,4 +1,4 @@
-package com.example.poleplanner.all_poses_view
+package com.example.poleplanner.poses_list_view
 
 import com.example.poleplanner.data_structure.Difficulty
 import com.example.poleplanner.data_structure.Pose
@@ -14,6 +14,11 @@ sealed interface PoseEvent {
     ): PoseEvent
 
     object ClearDiffFilter: PoseEvent
+
+//    data class TagsForPose(
+//        val pose: Pose
+//    ): PoseEvent
+
 
 //    data class FilterByProg(
 //        val prog: Progress

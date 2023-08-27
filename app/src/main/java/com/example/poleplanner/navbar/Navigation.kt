@@ -4,12 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.poleplanner.all_poses_view.composables.AllScreen
 import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
-import com.example.poleplanner.SavedScreen
-import com.example.poleplanner.all_poses_view.AllPosesState
-import com.example.poleplanner.all_poses_view.PoseEvent
+import com.example.poleplanner.poses_list_view.AllPosesState
+import com.example.poleplanner.poses_list_view.PoseEvent
+import com.example.poleplanner.poses_list_view.PoseViewModel
+import com.example.poleplanner.poses_list_view.composables.AllScreen
+import com.example.poleplanner.poses_list_view.composables.SavedScreen
 import kotlin.reflect.KFunction1
 
 sealed class Screen(val route: String) {
@@ -23,14 +24,15 @@ sealed class Screen(val route: String) {
 fun Navigation(
     navController: NavHostController,
     state: AllPosesState,
-    onEvent: KFunction1<PoseEvent, Unit>
+    viewModel: PoseViewModel
+//    onEvent: KFunction1<PoseEvent, Unit>
 ){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
             MainScreen()
         }
         composable(route = Screen.AllPosesScreen.route) {
-            AllScreen(state, onEvent)
+            AllScreen(state, viewModel)
         }
         composable(route = Screen.SavedScreen.route) {
             SavedScreen()

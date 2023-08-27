@@ -1,4 +1,4 @@
-package com.example.poleplanner.all_poses_view.composables
+package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,14 +9,14 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.all_poses_view.AllPosesState
-import com.example.poleplanner.all_poses_view.PoseEvent
+import com.example.poleplanner.poses_list_view.AllPosesState
+import com.example.poleplanner.poses_list_view.PoseViewModel
 import com.example.poleplanner.ui.theme.AlmostWhite
 
 @Composable
 fun PoseList(
     state: AllPosesState,
-    onEvent: (PoseEvent) -> Unit
+    viewModel: PoseViewModel
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2)) {
@@ -26,7 +26,7 @@ fun PoseList(
                     .padding(5.dp)
                     .background(color = AlmostWhite)
             ) {
-                PoseListItem(pose, onEvent)
+                PoseListItem(pose, state, viewModel)
             }
         }
     }

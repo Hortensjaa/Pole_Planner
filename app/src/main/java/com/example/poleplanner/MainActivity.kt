@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
-import com.example.poleplanner.all_poses_view.PoseViewModel
-import com.example.poleplanner.navbar.composables.NavDrawer
 import com.example.poleplanner.navbar.Navigation
+import com.example.poleplanner.navbar.composables.NavDrawer
+import com.example.poleplanner.poses_list_view.PoseViewModel
 
 @Composable
 fun MainScreen() {
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return PoseViewModel(database.poseDao) as T
+                    return PoseViewModel(database.poseDao, database.poseTagDao) as T
                 }
             }
         }
@@ -47,7 +47,8 @@ class MainActivity : ComponentActivity() {
                 Navigation(
                     navController = navController,
                     state = state,
-                    onEvent = viewModel::onEvent)
+                    viewModel = viewModel
+                )
             }
         }
     }

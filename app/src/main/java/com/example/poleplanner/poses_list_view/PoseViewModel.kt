@@ -1,9 +1,10 @@
-package com.example.poleplanner.all_poses_view
+package com.example.poleplanner.poses_list_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.Difficulty
 import com.example.poleplanner.data_structure.PoseDao
+import com.example.poleplanner.data_structure.PoseTagDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PoseViewModel (
-    private val dao: PoseDao
+     private val poseDao: PoseDao,
+     val dao: PoseTagDao
 ) : ViewModel() {
 
     private val _filter = MutableStateFlow<Difficulty?>(null)
@@ -23,10 +25,10 @@ class PoseViewModel (
         .flatMapLatest {
             filter ->
             when(filter) {
-                Difficulty.BEGGINER -> dao.filterDifficulty(Difficulty.BEGGINER)
-                Difficulty.INTERMEDIATE -> dao.filterDifficulty(Difficulty.INTERMEDIATE)
-                Difficulty.ADVANCED -> dao.filterDifficulty(Difficulty.ADVANCED)
-                else -> dao.sortByName()
+                Difficulty.BEGGINER -> poseDao.filterDifficulty(Difficulty.BEGGINER)
+                Difficulty.INTERMEDIATE -> poseDao.filterDifficulty(Difficulty.INTERMEDIATE)
+                Difficulty.ADVANCED -> poseDao.filterDifficulty(Difficulty.ADVANCED)
+                else -> poseDao.sortByName()
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -40,16 +42,15 @@ class PoseViewModel (
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
 
-
     fun onEvent(event: PoseEvent) {
         when(event) {
 
             is PoseEvent.ChangeSave -> {
                 viewModelScope.launch {
                     if (event.pose.saved) {
-                        dao.unsavePose(event.pose)
+                        poseDao.unsavePose(event.pose)
                     } else {
-                        dao.savePose(event.pose)
+                        poseDao.savePose(event.pose)
                     }
                 }
             }
@@ -65,6 +66,12 @@ class PoseViewModel (
                     _filter.value = null
                 }
             }
+            
+//            is PoseEvent.TagsForPose -> {
+//                viewModelScope.launch {
+//                    dao.getTagsForPose(event.pose)
+//                }
+//            }
         }
     }
 }

@@ -37,6 +37,13 @@ interface PoseTagDao {
         }
     }
 
+    @Transaction
+    @Query("SELECT * FROM tag " +
+            "WHERE tagName IN " +
+            "(SELECT tagName FROM PoseTagCrossRef " +
+            "WHERE poseName = :poseName)")
+    suspend fun getTagsForPose(poseName: String): List<Tag>
+
 //    @Transaction
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    suspend fun insertAllPosesWithTags(pose: Pose, tags: Collection<Tag>)

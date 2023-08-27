@@ -15,25 +15,29 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.poleplanner.all_poses_view.PoseEvent
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.DarkPink
 
-@Preview
 @Composable
-fun PoseListItem(pose: Pose = Pose(name = "Brass Sit")) {
+fun PoseListItem(
+    pose: Pose = Pose(name = "Brass Sit"),
+    onEvent: (PoseEvent) -> Unit
+) {
 
-    var heart = Icons.Default.FavoriteBorder
-    if (pose.saved) {
-        heart = Icons.Default.Favorite
-    }
+    var isSaved by remember { mutableStateOf(pose.saved) }
+    val heartIcon = if (isSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder
 
     Column (
         modifier = Modifier
@@ -53,13 +57,14 @@ fun PoseListItem(pose: Pose = Pose(name = "Brass Sit")) {
                 modifier = Modifier
                     .padding(15.dp))
             Icon(
-                imageVector = heart,
+                imageVector = heartIcon,
                 contentDescription = "Save pose",
                 modifier = Modifier
                     .padding(15.dp)
                     .size(20.dp)
                     .clickable{
-
+                        isSaved = !isSaved
+                        onEvent(PoseEvent.ChangeSave(pose))
                     },
                 tint = AlmostWhite,
             )

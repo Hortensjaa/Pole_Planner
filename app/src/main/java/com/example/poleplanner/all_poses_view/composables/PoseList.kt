@@ -26,7 +26,7 @@ fun PoseList(
                     .padding(5.dp)
                     .background(color = AlmostWhite)
             ) {
-                PoseListItem(pose)
+                PoseListItem(pose, onEvent)
             }
         }
     }

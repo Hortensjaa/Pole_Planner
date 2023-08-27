@@ -19,7 +19,7 @@ interface PoseDao {
     @Query("SELECT * FROM pose ORDER BY name ASC")
     fun sortByName(): Flow<List<Pose>>
 
-       @Query("SELECT * FROM pose ORDER BY id ASC")
+    @Query("SELECT * FROM pose ORDER BY id ASC")
     fun sortByID(): Flow<List<Pose>>
 
     // filtrowanie
@@ -41,7 +41,6 @@ interface PoseDao {
         diff: Difficulty,
         prog: Progress): Flow<List<Pose>>
 
-
     @Query("SELECT * FROM pose " +
             "WHERE saved = :isSaved " +
             "ORDER BY name ASC ")
@@ -54,33 +53,24 @@ interface PoseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(poses: List<Pose>)
 
+    // aktualizacja
     @Update
     suspend fun update(pose: Pose)
 
-    @Transaction
-    suspend fun savePose(poseId: Int) {
-        val pose = getId(poseId)
-        if (pose != null) {
-            pose.saved = true
-            update(pose)
-        }
-    }
-
-    @Transaction
-    suspend fun setProgress(poseId: Int, progress: Progress) {
-        val pose = getId(poseId)
-        if (pose != null) {
-            pose.progress = progress
-            update(pose)
-        }
-    }
-
+    // zapisywanie i "odzapisywanie"
     @Transaction
     suspend fun savePose(pose: Pose) {
         pose.saved = true
         update(pose)
     }
 
+    @Transaction
+    suspend fun unsavePose(pose: Pose) {
+        pose.saved = false
+        update(pose)
+    }
+
+    // ustawianie postępu
     @Transaction
     suspend fun setProgress(pose: Pose, progress: Progress) {
         pose.progress = progress

@@ -5,7 +5,7 @@ import com.example.poleplanner.data_structure.Pose
 
 sealed interface PoseEvent {
 
-    data class SavePose(
+    data class ChangeSave(
         val pose: Pose
     ): PoseEvent
 
@@ -14,10 +14,6 @@ sealed interface PoseEvent {
     ): PoseEvent
 
     object ClearDiffFilter: PoseEvent
-//
-//    object ShowFilters: PoseEvent
-//
-//    object HideFilters: PoseEvent
 
 //    data class FilterByProg(
 //        val prog: Progress

@@ -59,11 +59,11 @@ fun FiltersBar(
                         .background(color = PurpleGrey40)
                         .padding(padding.dp)
                     )
-                FiltersBarContent(state = state, onEvent = onEvent)
+                FiltersBarContent(state, onEvent)
             },
             sheetPeekHeight = (height + 2.5 * padding).dp
         ) {
-            PoseList(state = state, onEvent = onEvent)
+            PoseList(state, onEvent)
         }
     }
 }

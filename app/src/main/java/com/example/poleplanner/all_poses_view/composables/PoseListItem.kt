@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.poleplanner.all_poses_view.PoseEvent
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.ui.theme.AlmostWhite
+import com.example.poleplanner.ui.theme.AutoResizedText
 import com.example.poleplanner.ui.theme.DarkPink
 
+//@Preview
 @Composable
 fun PoseListItem(
     pose: Pose = Pose(name = "Brass Sit"),
@@ -48,20 +47,20 @@ fun PoseListItem(
     ){
         Row (
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            AutoResizedText(
                 text = pose.name,
                 color = AlmostWhite,
-                fontSize = 15.sp,
                 modifier = Modifier
-                    .padding(15.dp))
+                    .fillMaxWidth(0.75f)
+                    .padding(10.dp))
             Icon(
                 imageVector = heartIcon,
                 contentDescription = "Save pose",
                 modifier = Modifier
-                    .padding(15.dp)
-                    .size(20.dp)
+                    .padding(10.dp)
                     .clickable{
                         isSaved = !isSaved
                         onEvent(PoseEvent.ChangeSave(pose))

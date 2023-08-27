@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -45,7 +45,7 @@ fun NavDrawer(
                         MenuItem(
                             title = "Zapisane figury",
                             contentDescription = "Figury, do których planujesz wrócić",
-                            icon = Icons.Default.FavoriteBorder,
+                            icon = Icons.Default.Favorite,
                             onClick = {
                                 navController.navigate(Screen.SavedScreen.route)
                             }

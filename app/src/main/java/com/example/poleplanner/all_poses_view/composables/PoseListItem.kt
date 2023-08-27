@@ -4,8 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,7 +22,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.poleplanner.all_poses_view.PoseEvent
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.DarkPink
@@ -39,41 +38,38 @@ fun PoseListItem(pose: Pose = Pose(name = "Brass Sit")) {
     Column (
         modifier = Modifier
             .background(color = DarkPink)
-            .clickable{/* todo: wejście do podglądu */},
+            .clickable {/* todo: wejście do podglądu */ },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(
-            text = pose.name,
-            color = AlmostWhite,
-            fontSize = 15.sp,
-            modifier = Modifier
-                .padding(15.dp))
-        Image(
-            painter = painterResource(id = pose.photoResId),
-            contentDescription = null,
+        Row (
             modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.Crop
-        )
-        Box (
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                /* todo: dodawanie polubienia */
-                    PoseEvent.SavePose(pose)
-                }
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Text(
+                text = pose.name,
+                color = AlmostWhite,
+                fontSize = 15.sp,
+                modifier = Modifier
+                    .padding(15.dp))
             Icon(
                 imageVector = heart,
                 contentDescription = "Save pose",
                 modifier = Modifier
                     .padding(15.dp)
                     .size(20.dp)
-                    .align(Alignment.Center),
+                    .clickable{
+
+                    },
                 tint = AlmostWhite,
             )
         }
-
+        Image(
+            painter = painterResource(id = pose.photoResId),
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 

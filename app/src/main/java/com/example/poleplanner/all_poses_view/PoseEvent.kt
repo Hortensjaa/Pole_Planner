@@ -14,6 +14,10 @@ sealed interface PoseEvent {
     ): PoseEvent
 
     object ClearDiffFilter: PoseEvent
+//
+//    object ShowFilters: PoseEvent
+//
+//    object HideFilters: PoseEvent
 
 //    data class FilterByProg(
 //        val prog: Progress

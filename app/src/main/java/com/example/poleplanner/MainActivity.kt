@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.all_poses_view.PoseViewModel
-import com.example.poleplanner.navbar.NavDrawer
+import com.example.poleplanner.navbar.composables.NavDrawer
 import com.example.poleplanner.navbar.Navigation
 
 @Composable

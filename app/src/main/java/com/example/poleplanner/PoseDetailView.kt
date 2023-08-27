@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,11 +17,9 @@ import com.example.poleplanner.data_structure.Pose
 @Preview
 @Composable
 fun PoseDetailView(pose: Pose = Pose(name = "Pose 1")) {
-    // Customize the appearance of a single pose item here
     Text(text = pose.name, fontSize = 16.sp, modifier = Modifier.padding(16.dp))
     Text(text = pose.description, fontSize = 14.sp, modifier = Modifier.padding(16.dp))
 
-    // Load the image from the resource using the resource ID
     val imageModifier = Modifier
         .size(200.dp) // Adjust size as needed
         .fillMaxWidth()

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.poleplanner.all_poses_view.PoseEvent
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.ui.theme.AlmostWhite
-import com.example.poleplanner.ui.theme.Pink40
+import com.example.poleplanner.ui.theme.DarkPink
 
 @Preview
 @Composable
@@ -38,7 +38,7 @@ fun PoseListItem(pose: Pose = Pose(name = "Brass Sit")) {
 
     Column (
         modifier = Modifier
-            .background(color = Pink40)
+            .background(color = DarkPink)
             .clickable{/* todo: wejście do podglądu */},
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

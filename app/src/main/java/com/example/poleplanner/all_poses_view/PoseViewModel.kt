@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PoseViewModel (
@@ -61,6 +62,25 @@ class PoseViewModel (
                     _filter.value = null
                 }
             }
-        }
+
+//            is PoseEvent.ShowFilters -> {
+//                viewModelScope.launch {
+//                    _state.update {
+//                        it.copy(
+//                            filtersVisible = true
+//                        )
+//                    }
+//                }
+//            }
+//
+//            is PoseEvent.HideFilters -> {
+//                viewModelScope.launch {
+//                    _state.update { it.copy(
+//                        filtersVisible = false
+//                        )
+//                    }
+                }
+//            }
+//        }
     }
 }

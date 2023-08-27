@@ -5,6 +5,7 @@ import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.data_structure.Progress
 
 data class AllPosesState(
+//    val filtersVisible: Boolean = false,
     val poses: List<Pose> = emptyList(),
 //    val sortType: SortType = SortType.NAME,
     val diffFilter: Difficulty? = null,

@@ -93,7 +93,7 @@ fun PoseListItem(
                 poseTags.forEach {
                     tag ->
                     TagBox(tagName = tag.tagName,
-                    action = { viewModel.onEvent(PoseEvent.FilterByTags(listOf(tag.tagName))) })
+                    action = { viewModel.onEvent(PoseEvent.AddTagFilter(tag.tagName)) })
                 }
             } else {
                 Text(

@@ -15,8 +15,12 @@ sealed interface PoseEvent {
 
     object ClearDiffFilter: PoseEvent
 
-    data class FilterByTags(
-        val tags: Collection<String>
+    data class AddTagFilter(
+        val tag: String
+    ): PoseEvent
+
+    data class DeleteTagFilter(
+        val tag: String
     ): PoseEvent
 
     object ClearTagFilter: PoseEvent

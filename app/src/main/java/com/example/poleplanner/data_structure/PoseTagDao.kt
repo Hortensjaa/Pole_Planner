@@ -57,10 +57,11 @@ interface PoseTagDao {
 
     // pobranie figur o danych tagach
     @Transaction
-    @Query("SELECT DISTINCT * FROM pose " +
-            "INNER JOIN PoseTagCrossRef " +
-            "ON pose.poseName = PoseTagCrossRef.poseName " +
-            "WHERE PoseTagCrossRef.tagName IN (:tagNames)")
-    fun getPosesWithTags(tagNames: Collection<String>): Flow<List<Pose>>
+    @Query("SELECT DISTINCT p.* FROM pose p " +
+            "WHERE (" +
+            "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
+            "   WHERE ptc.poseName = p.poseName " +
+            "   AND ptc.tagName IN (:tagNames)) = :tagCount")
+    fun getPosesWithTags(tagNames: Collection<String>, tagCount: Int): Flow<List<Pose>>
 
 }

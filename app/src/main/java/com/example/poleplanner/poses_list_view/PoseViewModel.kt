@@ -31,7 +31,7 @@ class PoseViewModel (
 //            difficulty != null && tags.isNotEmpty()
 //                -> poseDao.filterByDifficultyAndTags(difficulty, tags)
             tags.isNotEmpty()
-                -> PTdao.getPosesWithTags(tags)
+                -> PTdao.getPosesWithTags(tags, tags.size)
             difficulty != null
                 -> poseDao.filterDifficulty(difficulty)
             else -> poseDao.sortByName()
@@ -74,9 +74,23 @@ class PoseViewModel (
                 }
             }
             
-            is PoseEvent.FilterByTags -> {
+            is PoseEvent.AddTagFilter -> {
                 viewModelScope.launch {
-                    _tagNamesFilters.value = event.tags
+                    if (event.tag !in _tagNamesFilters.value) {
+                        _tagNamesFilters.value += event.tag
+                    }
+                }
+            }
+
+            is PoseEvent.DeleteTagFilter -> {
+                viewModelScope.launch {
+                    if (event.tag in _tagNamesFilters.value) {
+                        if (event.tag in _tagNamesFilters.value) {
+                            _tagNamesFilters.value = _tagNamesFilters.value.toMutableList().apply {
+                                remove(event.tag)
+                            }
+                        }
+                    }
                 }
             }
 

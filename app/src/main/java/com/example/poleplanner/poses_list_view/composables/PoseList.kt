@@ -30,7 +30,7 @@ fun PoseList(
                     .padding(5.dp)
                     .background(color = AlmostWhite)
             ) {
-                PoseListItem(pose, state, viewModel)
+                PoseListItem(pose, viewModel)
             }
         }
     }

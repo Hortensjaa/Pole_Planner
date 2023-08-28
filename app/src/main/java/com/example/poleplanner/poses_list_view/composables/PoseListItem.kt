@@ -23,23 +23,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.PoseViewModel
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.AutoResizedText
 import com.example.poleplanner.ui.theme.DarkPink
+import com.example.poleplanner.ui.theme.TagBox
 
 
 @Composable
 fun PoseListItem(
     pose: Pose = Pose(poseName = "Brass Sit"),
-    state: AllPosesState,
     viewModel: PoseViewModel
 ) {
 
@@ -94,17 +92,8 @@ fun PoseListItem(
             if (poseTags.isNotEmpty()) {
                 poseTags.forEach {
                     tag ->
-                    Text(text = "#${tag.tagName.lowercase()}",
-                        maxLines = 1,
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .background(color = AlmostWhite.copy(alpha = 0.3f))
-                            .padding(vertical = 3.dp, horizontal = 5.dp)
-                            .clickable {
-                                viewModel.onEvent(PoseEvent.FilterByTags(listOf(tag.tagName)))
-                            }
-                    )
+                    TagBox(tagName = tag.tagName,
+                    action = { viewModel.onEvent(PoseEvent.FilterByTags(listOf(tag.tagName))) })
                 }
             } else {
                 Text(

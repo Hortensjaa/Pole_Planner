@@ -1,5 +1,6 @@
 package com.example.poleplanner.poses_list_view.composables
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseViewModel
@@ -12,6 +13,13 @@ fun AllScreen(
 ) {
     FiltersBar(
         state = state,
-        viewModel = viewModel
+        viewModel = viewModel,
+        content =
+        {
+            Column {
+                FiltersRow(state, viewModel)
+                PoseList(state, viewModel)
+            }
+        }
     )
 }

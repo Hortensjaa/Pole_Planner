@@ -15,5 +15,11 @@ sealed interface PoseEvent {
 
     object ClearDiffFilter: PoseEvent
 
+    data class FilterByTags(
+        val tags: Collection<String>
+    ): PoseEvent
+
+    object ClearTagFilter: PoseEvent
+
     // future/todo: filtrowanie po progressie
 }

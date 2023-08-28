@@ -23,7 +23,8 @@ fun PoseList(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(bottom = 30.dp)
     ) {
-        items(state.poses) { pose ->
+        items(state.poses) {
+            pose ->
             Box(
                 modifier = Modifier
                     .padding(5.dp)

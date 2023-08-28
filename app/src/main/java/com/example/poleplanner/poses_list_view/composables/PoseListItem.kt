@@ -16,7 +16,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +28,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.data_structure.Tag
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.PoseViewModel
@@ -42,7 +41,6 @@ fun PoseListItem(
     pose: Pose = Pose(poseName = "Brass Sit"),
     state: AllPosesState,
     viewModel: PoseViewModel
-//    onEvent: (PoseEvent) -> Unit
 ) {
 
     var isSaved by remember { mutableStateOf(pose.saved) }
@@ -54,8 +52,8 @@ fun PoseListItem(
             .clickable {/* todo: wejście do podglądu */ },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Row (
+    ) {
+        Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -65,7 +63,8 @@ fun PoseListItem(
                 color = AlmostWhite,
                 modifier = Modifier
                     .fillMaxWidth(0.75f)
-                    .padding(10.dp))
+                    .padding(10.dp)
+            )
             Icon(
                 imageVector = heartIcon,
                 contentDescription = "Save pose",
@@ -84,26 +83,27 @@ fun PoseListItem(
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop
         )
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+        )
         {
-            val tags = remember { mutableStateOf<List<Tag>>(emptyList()) }
-            LaunchedEffect(Unit) {
-                val tagsForPose = viewModel.dao.getTagsForPose(pose.poseName)
-                tags.value = tagsForPose
-            }
-            if (tags.value.isNotEmpty()) {
-                tags.value.forEach { tag ->
-                    Text(
-                        text = "#"+tag.tagName.lowercase(),
+            val poseTags by viewModel.PTdao.getTagsForPose(pose.poseName)
+                .collectAsState(emptyList())
+            if (poseTags.isNotEmpty()) {
+                poseTags.forEach {
+                    tag ->
+                    Text(text = "#${tag.tagName.lowercase()}",
                         maxLines = 1,
                         color = Color.White,
                         modifier = Modifier
                             .padding(5.dp)
                             .background(color = AlmostWhite.copy(alpha = 0.3f))
                             .padding(vertical = 3.dp, horizontal = 5.dp)
-                            .clickable{/*todo: filtrowanie po tagu*/}
+                            .clickable {
+                                viewModel.onEvent(PoseEvent.FilterByTags(listOf(tag.tagName)))
+                            }
                     )
                 }
             } else {
@@ -114,7 +114,6 @@ fun PoseListItem(
             }
 
         }
-
     }
 }
 

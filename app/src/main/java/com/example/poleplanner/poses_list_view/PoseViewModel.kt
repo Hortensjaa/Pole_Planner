@@ -15,30 +15,37 @@ import kotlinx.coroutines.launch
 
 class PoseViewModel (
      private val poseDao: PoseDao,
-     val dao: PoseTagDao
+     val PTdao: PoseTagDao
 ) : ViewModel() {
 
-    private val _filter = MutableStateFlow<Difficulty?>(null)
+    private val _diffFilter = MutableStateFlow<Difficulty?>(null)
+    private val _tagNamesFilters = MutableStateFlow<Collection<String>>(emptyList())
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val _poses = _filter
-        .flatMapLatest {
-            filter ->
-            when(filter) {
-                Difficulty.BEGGINER -> poseDao.filterDifficulty(Difficulty.BEGGINER)
-                Difficulty.INTERMEDIATE -> poseDao.filterDifficulty(Difficulty.INTERMEDIATE)
-                Difficulty.ADVANCED -> poseDao.filterDifficulty(Difficulty.ADVANCED)
-                else -> poseDao.sortByName()
+    private val _poses = combine(_diffFilter, _tagNamesFilters) { difficulty, tags ->
+        Pair(difficulty, tags)
+    }.flatMapLatest { 
+        (difficulty, tags) ->
+        when {
+            // todo: wieloaspektowe filtry
+//            difficulty != null && tags.isNotEmpty()
+//                -> poseDao.filterByDifficultyAndTags(difficulty, tags)
+            tags.isNotEmpty()
+                -> PTdao.getPosesWithTags(tags)
+            difficulty != null
+                -> poseDao.filterDifficulty(difficulty)
+            else -> poseDao.sortByName()
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val _state = MutableStateFlow(AllPosesState())
-    val state = combine(_state, _filter, _poses) {
-        state, filter, poses ->
+    val state = combine(_state, _diffFilter, _tagNamesFilters, _poses) {
+        state, diffFilter, tagNamesFilters,  poses ->
         state.copy(
             poses = poses,
-            diffFilter = filter
+            diffFilter = diffFilter,
+            tagFilters = tagNamesFilters
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
 
@@ -57,13 +64,25 @@ class PoseViewModel (
 
             is PoseEvent.FilterByDiff -> {
                 viewModelScope.launch {
-                    _filter.value = event.diff
+                    _diffFilter.value = event.diff
                 }
             }
 
             is PoseEvent.ClearDiffFilter -> {
                 viewModelScope.launch {
-                    _filter.value = null
+                    _diffFilter.value = null
+                }
+            }
+            
+            is PoseEvent.FilterByTags -> {
+                viewModelScope.launch {
+                    _tagNamesFilters.value = event.tags
+                }
+            }
+
+            is PoseEvent.ClearTagFilter -> {
+                viewModelScope.launch {
+                    _tagNamesFilters.value = emptyList()
                 }
             }
         }

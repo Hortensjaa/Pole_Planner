@@ -25,7 +25,6 @@ import com.example.poleplanner.poses_list_view.PoseViewModel
 fun FiltersBarContent(
     state: AllPosesState,
     viewModel: PoseViewModel
-//    onEvent: (PoseEvent) -> Unit
     ) {
         Column(
         modifier = Modifier.background(color = Color.White).padding()

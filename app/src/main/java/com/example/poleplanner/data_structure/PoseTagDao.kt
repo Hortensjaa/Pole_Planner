@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PoseTagDao {
@@ -44,6 +45,22 @@ interface PoseTagDao {
             "WHERE tagName IN " +
             "(SELECT tagName FROM PoseTagCrossRef " +
             "WHERE poseName = :poseName)")
-    suspend fun getTagsForPose(poseName: String): List<Tag>
+    fun getTagsForPose(poseName: String): Flow<List<Tag>>
+
+    // pobranie figur o danym tagu
+    @Transaction
+    @Query("SELECT * FROM pose " +
+            "WHERE poseName IN " +
+            "(SELECT poseName FROM PoseTagCrossRef " +
+            "WHERE tagName = :tagName)")
+    fun getPosesWithTag(tagName: String): Flow<List<Pose>>
+
+    // pobranie figur o danych tagach
+    @Transaction
+    @Query("SELECT DISTINCT * FROM pose " +
+            "INNER JOIN PoseTagCrossRef " +
+            "ON pose.poseName = PoseTagCrossRef.poseName " +
+            "WHERE PoseTagCrossRef.tagName IN (:tagNames)")
+    fun getPosesWithTags(tagNames: Collection<String>): Flow<List<Pose>>
 
 }

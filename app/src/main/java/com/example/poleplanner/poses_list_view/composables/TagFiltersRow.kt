@@ -5,11 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,29 +23,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
-import com.example.poleplanner.poses_list_view.PoseViewModel
-import com.example.poleplanner.ui.theme.AlmostWhite
-import com.example.poleplanner.ui.theme.DarkPink
+import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.TagBox
 
+// todo: dodawanie tagów do filtra z tego poziomu
 @Composable
-fun FiltersRow(
+fun TagFiltersRow(
     state: AllPosesState,
-    viewModel: PoseViewModel
+    viewModel: PosesViewModel
 ) {
     Row (
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
+            .height(60.dp)
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(5.dp)
-            .horizontalScroll(rememberScrollState()))
+            .background(color = MaterialTheme.colorScheme.secondary)
+            .horizontalScroll(rememberScrollState())
+    )
     {
         if (state.tagFilters.isNotEmpty()) {
-            state.tagFilters.forEach {
-                tagName ->
-                FilterRowItem(
-                    tagName
-                ) { viewModel.onEvent(PoseEvent.DeleteTagFilter(tagName)) }
+            Row {
+                state.tagFilters.forEach {
+                    tagName ->
+                    FilterRowItem(
+                        tagName
+                    ) { viewModel.onEvent(PoseEvent.DeleteTagFilter(tagName)) }
+                }
             }
             Icon(
                 imageVector = Icons.Default.Clear,
@@ -50,7 +59,7 @@ fun FiltersRow(
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
                     .align(Alignment.CenterVertically)
-                    .clickable {viewModel.onEvent(PoseEvent.ClearTagFilter)}
+                    .clickable { viewModel.onEvent(PoseEvent.ClearTagFilter) }
             )
         } else {
             Text(
@@ -72,8 +81,8 @@ fun FilterRowItem(
 ) {
     Row (
         modifier = Modifier
-            .padding(end = 10.dp)
-            .background(color = DarkPink.copy(alpha = 0.7f))
+            .padding(horizontal = 5.dp)
+            .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
     )
     {
         TagBox(
@@ -83,11 +92,11 @@ fun FilterRowItem(
         Icon(
             imageVector = Icons.Default.Clear,
             contentDescription = "Delete tag",
-            tint = AlmostWhite,
+            tint = MaterialTheme.colorScheme.background,
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .align(Alignment.CenterVertically)
-                .clickable {action()}
+                .clickable { action() }
         )
     }
 }

@@ -14,7 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.navbar.Navigation
 import com.example.poleplanner.navbar.composables.NavDrawer
-import com.example.poleplanner.poses_list_view.PoseViewModel
+import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.ui.theme.PolePlannerTheme
 
 @Composable
 fun MainScreen() {
@@ -28,11 +29,11 @@ class MainActivity : ComponentActivity() {
         AppDatabase.getInstance(this)
     }
 
-    private val viewModel by viewModels<PoseViewModel>(
+    private val poseVM by viewModels<PosesViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return PoseViewModel(database.poseDao, database.poseTagDao) as T
+                    return PosesViewModel(database.poseDao, database.poseTagDao) as T
                 }
             }
         }
@@ -41,14 +42,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            NavDrawer (navController) {
-                val state by viewModel.state.collectAsState()
-                Navigation(
-                    navController = navController,
-                    state = state,
-                    viewModel = viewModel
-                )
+            PolePlannerTheme {
+                val navController = rememberNavController()
+                NavDrawer(navController) {
+                    val posesState by poseVM.state.collectAsState()
+                    Navigation(
+                        navController = navController,
+                        posesState = posesState,
+                        poseVM = poseVM
+                    )
+                }
             }
         }
     }

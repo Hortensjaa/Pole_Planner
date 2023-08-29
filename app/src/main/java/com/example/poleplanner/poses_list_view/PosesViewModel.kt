@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class PoseViewModel (
+class PosesViewModel (
      private val poseDao: PoseDao,
      val PTdao: PoseTagDao
 ) : ViewModel() {

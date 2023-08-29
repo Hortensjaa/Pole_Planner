@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PoseViewModel
+import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.poses_list_view.composables.AllScreen
 import com.example.poleplanner.poses_list_view.composables.SavedScreen
 
@@ -21,15 +21,15 @@ sealed class Screen(val route: String) {
 @Composable
 fun Navigation(
     navController: NavHostController,
-    state: AllPosesState,
-    viewModel: PoseViewModel
+    posesState: AllPosesState,
+    poseVM: PosesViewModel
 ){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
             MainScreen()
         }
         composable(route = Screen.AllPosesScreen.route) {
-            AllScreen(state, viewModel)
+            AllScreen(posesState, poseVM)
         }
         composable(route = Screen.SavedScreen.route) {
             SavedScreen()

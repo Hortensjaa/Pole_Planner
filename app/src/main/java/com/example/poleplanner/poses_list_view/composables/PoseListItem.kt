@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,17 +29,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.poses_list_view.PoseEvent
-import com.example.poleplanner.poses_list_view.PoseViewModel
-import com.example.poleplanner.ui.theme.AlmostWhite
+import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.AutoResizedText
-import com.example.poleplanner.ui.theme.DarkPink
 import com.example.poleplanner.ui.theme.TagBox
 
 
 @Composable
 fun PoseListItem(
     pose: Pose = Pose(poseName = "Brass Sit"),
-    viewModel: PoseViewModel
+    viewModel: PosesViewModel
 ) {
 
     var isSaved by remember { mutableStateOf(pose.saved) }
@@ -46,7 +45,7 @@ fun PoseListItem(
 
     Column (
         modifier = Modifier
-            .background(color = DarkPink)
+            .background(color = MaterialTheme.colorScheme.primary)
             .clickable {/* todo: wejście do podglądu */ },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -58,7 +57,7 @@ fun PoseListItem(
         ) {
             AutoResizedText(
                 text = pose.poseName,
-                color = AlmostWhite,
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth(0.75f)
                     .padding(10.dp)
@@ -72,7 +71,7 @@ fun PoseListItem(
                         isSaved = !isSaved
                         viewModel.onEvent(PoseEvent.ChangeSave(pose))
                     },
-                tint = AlmostWhite,
+                tint = MaterialTheme.colorScheme.background,
             )
         }
         Image(
@@ -84,6 +83,7 @@ fun PoseListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 5.dp)
                 .horizontalScroll(rememberScrollState())
         )
         {

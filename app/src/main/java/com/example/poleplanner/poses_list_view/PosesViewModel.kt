@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PosesViewModel (
-     private val poseDao: PoseDao,
-     val PTdao: PoseTagDao
+    private val poseDao: PoseDao,
+    val PTdao: PoseTagDao
 ) : ViewModel() {
 
     private val _diffFilter = MutableStateFlow<Difficulty?>(null)

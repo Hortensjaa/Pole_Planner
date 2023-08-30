@@ -7,37 +7,56 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.pose_detail_view.DetailViewModel
+import com.example.poleplanner.pose_detail_view.PoseDetailState
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.AutoResizedText
 import com.example.poleplanner.ui.theme.DarkPink
 import com.example.poleplanner.ui.theme.TagBox
 import com.example.poleplanner.ui.theme.Typography
 
-@Preview
+// todo: zmienić kolory na themowe
 @Composable
-fun PoseDetailView(
-    pose: Pose = Pose(poseName = "Fireman Spin")
+fun PoseDetailScreen(
+    poseName: String?,
+    detailVM: DetailViewModel,
+    state: PoseDetailState
 ) {
-    Column (
-        modifier = Modifier
-            .background(AlmostWhite)
-            .padding(20.dp)
-    )
-    {
-        NameBar(pose.poseName)
-        TagsRow(listOf("statyczne", "duety"))
-        Photo(photoResId = pose.photoResId)
-        DescriptionContent(pose.description)
-        NotesContent(pose.notes)
+    if (poseName != null) {
+        var pose by remember { mutableStateOf<Pose?>(null) }
+        LaunchedEffect(poseName) {
+             pose = detailVM.getPoseByName(poseName)
+        }
+        if (pose != null) {
+            val poseTags by detailVM.PTdao.getTagsForPose(poseName)
+                .collectAsState(emptyList())
+            Column (
+                modifier = Modifier
+                    .background(AlmostWhite)
+                    .padding(20.dp)
+            ) {
+                NameBar(pose!!.poseName)
+                TagsRow(poseTags)
+                Photo(photoResId = pose!!.photoResId)
+                DescriptionContent(pose!!.description)
+                NotesContent(pose!!.notes)
+            }
+        }
+
     }
 }
 
@@ -58,18 +77,18 @@ fun NameBar (
 
 @Composable
 fun TagsRow(
-    tagNames: List<String> = listOf("statyczne", "duety")
+    tags: List<Tag>
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        if (tagNames.isNotEmpty()) {
-            tagNames.forEach { tagName ->
+        if (tags.isNotEmpty()) {
+            tags.forEach { tag ->
                 TagBox(
-                    tagName = tagName,
-                    backgroundColor =
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                    tagName = tag.tagName,
+                    backgroundColor = DarkPink.copy(alpha = 0.7f),
+                    textColor = AlmostWhite
                 )
             }
         }

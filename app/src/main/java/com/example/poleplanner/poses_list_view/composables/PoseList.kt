@@ -10,13 +10,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
 @Composable
 fun PoseList(
     state: AllPosesState,
-    viewModel: PosesViewModel
+    viewModel: PosesViewModel,
+    navController: NavController
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -29,7 +31,7 @@ fun PoseList(
                 modifier = Modifier
                     .padding(5.dp)
             ) {
-                PoseListItem(pose, viewModel)
+                PoseListItem(pose, viewModel, navController)
             }
         }
     }

@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.poleplanner.data_structure.AppDatabase
 import com.example.poleplanner.navbar.Navigation
 import com.example.poleplanner.navbar.composables.NavDrawer
+import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.PolePlannerTheme
 
@@ -39,6 +40,16 @@ class MainActivity : ComponentActivity() {
         }
     )
 
+    private val detailVM by viewModels<DetailViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return DetailViewModel(database.poseDao, database.poseTagDao) as T
+                }
+            }
+        }
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,10 +57,13 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavDrawer(navController) {
                     val posesState by poseVM.state.collectAsState()
+                    val detailState by detailVM.state.collectAsState()
                     Navigation(
                         navController = navController,
                         posesState = posesState,
-                        poseVM = poseVM
+                        poseVM = poseVM,
+                        detailState = detailState,
+                        detailVM = detailVM
                     )
                 }
             }

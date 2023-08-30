@@ -18,15 +18,23 @@ data class Pose(
     val photoResId: Int = R.drawable.pd, // future: opcja dodania własnego zdjęcia zamiast rysunku
     val difficulty: Difficulty = Difficulty.BEGGINER, // fixme: usunąć tu default
     var saved: Boolean = false,
-    var progress: Progress = Progress.JESZCZE_NIE,
+    var progress: Progress = Progress.NOT_YET,
     var notes: String = ""
 )
 
 enum class Progress {
-    JESZCZE_NIE,
-    PRAWIE,
-    ZROBIONE,
-    IDEALNIE
+    NOT_YET {
+        override fun toString() = "JESZCZE NIE"
+    },
+    ALMOST {
+        override fun toString() = "PRAWIE!"
+    },
+    DONE {
+        override fun toString() = "ZROBIONE!"
+    },
+    PERFECT {
+        override fun toString() = "IDEALNIE!"
+    }
 }
 
 enum class Difficulty {

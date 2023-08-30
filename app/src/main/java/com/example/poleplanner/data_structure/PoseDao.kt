@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PoseDao {
 
+    @Query("SELECT * FROM pose WHERE poseName=:name")
+    fun getByName(name: String): Pose
+
     // sortowania
     @Query("SELECT * FROM pose ORDER BY poseName ASC")
     fun sortByName(): Flow<List<Pose>>

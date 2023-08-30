@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
@@ -12,7 +13,8 @@ import com.example.poleplanner.poses_list_view.PosesViewModel
 @Composable
 fun AllScreen(
     state: AllPosesState,
-    viewModel: PosesViewModel
+    viewModel: PosesViewModel,
+    navController: NavController,
 ) {
     FiltersBar(
         state = state,
@@ -24,7 +26,7 @@ fun AllScreen(
             )
             {
                 TagFiltersRow(state, viewModel)
-                PoseList(state, viewModel)
+                PoseList(state, viewModel, navController)
             }
         }
     )

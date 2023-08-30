@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.AutoResizedText
@@ -37,7 +39,8 @@ import com.example.poleplanner.ui.theme.TagBox
 @Composable
 fun PoseListItem(
     pose: Pose = Pose(poseName = "Brass Sit"),
-    viewModel: PosesViewModel
+    viewModel: PosesViewModel,
+    navController: NavController
 ) {
 
     var isSaved by remember { mutableStateOf(pose.saved) }
@@ -46,7 +49,9 @@ fun PoseListItem(
     Column (
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.primary)
-            .clickable {/* todo: wejście do podglądu */ },
+            .clickable {
+                navController.navigate("${Screen.DetailScreen.route}/${pose.poseName}")
+            },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -68,7 +73,7 @@ fun PoseListItem(
                 modifier = Modifier
                     .padding(10.dp)
                     .clickable {
-                        isSaved = !isSaved
+//                        isSaved = !isSaved // fixme: tu sie dzieje cos nietak
                         viewModel.onEvent(PoseEvent.ChangeSave(pose))
                     },
                 tint = MaterialTheme.colorScheme.background,

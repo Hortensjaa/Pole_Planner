@@ -4,9 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.PoseDetailState
 import com.example.poleplanner.ui.theme.AlmostWhite
@@ -46,17 +51,19 @@ fun PoseDetailScreen(
                 .collectAsState(emptyList())
             Column (
                 modifier = Modifier
+                    .fillMaxSize()
                     .background(AlmostWhite)
                     .padding(20.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 NameBar(pose!!.poseName)
-                TagsRow(poseTags)
                 Photo(photoResId = pose!!.photoResId)
-                DescriptionContent(pose!!.description)
-                NotesContent(pose!!.notes)
+                TagsRow(poseTags)
+                ProgressRow(pose!!.progress)
+                DescriptionContent(pose!!.description, detailVM, state)
+                NotesContent(pose!!.notes, detailVM, state)
             }
         }
-
     }
 }
 
@@ -109,20 +116,37 @@ fun Photo (
 
 @Composable
 fun DescriptionContent (
-    description: String = ""
+    description: String = "",
+    detailVM: DetailViewModel,
+    state: PoseDetailState
 ) {
-    ContentHideButton(text = "Opis")
-//    Text(
-//        text = description,
-//        modifier = Modifier.padding(10.dp))
+    ContentHideButton(
+        text = "Opis",
+        action = { detailVM.onEvent(DetailEvent.changeDescription) },
+        isOpened = state.descriptionOpen
+    )
+    if (state.descriptionOpen) {
+        Text(
+            text = description,
+            modifier = Modifier.padding(10.dp))
+    }
 }
 
 @Composable
 fun NotesContent (
-    notes: String = ""
+    notes: String = "",
+    detailVM: DetailViewModel,
+    state: PoseDetailState
 ) {
-    ContentHideButton(text = "Notatki")
-//    Text(
-//        text = notes,
-//        modifier = Modifier.padding(10.dp))
+    ContentHideButton(
+        text = "Notatki",
+        action = { detailVM.onEvent(DetailEvent.changeNotes) },
+        isOpened = state.notesOpen,
+        editable = true
+    )
+    if (state.notesOpen) {
+        Text(
+            text = notes,
+            modifier = Modifier.padding(10.dp))
+    }
 }

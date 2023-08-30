@@ -9,6 +9,7 @@ val LightPink = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val DarkPink = Color(0xFF7D5260)
+val DarkerPink = Color(0xFF553841)
 
 val AlmostWhite = Color(0xFFF5E7EB)
 val Beige = Color(0xFFD19B8A)

@@ -1,38 +1,70 @@
 package com.example.poleplanner.pose_detail_view.composables
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.poleplanner.ui.theme.DarkPink
+import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
 fun ContentHideButton (
-    text: String = "Opis"
+    text: String = "Opis",
+    action: () -> Unit = {},
+    editAction: () -> Unit = {},
+    isOpened: Boolean = false,
+    editable: Boolean = false
 ) {
+    val icon =  if (isOpened) Icons.Default.KeyboardArrowDown
+                else Icons.Default.KeyboardArrowRight
     Button(
-        onClick = { /*todo: otwarcie opisu*/ },
+        onClick = { action() },
         shape = RectangleShape,
-        colors = ButtonDefaults.buttonColors(containerColor = DarkPink),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+        ),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
-                contentDescription = "open description")
-            Text(
-                text = text,
-                textAlign = TextAlign.Center)
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "open",
+                    tint = MaterialTheme.colorScheme.secondary
+                )
+                Text(
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                )
+            }
+            if (editable) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "edit",
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.clickable{editAction()}
+                )
+            }
         }
     }
 }

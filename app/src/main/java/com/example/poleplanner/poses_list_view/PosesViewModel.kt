@@ -3,8 +3,10 @@ package com.example.poleplanner.poses_list_view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.Difficulty
+import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.data_structure.PoseDao
 import com.example.poleplanner.data_structure.PoseTagDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -12,9 +14,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PosesViewModel (
-    private val poseDao: PoseDao,
+    val poseDao: PoseDao,
     val PTdao: PoseTagDao
 ) : ViewModel() {
 
@@ -48,6 +51,12 @@ class PosesViewModel (
             tagFilters = tagNamesFilters
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
+
+    suspend fun getPoseByName(name: String): Pose {
+        return withContext(Dispatchers.IO) {
+            poseDao.getByName(name)
+        }
+    }
 
     fun onEvent(event: PoseEvent) {
         when(event) {

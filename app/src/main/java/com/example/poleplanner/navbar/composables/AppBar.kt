@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import com.example.poleplanner.ui.theme.Typography
 
 // source:
 // https://github.com/philipplackner/NavigationDrawerCompose
@@ -22,7 +23,10 @@ fun AppBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = "Pole planner")
+            Text(
+                text = "Pole planner",
+                style = Typography.titleMedium,
+            )
         },
         navigationIcon = {
             IconButton(onClick = onNavigationIconClick) {

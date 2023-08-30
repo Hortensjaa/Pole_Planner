@@ -55,7 +55,7 @@ fun FiltersBar(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primary)
+                        .background(color = MaterialTheme.colorScheme.onPrimary)
                         .padding(padding.dp)
                     )
                 FiltersBarContent(state, viewModel)

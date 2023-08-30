@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 
 class DetailViewModel (
@@ -36,8 +37,16 @@ class DetailViewModel (
         }
     }
 
-//    fun onEvent(event: DetailEvent) {
-//        when(event) {
+    fun onEvent(event: DetailEvent) {
+        when(event) {
+
+            is DetailEvent.changeDescription -> {
+                _state.update { it.copy(descriptionOpen = !it.descriptionOpen) }
+            }
+
+            is DetailEvent.changeNotes -> {
+                _state.update { it.copy(notesOpen = !it.notesOpen) }
+            }
 //            is DetailEvent.ChangePose -> {
 //                Log.d("kdmdslds", "1: ${event.poseName}")
 //                viewModelScope.launch {
@@ -52,6 +61,7 @@ class DetailViewModel (
 //                    Log.d("kdmdslds", "3")
 //                }
 //            }
-//        }
-//    }
+
+        }
+    }
 }

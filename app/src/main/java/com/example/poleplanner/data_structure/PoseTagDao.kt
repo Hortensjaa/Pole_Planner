@@ -44,7 +44,8 @@ interface PoseTagDao {
     @Query("SELECT * FROM tag " +
             "WHERE tagName IN " +
             "(SELECT tagName FROM PoseTagCrossRef " +
-            "WHERE poseName = :poseName)")
+            "WHERE poseName = :poseName " +
+            "ORDER BY tagName ASC)")
     fun getTagsForPose(poseName: String): Flow<List<Tag>>
 
     // pobranie figur o danym tagu
@@ -52,7 +53,8 @@ interface PoseTagDao {
     @Query("SELECT * FROM pose " +
             "WHERE poseName IN " +
             "(SELECT poseName FROM PoseTagCrossRef " +
-            "WHERE tagName = :tagName)")
+            "WHERE tagName = :tagName " +
+            "ORDER BY poseName ASC)")
     fun getPosesWithTag(tagName: String): Flow<List<Pose>>
 
     // pobranie figur o danych tagach
@@ -61,7 +63,8 @@ interface PoseTagDao {
             "WHERE (" +
             "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
             "   WHERE ptc.poseName = p.poseName " +
-            "   AND ptc.tagName IN (:tagNames)) = :tagCount")
+            "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
+            "ORDER BY poseName ASC")
     fun getPosesWithTags(tagNames: Collection<String>, tagCount: Int): Flow<List<Pose>>
 
 }

@@ -63,7 +63,7 @@ fun TagFiltersRow(
             )
         } else {
             Text(
-                text = "wybierz tag, aby po nim filtrować",
+                text = "wybierz #tag, aby po nim filtrować",
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(10.dp)

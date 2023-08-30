@@ -40,7 +40,7 @@ fun AppBar(
                   IconButton(onClick = { backAction() }) {
                       Icon(
                           imageVector = Icons.Default.ArrowBackIos,
-                          contentDescription = "Toggle drawer"
+                          contentDescription = "Back"
                       )
                   }
         },

@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -19,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
@@ -36,7 +34,7 @@ fun ContentHideButton (
         onClick = { action() },
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
         ),
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -54,7 +52,7 @@ fun ContentHideButton (
                     text = text,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(horizontal = 15.dp)
+                    modifier = Modifier
                 )
             }
             if (editable) {

@@ -76,4 +76,11 @@ interface PoseDao {
         update(pose)
     }
 
+    // zapisywanie notatek
+    @Transaction
+    suspend fun setNotes(pose: Pose, notes: String) {
+        pose.notes = notes
+        update(pose)
+    }
+
 }

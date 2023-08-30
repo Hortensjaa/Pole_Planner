@@ -66,7 +66,7 @@ fun ContentHideButton (
                     imageVector = Icons.Default.Edit,
                     contentDescription = "edit",
                     tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.clickable{editAction()}
+                    modifier = Modifier.clickable{ editAction() }
                 )
             }
         }

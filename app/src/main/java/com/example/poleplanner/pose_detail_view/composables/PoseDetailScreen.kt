@@ -131,22 +131,3 @@ fun DescriptionContent (
             modifier = Modifier.padding(10.dp))
     }
 }
-
-@Composable
-fun NotesContent (
-    notes: String = "",
-    detailVM: DetailViewModel,
-    state: PoseDetailState
-) {
-    ContentHideButton(
-        text = "Notatki",
-        action = { detailVM.onEvent(DetailEvent.changeNotes) },
-        isOpened = state.notesOpen,
-        editable = true
-    )
-    if (state.notesOpen) {
-        Text(
-            text = notes,
-            modifier = Modifier.padding(10.dp))
-    }
-}

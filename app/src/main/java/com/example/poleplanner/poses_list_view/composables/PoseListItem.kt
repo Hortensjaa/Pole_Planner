@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +69,7 @@ fun NameBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val poseSave by poseVM.poseDao.getSaveByName(pose.poseName).collectAsState(false)
         AutoResizedText(
             text = pose.poseName,
             color = MaterialTheme.colorScheme.background,
@@ -76,8 +78,7 @@ fun NameBar(
                 .padding(10.dp)
         )
         Icon(
-            // fixme: zmieniający się stan serduszka
-            imageVector = Icons.Default.FavoriteBorder,
+            imageVector = if (poseSave) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = "Save pose",
             modifier = Modifier
                 .padding(10.dp)

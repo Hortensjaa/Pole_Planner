@@ -14,6 +14,9 @@ interface PoseDao {
     @Query("SELECT * FROM pose WHERE poseName=:name")
     fun getByName(name: String): Pose
 
+    @Query("SELECT saved FROM pose WHERE poseName=:name")
+    fun getSaveByName(name: String): Flow<Boolean>
+
     // sortowania
     @Query("SELECT * FROM pose ORDER BY poseName ASC")
     fun sortByName(): Flow<List<Pose>>

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailViewModel (
@@ -40,27 +41,46 @@ class DetailViewModel (
     fun onEvent(event: DetailEvent) {
         when(event) {
 
-            is DetailEvent.changeDescription -> {
+            is DetailEvent.ChangeSave -> {
+                viewModelScope.launch {
+                    if (_state.value.pose.saved) {
+                        poseDao.unsavePose(_state.value.pose)
+                    } else {
+                        poseDao.savePose(_state.value.pose)
+                    }
+                }
+            }
+
+            is DetailEvent.DescriptionChangeVisibility -> {
                 _state.update { it.copy(descriptionOpen = !it.descriptionOpen) }
             }
 
-            is DetailEvent.changeNotes -> {
+            is DetailEvent.NotesChangeVisibility -> {
                 _state.update { it.copy(notesOpen = !it.notesOpen) }
             }
-//            is DetailEvent.ChangePose -> {
-//                Log.d("kdmdslds", "1: ${event.poseName}")
-//                viewModelScope.launch {
-//                    Log.d("kdmdslds", "2: ${event.poseName}")
-//                    try {
-//                        _pose.value =
-//                            poseDao.getByName(event.poseName)
-//                    } catch (e: Exception) {
-//                        Log.d("kdmdslds", "aa: ${e.message}")
-//                    }
-//
-//                    Log.d("kdmdslds", "3")
-//                }
-//            }
+
+            is DetailEvent.NotesEditChange -> {
+                _state.update { it.copy(notesOpen = true) }
+                _state.update { it.copy(notesEditing = !it.notesEditing) }
+            }
+
+            is DetailEvent.ChangePose -> {
+                viewModelScope.launch {
+                    _state.update { it.copy(pose = event.pose) }
+                }
+            }
+
+            is DetailEvent.SaveNotes -> {
+                viewModelScope.launch {
+                    poseDao.setNotes(_state.value.pose, event.notes)
+                }
+            }
+
+            is DetailEvent.SaveProgress -> {
+                viewModelScope.launch {
+                    poseDao.setProgress(_state.value.pose, event.progress)
+                }
+            }
 
         }
     }

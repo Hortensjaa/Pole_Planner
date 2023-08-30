@@ -1,6 +1,7 @@
 package com.example.poleplanner.navbar.composables
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,7 +17,8 @@ import androidx.compose.runtime.Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(
-    onNavigationIconClick: () -> Unit
+    onNavigationIconClick: () -> Unit,
+    backAction: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -29,6 +31,14 @@ fun AppBar(
                     contentDescription = "Toggle drawer"
                 )
             }
+        },
+        actions = {
+                  IconButton(onClick = { backAction() }) {
+                      Icon(
+                          imageVector = Icons.Default.ArrowBackIos,
+                          contentDescription = "Toggle drawer"
+                      )
+                  }
         },
         colors = topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
     )

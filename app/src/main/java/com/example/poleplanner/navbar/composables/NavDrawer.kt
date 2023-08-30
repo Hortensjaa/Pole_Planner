@@ -34,7 +34,8 @@ fun NavDrawer(
                         scope.launch {
                             scaffoldState.drawerState.open()
                         }
-                    }
+                    },
+                    backAction = { navController.popBackStack() }
                 )
             },
             drawerGesturesEnabled = scaffoldState.drawerState.isOpen,

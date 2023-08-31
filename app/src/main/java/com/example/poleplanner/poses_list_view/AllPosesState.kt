@@ -7,5 +7,6 @@ data class AllPosesState(
     val poses: List<Pose> = emptyList(),
     val diffFilters: Collection<Difficulty> = Difficulty.values().toList(),
     val tagFilters: Collection<String> = emptyList(),
-    val searchText: String = ""
+    val searchText: String = "",
+    val savedOnly: Boolean = false
 )

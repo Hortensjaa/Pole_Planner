@@ -6,6 +6,7 @@ import com.example.poleplanner.data_structure.Difficulty
 import com.example.poleplanner.data_structure.PoseDao
 import com.example.poleplanner.data_structure.PoseTagDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -34,8 +35,9 @@ class PosesViewModel (
 
     // filtry
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val _posesList = combine(_diffFilters, _tagNamesFilters) { diffs, tags ->
-        Pair(diffs, tags)
+    private val _posesList = combine(_diffFilters, _tagNamesFilters, _savedOnly) {
+        diffs, tags, saved ->
+        Triple(diffs, tags, saved)
     }.flatMapLatest { 
         (diffs, tags) ->
         when {
@@ -61,13 +63,14 @@ class PosesViewModel (
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _posesList.value)
 
     private val _state = MutableStateFlow(AllPosesState())
-    val state = combine(_state, _diffFilters, _tagNamesFilters, _poses, _searchText) {
-        state, diffFilters, tagNamesFilters,  poses, searchText ->
+    val state = myCombine(_state, _diffFilters, _tagNamesFilters, _poses, _searchText, _savedOnly) {
+        state, diffFilters, tagNamesFilters,  poses, searchText, savedOnly ->
         state.copy(
             poses = poses,
             diffFilters = diffFilters,
             tagFilters = tagNamesFilters,
-            searchText = searchText
+            searchText = searchText,
+            savedOnly = savedOnly
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
 
@@ -140,4 +143,24 @@ class PosesViewModel (
             }
         }
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+private fun <T1, T2, T3, T4, T5, T6, R> myCombine(
+    flow: Flow<T1>,
+    flow2: Flow<T2>,
+    flow3: Flow<T3>,
+    flow4: Flow<T4>,
+    flow5: Flow<T5>,
+    flow6: Flow<T6>,
+    transform: suspend (T1, T2, T3, T4, T5, T6) -> R
+): Flow<R> = combine(flow, flow2, flow3, flow4, flow5, flow6) { args: Array<*> ->
+    transform(
+        args[0] as T1,
+        args[1] as T2,
+        args[2] as T3,
+        args[3] as T4,
+        args[4] as T5,
+        args[5] as T6
+    )
 }

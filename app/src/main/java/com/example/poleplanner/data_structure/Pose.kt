@@ -20,7 +20,14 @@ data class Pose(
     var saved: Boolean = false,
     var progress: Progress = Progress.NOT_YET,
     var notes: String = ""
-)
+) {
+    fun matchSearchText(text: String): Boolean {
+        val poseWords = poseName.split(" ")
+        return poseWords.any {
+            it.startsWith(text, ignoreCase = true)
+        }
+    }
+}
 
 enum class Progress {
     NOT_YET {

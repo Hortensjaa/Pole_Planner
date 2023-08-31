@@ -39,7 +39,6 @@ fun TagFiltersRow(
             .height(60.dp)
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(5.dp)
             .background(color = MaterialTheme.colorScheme.secondary)
             .horizontalScroll(rememberScrollState())
     )

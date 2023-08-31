@@ -19,12 +19,12 @@ import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 
-//todo: zrób coś żeby to nie było takie obrzydliwe
+// todo: zrób coś żeby to nie było takie obrzydliwe
 // source:
 // https://github.com/philipplackner/BottomSheetCompose
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FiltersBar(
+fun FiltersSheet(
     state: AllPosesState,
     viewModel: PosesViewModel,
     content: @Composable () -> Unit
@@ -52,7 +52,7 @@ fun FiltersBar(
                         .fillMaxWidth()
                         .padding(padding.dp)
                     )
-                FiltersBarContent(state, viewModel)
+                FiltersSheetContent(state, viewModel)
             },
             sheetPeekHeight = (height + 2 * padding).dp,
             sheetShape = RoundedCornerShape(15.dp),

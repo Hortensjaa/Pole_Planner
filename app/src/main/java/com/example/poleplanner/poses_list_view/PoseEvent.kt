@@ -27,5 +27,7 @@ sealed interface PoseEvent {
 
     object ClearTagFilter: PoseEvent
 
+    object ClearSearcher: PoseEvent
+
     // future/todo: filtrowanie po progressie
 }

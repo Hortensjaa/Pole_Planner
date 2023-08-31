@@ -19,7 +19,7 @@ interface PoseDao {
 
     // sortowania
     @Query("SELECT * FROM pose ORDER BY poseName ASC")
-    fun sortByName(): Flow<List<Pose>>
+    fun sortByName(): List<Pose>
 
     // filtrowanie
     @Query("SELECT * FROM pose " +

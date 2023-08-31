@@ -11,21 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.poleplanner.poses_list_view.AllPosesState
+import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
 @Composable
 fun PoseList(
-    state: AllPosesState,
     viewModel: PosesViewModel,
-    navController: NavController
+    navController: NavController,
+    poses: List<Pose>
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(bottom = 30.dp)
     ) {
-        items(state.poses) {
+        items(poses) {
             pose ->
             Box(
                 modifier = Modifier
@@ -36,3 +36,4 @@ fun PoseList(
         }
     }
 }
+

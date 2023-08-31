@@ -2,31 +2,40 @@ package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
-// future: wyszukiwarka
+// todo: wyszukiwarka
 @Composable
 fun AllScreen(
     state: AllPosesState,
     viewModel: PosesViewModel,
     navController: NavController,
 ) {
-    FiltersBar(
+    FiltersSheet(
         state = state,
         viewModel = viewModel,
         content =
         {
             Column (
-                modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .padding(10.dp)
             )
             {
-                TagFiltersRow(state, viewModel)
-                PoseList(state, viewModel, navController)
+                SearchBar(viewModel, state.searchText)
+                Spacer(modifier = Modifier.height(15.dp))
+                PoseList(viewModel, navController, state.poses)
             }
         }
     )

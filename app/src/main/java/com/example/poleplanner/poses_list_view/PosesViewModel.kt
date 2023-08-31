@@ -25,7 +25,6 @@ class PosesViewModel (
 
     // wyszukiwarka
     private val _searchText = MutableStateFlow("")
-//    private val _searchTextFlow = _searchText.asStateFlow()
     private val _isSearching = MutableStateFlow(false)
 
     fun onSearchTextChange(text: String) {

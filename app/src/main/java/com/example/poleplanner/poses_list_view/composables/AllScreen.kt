@@ -2,9 +2,7 @@ package com.example.poleplanner.poses_list_view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,11 +28,10 @@ fun AllScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = MaterialTheme.colorScheme.background)
-                    .padding(10.dp)
+                    .padding(horizontal = 10.dp)
             )
             {
                 SearchBar(viewModel, state.searchText)
-                Spacer(modifier = Modifier.height(15.dp))
                 PoseList(viewModel, navController, state.poses)
             }
         }

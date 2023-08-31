@@ -1,8 +1,8 @@
 package com.example.poleplanner.poses_list_view.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,25 +41,21 @@ fun FiltersBar(
 
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
-            sheetContent = 
+            sheetContent =
             {
-//                Divider(
-//                    color = MaterialTheme.colorScheme.primary,
-//                    thickness = (padding/2).dp)
                 Text(
-                    text = "filtry",
-                    color = MaterialTheme.colorScheme.background,
+                    text = "FILTRY",
+                    color = MaterialTheme.colorScheme.primary,
                     lineHeight = height.sp,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.onPrimary)
                         .padding(padding.dp)
                     )
                 FiltersBarContent(state, viewModel)
             },
-            sheetPeekHeight = (height + 2 * padding).dp
+            sheetPeekHeight = (height + 2 * padding).dp,
+            sheetShape = RoundedCornerShape(15.dp),
         ) {
             content()
         }

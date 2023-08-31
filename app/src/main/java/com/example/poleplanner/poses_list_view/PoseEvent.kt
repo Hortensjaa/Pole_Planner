@@ -9,11 +9,13 @@ sealed interface PoseEvent {
         val pose: Pose
     ): PoseEvent
 
-    data class FilterByDiff(
+    data class AddDiffFilter(
         val diff: Difficulty
-    ): PoseEvent
+    ) : PoseEvent
 
-    object ClearDiffFilter: PoseEvent
+    data class DeleteDiffFilter(
+        val diff: Difficulty
+    ) : PoseEvent
 
     data class AddTagFilter(
         val tag: String

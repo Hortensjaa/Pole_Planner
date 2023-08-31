@@ -28,6 +28,11 @@ interface PoseDao {
     fun filterDifficulty(diff: Difficulty): Flow<List<Pose>>
 
     @Query("SELECT * FROM pose " +
+            "WHERE difficulty IN (:diffs) " +
+            "ORDER BY poseName ASC ")
+    fun filterDifficultyList(diffs: Collection<Difficulty>): Flow<List<Pose>>
+
+    @Query("SELECT * FROM pose " +
             "WHERE progress = :prog " +
             "ORDER BY poseName ASC ")
     fun filterProgress(prog: Progress): Flow<List<Pose>>

@@ -4,12 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,14 +34,6 @@ fun FiltersBarContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Poziom")
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = {
-                    viewModel.onEvent(PoseEvent.ClearDiffFilter)
-                }
-            ) {
-                Text(text = "wyczyść")
-            }
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -53,13 +43,14 @@ fun FiltersBarContent(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    RadioButton(
-                        selected = state.diffFilter == diff,
-                        onClick = {
-                            viewModel.onEvent(PoseEvent.FilterByDiff(diff))
+                    Checkbox(
+                        checked = (diff in state.diffFilters),
+                        onCheckedChange = {
+                            if (it) viewModel.onEvent(PoseEvent.AddDiffFilter(diff))
+                            else viewModel.onEvent(PoseEvent.DeleteDiffFilter(diff))
                         }
                     )
-                    Text(text = diff.name, maxLines = 1)
+                    Text(text = diff.toString(), maxLines = 1)
                 }
             }
         }

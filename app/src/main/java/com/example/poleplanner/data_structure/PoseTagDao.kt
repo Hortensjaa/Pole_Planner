@@ -13,7 +13,7 @@ interface PoseTagDao {
     // gettery
     @Transaction
     @Query("SELECT * FROM pose")
-    fun getPosesWithTags(): List<PoseWithTags>
+    fun filterPosesWithTags(): List<PoseWithTags>
 
     @Transaction
     @Query("SELECT * FROM tag")
@@ -55,7 +55,7 @@ interface PoseTagDao {
             "(SELECT poseName FROM PoseTagCrossRef " +
             "WHERE tagName = :tagName " +
             "ORDER BY poseName ASC)")
-    fun getPosesWithTag(tagName: String): Flow<List<Pose>>
+    fun filterPosesWithTag(tagName: String): Flow<List<Pose>>
 
     // pobranie figur o danych tagach
     @Transaction
@@ -65,6 +65,19 @@ interface PoseTagDao {
             "   WHERE ptc.poseName = p.poseName " +
             "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
             "ORDER BY poseName ASC")
-    fun getPosesWithTags(tagNames: Collection<String>, tagCount: Int): Flow<List<Pose>>
+    fun filterPosesWithTags(tagNames: Collection<String>, tagCount: Int): Flow<List<Pose>>
+
+    @Transaction
+    @Query("SELECT DISTINCT p.* FROM pose p " +
+            "WHERE (" +
+            "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
+            "   WHERE ptc.poseName = p.poseName " +
+            "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
+            "AND difficulty IN (:diffs)" +
+            "ORDER BY poseName ASC")
+    fun filterDifficultyAndTags(
+        tagNames: Collection<String>,
+        tagCount: Int,
+        diffs: Collection<Difficulty>): Flow<List<Pose>>
 
 }

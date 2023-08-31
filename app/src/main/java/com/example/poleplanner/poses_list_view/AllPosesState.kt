@@ -5,6 +5,6 @@ import com.example.poleplanner.data_structure.Pose
 
 data class AllPosesState(
     val poses: List<Pose> = emptyList(),
-    val diffFilter: Difficulty? = null,
+    val diffFilters: Collection<Difficulty> = Difficulty.values().toList(),
     val tagFilters: Collection<String> = emptyList()
 )

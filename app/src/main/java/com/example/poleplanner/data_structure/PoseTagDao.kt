@@ -80,4 +80,18 @@ interface PoseTagDao {
         tagCount: Int,
         diffs: Collection<Difficulty>): Flow<List<Pose>>
 
+    @Transaction
+    @Query("SELECT DISTINCT p.* FROM pose p " +
+            "WHERE (" +
+            "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
+            "   WHERE ptc.poseName = p.poseName " +
+            "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
+            "AND difficulty IN (:diffs) " +
+            "AND saved = :savedOnly " +
+            "ORDER BY poseName ASC")
+    fun filterSaved(
+        tagNames: Collection<String>,
+        tagCount: Int,
+        diffs: Collection<Difficulty>,
+        savedOnly: Boolean = true): Flow<List<Pose>>
 }

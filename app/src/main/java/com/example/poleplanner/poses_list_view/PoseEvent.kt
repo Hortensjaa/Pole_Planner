@@ -25,6 +25,10 @@ sealed interface PoseEvent {
         val tag: String
     ): PoseEvent
 
+    data class ClearState(
+        val savedOnly: Boolean
+    ): PoseEvent
+
     object ClearTagFilter: PoseEvent
 
     object ClearSearcher: PoseEvent

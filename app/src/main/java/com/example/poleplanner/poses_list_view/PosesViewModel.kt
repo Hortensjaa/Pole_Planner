@@ -22,6 +22,7 @@ class PosesViewModel (
 
     private val _diffFilters = MutableStateFlow<Collection<Difficulty>>(Difficulty.values().toList())
     private val _tagNamesFilters = MutableStateFlow<Collection<String>>(emptyList())
+    private var _savedOnly = MutableStateFlow(false)
 
     // wyszukiwarka
     private val _searchText = MutableStateFlow("")
@@ -36,7 +37,12 @@ class PosesViewModel (
     private val _posesList = combine(_diffFilters, _tagNamesFilters) { diffs, tags ->
         Pair(diffs, tags)
     }.flatMapLatest { 
-        (diffs, tags) -> PTdao.filterDifficultyAndTags(tags, tags.size, diffs)
+        (diffs, tags) ->
+        when {
+            _savedOnly.value -> PTdao.filterSaved(tags, tags.size, diffs)
+            else -> PTdao.filterDifficultyAndTags(tags, tags.size, diffs)
+        }
+
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
@@ -121,6 +127,15 @@ class PosesViewModel (
             is PoseEvent.ClearSearcher -> {
                 viewModelScope.launch {
                     _searchText.value = ""
+                }
+            }
+
+            is PoseEvent.ClearState -> {
+                viewModelScope.launch {
+                    _diffFilters.value = Difficulty.values().toList()
+                    _tagNamesFilters.value = emptyList()
+                    _searchText.value = ""
+                    _savedOnly.value = event.savedOnly
                 }
             }
         }

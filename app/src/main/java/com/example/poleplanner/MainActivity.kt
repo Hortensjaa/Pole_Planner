@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PolePlannerTheme {
                 val navController = rememberNavController()
-                NavDrawer(navController) {
+                NavDrawer(poseVM, navController) {
                     val posesState by poseVM.state.collectAsState()
                     val detailState by detailVM.state.collectAsState()
                     Navigation(

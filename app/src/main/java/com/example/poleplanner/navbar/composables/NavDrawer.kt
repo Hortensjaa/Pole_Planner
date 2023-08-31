@@ -13,11 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.poleplanner.navbar.MenuItem
 import com.example.poleplanner.navbar.Screen
+import com.example.poleplanner.poses_list_view.PoseEvent
+import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.NavigationDrawerComposeTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun NavDrawer(
+    posesViewModel: PosesViewModel,
     navController: NavController,
     content: @Composable (Modifier) -> Unit
 )
@@ -44,11 +47,12 @@ fun NavDrawer(
                 DrawerBody(
                     items = listOf(
                         MenuItem(
-                            title = "Zapisane figury",
+                            title = "Ulubione",
                             contentDescription = "Figury, do których planujesz wrócić",
                             icon = Icons.Default.Favorite,
                             onClick = {
                                 navController.navigate(Screen.SavedScreen.route)
+                                posesViewModel.onEvent(PoseEvent.ClearState(true))
                             }
                         ),
                         MenuItem(
@@ -57,6 +61,7 @@ fun NavDrawer(
                             icon = Icons.Default.List,
                             onClick = {
                                 navController.navigate(Screen.AllPosesScreen.route)
+                                posesViewModel.onEvent(PoseEvent.ClearState(false))
                             }
                         ),
                         MenuItem(

@@ -38,7 +38,7 @@ fun Navigation(
             AllScreen(posesState, poseVM, navController)
         }
         composable(route = Screen.SavedScreen.route) {
-            SavedScreen()
+            SavedScreen(posesState, poseVM, navController)
         }
         composable(route = Screen.ComboMakerScreen.route) {
             ComboMakerScreen()

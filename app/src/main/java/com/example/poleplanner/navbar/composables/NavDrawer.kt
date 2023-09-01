@@ -3,9 +3,9 @@ package com.example.poleplanner.navbar.composables
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.SportsGymnastics
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,7 +56,7 @@ fun NavDrawer(
                             }
                         ),
                         MenuItem(
-                            title = "Katalog figur",
+                            title = "Katalog",
                             contentDescription = "Alfabetyczna lista wszystkich figur",
                             icon = Icons.Default.List,
                             onClick = {
@@ -65,9 +65,9 @@ fun NavDrawer(
                             }
                         ),
                         MenuItem(
-                            title = "Losuj",
-                            contentDescription = "Wylosuj jedną figurę do zrobienia lub skorzystaj z naszego combo-makera",
-                            icon = Icons.Default.Add,
+                            title = "Figura dnia",
+                            contentDescription = "",
+                            icon = Icons.Default.SportsGymnastics,
                             onClick = {
                                 navController.navigate(Screen.ComboMakerScreen.route)
                             }

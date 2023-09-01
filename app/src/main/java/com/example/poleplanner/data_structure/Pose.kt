@@ -16,7 +16,7 @@ data class Pose(
         "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt " +
         "in culpa qui officia deserunt mollit anim id est laborum.",
     val photoResId: Int = R.drawable.pd, // future: opcja dodania własnego zdjęcia zamiast rysunku
-    val difficulty: Difficulty = Difficulty.BEGINNER, // fixme: usunąć tu default
+    val difficulty: Difficulty = Difficulty.BEGINNER,
     var saved: Boolean = false,
     var progress: Progress = Progress.NOT_YET,
     var notes: String = ""

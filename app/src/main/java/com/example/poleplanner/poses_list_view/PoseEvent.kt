@@ -33,5 +33,5 @@ sealed interface PoseEvent {
 
     object ClearSearcher: PoseEvent
 
-    // future/todo: filtrowanie po progressie
+    // todo: filtrowanie po progressie
 }

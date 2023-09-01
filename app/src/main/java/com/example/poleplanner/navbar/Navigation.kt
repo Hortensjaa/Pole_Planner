@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.poleplanner.ComboMakerScreen
 import com.example.poleplanner.MainScreen
 import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.PoseDetailState
@@ -18,7 +17,6 @@ sealed class Screen(val route: String) {
     object MainScreen : Screen("main_screen")
     object AllPosesScreen : Screen("all_screen")
     object SavedScreen: Screen("saved_screen")
-    object ComboMakerScreen: Screen("combo_screen")
     object DetailScreen: Screen("detail_screen")
 }
 
@@ -39,9 +37,6 @@ fun Navigation(
         }
         composable(route = Screen.SavedScreen.route) {
             SavedScreen(posesState, poseVM, navController)
-        }
-        composable(route = Screen.ComboMakerScreen.route) {
-            ComboMakerScreen()
         }
         composable(route = Screen.DetailScreen.route + "/{poseName}") {
             backStackEntry ->

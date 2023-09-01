@@ -1,13 +1,14 @@
 package com.example.poleplanner.pose_detail_view.composables
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,24 +25,25 @@ import com.example.poleplanner.pose_detail_view.PoseDetailState
 fun NotesContent (
     notes: String = "",
     detailVM: DetailViewModel,
-    state: PoseDetailState
+    state: PoseDetailState,
+    scrollState: ScrollState
 ) {
+    var updatedNotes by remember { mutableStateOf(notes) }
     ContentHideButton(
         text = "Notatki",
         action = { detailVM.onEvent(DetailEvent.NotesChangeVisibility) },
         isOpened = state.notesOpen,
         editable = true,
-        editAction = { detailVM.onEvent(DetailEvent.NotesEditChange) }
+        editAction = { detailVM.onEvent(DetailEvent.NotesEditChange) },
+        isEditing = state.notesEditing,
+        saveAction = {
+            detailVM.onEvent(DetailEvent.SaveNotes(updatedNotes))
+            detailVM.onEvent(DetailEvent.NotesEditChange)
+        }
     )
-    NotesDrawerContent(notes, detailVM, state)
-}
-
-@Composable
-fun NotesDrawerContent (
-    notes: String = "",
-    detailVM: DetailViewModel,
-    state: PoseDetailState
-) {
+    LaunchedEffect(state.notesOpen, updatedNotes, state.notesEditing) {
+        scrollState.animateScrollTo(scrollState.maxValue)
+    }
     if (state.notesOpen) {
         if (!state.notesEditing) {
             Text(
@@ -54,7 +56,6 @@ fun NotesDrawerContent (
             )
         } else {
             Column {
-                var updatedNotes by remember { mutableStateOf(notes) }
                 BasicTextField(
                     value = updatedNotes,
                     onValueChange = { newText: String -> updatedNotes = newText },
@@ -65,14 +66,6 @@ fun NotesDrawerContent (
                         .background(color = Color.White)
                         .padding(10.dp)
                 )
-                Button(
-                    onClick = {
-                        detailVM.onEvent(DetailEvent.SaveNotes(updatedNotes))
-                        detailVM.onEvent(DetailEvent.NotesEditChange)
-                        updatedNotes = ""
-                    }) {
-                    Text(text = "zapisz")
-                }
             }
         }
     }

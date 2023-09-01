@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -27,8 +28,10 @@ fun ContentHideButton (
     text: String = "Opis",
     action: () -> Unit = {},
     editAction: () -> Unit = {},
+    saveAction: () -> Unit = {},
     isOpened: Boolean = false,
-    editable: Boolean = false
+    editable: Boolean = false,
+    isEditing: Boolean = false
 ) {
     val icon =  if (isOpened) Icons.Default.KeyboardArrowDown
                 else Icons.Default.KeyboardArrowRight
@@ -62,12 +65,22 @@ fun ContentHideButton (
                 )
             }
             if (editable) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "edit",
-                    tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.clickable{ editAction() }
-                )
+                if (isEditing) {
+                    Icon(
+                        imageVector = Icons.Default.Save,
+                        contentDescription = "save",
+                        tint = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.clickable{ saveAction() }
+                    )
+                }
+                else {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "edit",
+                        tint = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.clickable{ editAction() }
+                    )
+                }
             }
         }
     }

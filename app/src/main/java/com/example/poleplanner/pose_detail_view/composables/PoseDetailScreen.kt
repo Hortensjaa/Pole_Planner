@@ -41,6 +41,7 @@ fun PoseDetailScreen(
 
         }
         if (pose != null) {
+            val scrollState = rememberScrollState()
             val poseTags by detailVM.PTdao.getTagsForPose(poseName)
                 .collectAsState(emptyList())
             Column (
@@ -48,14 +49,18 @@ fun PoseDetailScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(scrollState)
             ) {
                 TagsRow(poseTags)
-                NameBar(pose!!.poseName, pose!!.saved) { detailVM.onEvent(DetailEvent.ChangeSave) }
+                NameBar(pose!!.poseName, pose!!.saved) {
+                    detailVM.onEvent(DetailEvent.ChangeSave)
+                }
                 Photo(photoResId = pose!!.photoResId)
                 ProgressRow(pose!!.progress, detailVM)
-                DescriptionContent(pose!!.description, detailVM, state)
-                NotesContent(pose!!.notes, detailVM, state)
+                DescriptionContent(pose!!.description, state, scrollState) {
+                    detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
+                }
+                NotesContent(pose!!.notes, detailVM, state, scrollState)
             }
         }
     }

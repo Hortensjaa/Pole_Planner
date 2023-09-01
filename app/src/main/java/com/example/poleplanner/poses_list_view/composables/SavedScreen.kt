@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.poses_list_view.composables.filters_sheet.FiltersSheet
+import com.example.poleplanner.poses_list_view.composables.poses_list.PoseList
 
 // future: tworzenie kolekcji
 @Composable

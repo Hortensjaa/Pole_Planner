@@ -1,4 +1,4 @@
-package com.example.poleplanner.poses_list_view.composables
+package com.example.poleplanner.poses_list_view.composables.filters_sheet
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.poses_list_view.composables.filters_sheet.FiltersSheetContent
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 
 // todo: zrób coś żeby to nie było takie obrzydliwe

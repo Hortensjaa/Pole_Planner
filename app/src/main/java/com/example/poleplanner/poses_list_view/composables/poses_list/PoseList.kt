@@ -1,4 +1,4 @@
-package com.example.poleplanner.poses_list_view.composables
+package com.example.poleplanner.poses_list_view.composables.poses_list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues

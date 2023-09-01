@@ -1,4 +1,4 @@
-package com.example.poleplanner.poses_list_view.composables
+package com.example.poleplanner.poses_list_view.composables.filters_sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

@@ -12,20 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.data_structure.Difficulty
+import com.example.poleplanner.data_structure.Progress
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
 @Composable
-fun DiffFilterBox (
+fun ProgressFilterBox (
     state: AllPosesState,
     viewModel: PosesViewModel
 ){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(end = 20.dp, start = 20.dp, top = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Divider()
@@ -34,18 +34,18 @@ fun DiffFilterBox (
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center
     ) {
-        Difficulty.values().forEach { diff ->
+        Progress.values().forEach { progress ->
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = (diff in state.diffFilters),
+                    checked = (progress in state.progressFilters),
                     onCheckedChange = {
-                        if (it) viewModel.onEvent(PoseEvent.AddDiffFilter(diff))
-                        else viewModel.onEvent(PoseEvent.DeleteDiffFilter(diff))
+                        if (it) viewModel.onEvent(PoseEvent.AddProgressFilter(progress))
+                        else viewModel.onEvent(PoseEvent.DeleteProgressFilter(progress))
                     }
                 )
-                Text(text = diff.toString(), maxLines = 1)
+                Text(text = progress.toString(), maxLines = 1)
             }
         }
     }

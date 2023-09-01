@@ -22,5 +22,6 @@ fun FiltersSheetContent(
     ) {
         TagFiltersRow(state, viewModel)
         DiffFilterBox(state, viewModel)
+        ProgressFilterBox(state, viewModel)
     }
 }

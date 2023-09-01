@@ -74,11 +74,13 @@ interface PoseTagDao {
             "   WHERE ptc.poseName = p.poseName " +
             "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
             "AND difficulty IN (:diffs)" +
+            "AND progress IN (:progress)" +
             "ORDER BY poseName ASC")
-    fun filterDifficultyAndTags(
+    fun filterAll(
         tagNames: Collection<String>,
         tagCount: Int,
-        diffs: Collection<Difficulty>): Flow<List<Pose>>
+        diffs: Collection<Difficulty>,
+        progress: Collection<Progress>): Flow<List<Pose>>
 
     @Transaction
     @Query("SELECT DISTINCT p.* FROM pose p " +
@@ -87,11 +89,13 @@ interface PoseTagDao {
             "   WHERE ptc.poseName = p.poseName " +
             "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
             "AND difficulty IN (:diffs) " +
+            "AND progress IN (:progress) " +
             "AND saved = :savedOnly " +
             "ORDER BY poseName ASC")
     fun filterSaved(
         tagNames: Collection<String>,
         tagCount: Int,
         diffs: Collection<Difficulty>,
+        progress: Collection<Progress>,
         savedOnly: Boolean = true): Flow<List<Pose>>
 }

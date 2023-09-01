@@ -2,6 +2,7 @@ package com.example.poleplanner.poses_list_view
 
 import com.example.poleplanner.data_structure.Difficulty
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.Progress
 
 sealed interface PoseEvent {
 
@@ -23,6 +24,14 @@ sealed interface PoseEvent {
 
     data class DeleteTagFilter(
         val tag: String
+    ): PoseEvent
+
+    data class AddProgressFilter(
+        val prog: Progress
+    ): PoseEvent
+
+    data class DeleteProgressFilter(
+        val prog: Progress
     ): PoseEvent
 
     data class ClearState(

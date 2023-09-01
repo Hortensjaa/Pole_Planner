@@ -34,13 +34,13 @@ enum class Progress {
         override fun toString() = "JESZCZE NIE"
     },
     ALMOST {
-        override fun toString() = "PRAWIE!"
+        override fun toString() = "PRAWIE"
     },
     DONE {
-        override fun toString() = "ZROBIONE!"
+        override fun toString() = "ZROBIONE"
     },
     PERFECT {
-        override fun toString() = "IDEALNIE!"
+        override fun toString() = "IDEALNIE"
     }
 }
 

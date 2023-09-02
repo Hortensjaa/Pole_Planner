@@ -18,14 +18,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailViewModel
-import com.example.poleplanner.pose_detail_view.PoseDetailState
+import com.example.poleplanner.pose_detail_view.DetailState
 
 
 @Composable
 fun NotesContent (
     notes: String = "",
     detailVM: DetailViewModel,
-    state: PoseDetailState,
+    state: DetailState,
     scrollState: ScrollState
 ) {
     var updatedNotes by remember { mutableStateOf(notes) }

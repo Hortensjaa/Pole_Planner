@@ -19,7 +19,7 @@ class DetailViewModel (
     val PTdao: PoseTagDao
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(PoseDetailState())
+    private val _state = MutableStateFlow(DetailState())
     private val _pose = MutableStateFlow<Pose?>(null)
 
     val state = combine(_state, _pose) { state, pose ->
@@ -30,7 +30,7 @@ class DetailViewModel (
         } else {
             state
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PoseDetailState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailState())
 
     suspend fun getPoseByName(name: String): Pose {
         return withContext(Dispatchers.IO) {

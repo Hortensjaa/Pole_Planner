@@ -16,14 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.pose_detail_view.PoseDetailState
+import com.example.poleplanner.pose_detail_view.DetailState
 import kotlin.math.roundToInt
 
 
 @Composable
 fun DescriptionContent (
     description: String = "",
-    state: PoseDetailState,
+    state: DetailState,
     scrollState: ScrollState,
     action: () -> Unit = {}
 ) {

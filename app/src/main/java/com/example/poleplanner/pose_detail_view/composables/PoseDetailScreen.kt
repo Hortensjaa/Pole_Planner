@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailViewModel
-import com.example.poleplanner.pose_detail_view.PoseDetailState
+import com.example.poleplanner.pose_detail_view.DetailState
 
 @Composable
 fun PoseDetailScreen(
     poseName: String?,
     detailVM: DetailViewModel,
-    state: PoseDetailState
+    state: DetailState
 ) {
     if (poseName != null) {
         var pose by remember { mutableStateOf<Pose?>(null) }

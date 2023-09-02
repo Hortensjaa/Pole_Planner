@@ -36,7 +36,7 @@ data class MenuItemsList(
             title = "Figura dnia",
             contentDescription = "Codziennie nowa figurka",
             icon = Icons.Default.SportsGymnastics,
-            onClick = {}
+            onClick = { navController.navigate(Screen.PoseOfDayScreen.route) }
         ),
         MenuItem(
             title = "Plan treningów",

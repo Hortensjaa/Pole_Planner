@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
@@ -17,12 +15,6 @@ import com.example.poleplanner.navbar.composables.NavDrawer
 import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.PolePlannerTheme
-
-@Composable
-fun MainScreen() {
-    Text("Witaj w naszej aplikacji")
-}
-
 
 
 class MainActivity : ComponentActivity() {

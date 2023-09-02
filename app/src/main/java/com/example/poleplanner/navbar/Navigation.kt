@@ -41,7 +41,7 @@ fun Navigation(
             PoseDetailScreen(poseName, detailVM, detailState)
         }
         composable(route = Screen.PoseOfDayScreen.route) {
-            PoseOfDayScreen()
+            PoseOfDayScreen(navController)
         }
     }
 }

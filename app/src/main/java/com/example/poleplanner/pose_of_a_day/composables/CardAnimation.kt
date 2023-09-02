@@ -19,7 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.ui.theme.DarkPink
 
 
@@ -27,7 +29,8 @@ import com.example.poleplanner.ui.theme.DarkPink
 // https://stackoverflow.com/questions/68044576
 @Composable
 fun CardAnimation(
-    pose: Pose = Pose("Placeholder pose")
+    pose: Pose = Pose("Placeholder pose"),
+    navController: NavController
 ) {
 
     var rotated by remember { mutableStateOf(true) }
@@ -39,11 +42,6 @@ fun CardAnimation(
 
     val animateFront by animateFloatAsState(
         targetValue = if (!rotated) 1f else 0f,
-        animationSpec = tween(500), label = ""
-    )
-
-    val animateBack by animateFloatAsState(
-        targetValue = if (rotated) 1f else 0f,
         animationSpec = tween(500), label = ""
     )
 
@@ -67,7 +65,7 @@ fun CardAnimation(
                 .clickable {
                     if (rotated) rotated = false
                     else {
-//                        navController.navigate("${Screen.DetailScreen.route}/${pose.poseName}")
+                        navController.navigate("${Screen.DetailScreen.route}/${pose.poseName}")
                     }
                 },
             backgroundColor = animateColor
@@ -86,6 +84,7 @@ fun CardAnimation(
                         })
                 } else {
                     Front(
+                        pose = pose,
                         modifier = Modifier
                             .graphicsLayer {
                                 alpha = animateFront

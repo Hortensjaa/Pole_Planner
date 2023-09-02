@@ -10,11 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import com.example.poleplanner.ui.theme.Typography
 
 
 @Composable
-fun PoseOfDayScreen () {
+fun PoseOfDayScreen (
+    navController: NavController
+) {
     Column (
         modifier = Modifier
         .fillMaxSize()
@@ -27,6 +30,6 @@ fun PoseOfDayScreen () {
             modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
             color = MaterialTheme.colorScheme.primary
         )
-        CardAnimation()
+        CardAnimation(navController = navController)
     }
 }

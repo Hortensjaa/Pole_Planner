@@ -56,7 +56,7 @@ fun PoseDetailScreen(
                     detailVM.onEvent(DetailEvent.ChangeSave)
                 }
                 Photo(photoResId = pose!!.photoResId)
-                ProgressRow(pose!!.progress, detailVM)
+                ProgressBar(pose!!.progress, detailVM)
                 DescriptionContent(pose!!.description, state, scrollState) {
                     detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
                 }

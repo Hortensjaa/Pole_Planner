@@ -59,7 +59,7 @@ fun CardAnimation(
         Card(
             Modifier
                 .fillMaxSize()
-                .padding(vertical = 50.dp, horizontal = 30.dp)
+                .padding(top = 20.dp, bottom = 50.dp, start = 30.dp, end = 30.dp)
                 .graphicsLayer {
                     rotationY = rotation
                     cameraDistance = 8 * density

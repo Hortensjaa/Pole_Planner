@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class DetailViewModel (
     private val poseDao: PoseDao,
-    val PTdao: PoseTagDao
+    val PTdao: PoseTagDao // todo: wyczyscic to i dac na prywatne, to sie zwroci jako funkcje
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())

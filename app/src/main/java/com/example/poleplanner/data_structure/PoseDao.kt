@@ -17,6 +17,13 @@ interface PoseDao {
     @Query("SELECT saved FROM pose WHERE poseName=:name")
     fun getSaveByName(name: String): Flow<Boolean>
 
+    @Query("SELECT * FROM pose ORDER BY RANDOM() LIMIT 1")
+    fun getRandomPose(): Pose?
+
+    // zliczanie
+    @Query("SELECT COUNT(*) FROM pose")
+    fun countPoses(): Flow<Int>
+
     // sortowania
     @Query("SELECT * FROM pose ORDER BY poseName ASC")
     fun sortByName(): List<Pose>

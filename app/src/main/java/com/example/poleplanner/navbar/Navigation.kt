@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.DetailState
+import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.composables.PoseDetailScreen
+import com.example.poleplanner.pose_of_a_day.DayState
+import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.pose_of_a_day.composables.PoseOfDayScreen
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PosesViewModel
@@ -26,7 +28,9 @@ fun Navigation(
     posesState: AllPosesState,
     poseVM: PosesViewModel,
     detailState: DetailState,
-    detailVM: DetailViewModel
+    detailVM: DetailViewModel,
+    dayState: DayState,
+    dayVM: DayViewModel
 ){
     NavHost(navController = navController, startDestination = Screen.PoseOfDayScreen.route) {
         composable(route = Screen.AllPosesScreen.route) {
@@ -41,7 +45,7 @@ fun Navigation(
             PoseDetailScreen(poseName, detailVM, detailState)
         }
         composable(route = Screen.PoseOfDayScreen.route) {
-            PoseOfDayScreen(navController)
+            PoseOfDayScreen(dayState, dayVM, navController)
         }
     }
 }

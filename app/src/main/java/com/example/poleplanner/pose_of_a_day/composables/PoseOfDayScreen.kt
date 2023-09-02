@@ -11,25 +11,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import com.example.poleplanner.pose_of_a_day.DayState
+import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.ui.theme.Typography
 
 
 @Composable
 fun PoseOfDayScreen (
+    dayState: DayState,
+    dayVM: DayViewModel,
     navController: NavController
 ) {
     Column (
         modifier = Modifier
-        .fillMaxSize()
-        .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
     ){
         Text(
-            text="Figura dnia",
+            text = "Figura dnia",
             textAlign = TextAlign.Center,
             style = Typography.titleLarge,
-            modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally),
             color = MaterialTheme.colorScheme.primary
         )
-        CardAnimation(navController = navController)
+        CardAnimation(dayState, dayVM, navController)
     }
 }

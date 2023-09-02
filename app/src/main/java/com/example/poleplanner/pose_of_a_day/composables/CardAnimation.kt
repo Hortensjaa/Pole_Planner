@@ -11,17 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.navbar.Screen
+import com.example.poleplanner.pose_of_a_day.DayEvent
+import com.example.poleplanner.pose_of_a_day.DayState
+import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.ui.theme.DarkPink
 
 
@@ -29,19 +29,25 @@ import com.example.poleplanner.ui.theme.DarkPink
 // https://stackoverflow.com/questions/68044576
 @Composable
 fun CardAnimation(
-    pose: Pose = Pose("Placeholder pose"),
+    dayState: DayState,
+    dayVM: DayViewModel,
     navController: NavController
 ) {
 
-    var rotated by remember { mutableStateOf(true) }
+    if (dayState.covered) {
+        LaunchedEffect(dayState.pose) {
+            val pose = dayVM.getNewPose()!!
+            dayVM.onEvent(DayEvent.ChangePose(pose))
+        }
+    }
 
     val rotation by animateFloatAsState(
-        targetValue = if (rotated) 180f else 0f,
+        targetValue = if (dayState.covered) 180f else 0f,
         animationSpec = tween(500), label = ""
     )
 
     val animateFront by animateFloatAsState(
-        targetValue = if (!rotated) 1f else 0f,
+        targetValue = if (!dayState.covered) 1f else 0f,
         animationSpec = tween(500), label = ""
     )
 
@@ -63,9 +69,11 @@ fun CardAnimation(
                     cameraDistance = 8 * density
                 }
                 .clickable {
-                    if (rotated) rotated = false
-                    else {
-                        navController.navigate("${Screen.DetailScreen.route}/${pose.poseName}")
+                    if (dayState.covered) {
+                        dayVM.onEvent(DayEvent.UncoverPose)
+                    } else {
+                        navController.navigate(
+                            "${Screen.DetailScreen.route}/${dayState.pose.poseName}")
                     }
                 },
             backgroundColor = animateColor
@@ -76,7 +84,7 @@ fun CardAnimation(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                if (rotated) {
+                if (dayState.covered) {
                     Back(
                         modifier = Modifier
                         .graphicsLayer {
@@ -84,7 +92,7 @@ fun CardAnimation(
                         })
                 } else {
                     Front(
-                        pose = pose,
+                        pose = dayState.pose,
                         modifier = Modifier
                             .graphicsLayer {
                                 alpha = animateFront

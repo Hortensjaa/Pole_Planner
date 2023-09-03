@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.Tag
 import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.ProgressRow
@@ -63,8 +64,12 @@ fun Front(
                     .padding(vertical = 10.dp)
                     .horizontalScroll(rememberScrollState())
             ) {
-                listOf("statyczne", "duety", "szpagaty").forEach { tagName ->
-                    TagBox(tagName = tagName,
+                var poseTags by remember { mutableStateOf<List<Tag>>(emptyList()) }
+                LaunchedEffect(poseName) {
+                    poseTags = dayVM.getTags(poseName)
+                }
+                poseTags.forEach { tag ->
+                    TagBox(tagName = tag.tagName,
                         action = {})
                 }
             }

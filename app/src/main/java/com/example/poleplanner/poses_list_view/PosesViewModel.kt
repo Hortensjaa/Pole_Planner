@@ -6,6 +6,8 @@ import com.example.poleplanner.data_structure.Difficulty
 import com.example.poleplanner.data_structure.PoseDao
 import com.example.poleplanner.data_structure.PoseTagDao
 import com.example.poleplanner.data_structure.Progress
+import com.example.poleplanner.data_structure.Tag
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +18,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.Serializable
 
 class PosesViewModel (
     val poseDao: PoseDao,
-    val PTdao: PoseTagDao
+    private val PTdao: PoseTagDao
 ) : ViewModel() {
 
     private val _diffFilters = MutableStateFlow<Collection<Difficulty>>(Difficulty.values().toList())
@@ -77,6 +80,12 @@ class PosesViewModel (
             savedOnly = savedOnly
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
+
+    suspend fun getTags(poseName: String): List<Tag> {
+        return withContext(Dispatchers.IO) {
+            PTdao.getTagsForPose(poseName)
+        }
+    }
 
     fun onEvent(event: PoseEvent) {
         when(event) {

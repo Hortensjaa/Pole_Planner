@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.Tag
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 import com.example.poleplanner.pose_detail_view.DetailViewModel
@@ -33,16 +33,16 @@ fun PoseDetailScreen(
 ) {
     if (poseName != null) {
         var pose by remember { mutableStateOf<Pose?>(null) }
+        var poseTags by remember { mutableStateOf<List<Tag>>(emptyList()) }
         LaunchedEffect(poseName) {
             pose = detailVM.getPoseByName(poseName)
             detailVM.onEvent(DetailEvent.ChangePose(pose!!))
             if (state.descriptionOpen) detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
             if (state.notesOpen) detailVM.onEvent(DetailEvent.NotesChangeVisibility)
+            poseTags = detailVM.getTags(poseName)
         }
         if (pose != null) {
             val scrollState = rememberScrollState()
-            val poseTags by detailVM.PTdao.getTagsForPose(poseName)
-                .collectAsState(emptyList())
             Column (
                 modifier = Modifier
                     .fillMaxSize()

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.data_structure.PoseDao
 import com.example.poleplanner.data_structure.PoseTagDao
+import com.example.poleplanner.data_structure.Tag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class DetailViewModel (
     private val poseDao: PoseDao,
-    val PTdao: PoseTagDao // todo: wyczyscic to i dac na prywatne, to sie zwroci jako funkcje
+    private val PTdao: PoseTagDao
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
@@ -35,6 +36,11 @@ class DetailViewModel (
     suspend fun getPoseByName(name: String): Pose {
         return withContext(Dispatchers.IO) {
             poseDao.getByName(name)
+        }
+    }
+    suspend fun getTags(poseName: String): List<Tag> {
+        return withContext(Dispatchers.IO) {
+            PTdao.getTagsForPose(poseName)
         }
     }
 

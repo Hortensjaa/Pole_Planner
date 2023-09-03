@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.data_structure.PoseDao
 import com.example.poleplanner.data_structure.PoseTagDao
+import com.example.poleplanner.data_structure.Tag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,7 +30,7 @@ class DayViewModel (
         if (pose != null) {
             state.copy(
                 pose = pose,
-//                lastDrawDate = lastDraw,
+                lastDrawDate = lastDraw,
                 covered = covered
             )
         } else {
@@ -48,6 +49,13 @@ class DayViewModel (
             poseDao.getByName(name)
         }
     }
+
+    suspend fun getTags(poseName: String): List<Tag> {
+        return withContext(Dispatchers.IO) {
+            PTdao.getTagsForPose(poseName)
+        }
+    }
+
 
     fun onEvent(event: DayEvent) {
         when(event) {

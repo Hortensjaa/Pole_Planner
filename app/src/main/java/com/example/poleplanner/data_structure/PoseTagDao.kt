@@ -46,7 +46,7 @@ interface PoseTagDao {
             "(SELECT tagName FROM PoseTagCrossRef " +
             "WHERE poseName = :poseName " +
             "ORDER BY tagName ASC)")
-    fun getTagsForPose(poseName: String): Flow<List<Tag>>
+    fun getTagsForPose(poseName: String): List<Tag>
 
     // pobranie figur o danym tagu
     @Transaction

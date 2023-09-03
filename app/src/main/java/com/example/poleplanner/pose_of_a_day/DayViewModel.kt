@@ -43,21 +43,21 @@ class DayViewModel (
         }
     }
 
+    suspend fun getPoseByName(name: String): Pose {
+        return withContext(Dispatchers.IO) {
+            poseDao.getByName(name)
+        }
+    }
+
     fun onEvent(event: DayEvent) {
         when(event) {
 
             is DayEvent.UncoverPose -> {
-                viewModelScope.launch {
-//                        val newPose = poseDao.getRandomPose()
-//                        _state.update { it.copy(pose = newPose!!) }
-                        _state.update { it.copy(covered = false) }
-                }
+                _state.update { it.copy(covered = false) }
             }
 
             is DayEvent.CoverPose -> {
-                viewModelScope.launch {
-                    _covered.value = true
-                }
+                _state.update { it.copy(covered = true) }
             }
 
             is DayEvent.GetNewPose -> {

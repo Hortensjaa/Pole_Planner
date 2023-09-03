@@ -34,8 +34,8 @@ fun CardAnimation(
     navController: NavController
 ) {
 
-    if (dayState.covered) {
-        LaunchedEffect(dayState.pose) {
+    LaunchedEffect(dayState.covered) {
+        if (dayState.covered) {
             val pose = dayVM.getNewPose()!!
             dayVM.onEvent(DayEvent.ChangePose(pose))
         }
@@ -92,7 +92,8 @@ fun CardAnimation(
                         })
                 } else {
                     Front(
-                        pose = dayState.pose,
+                        dayVM = dayVM,
+                        poseName = dayState.pose.poseName,
                         modifier = Modifier
                             .graphicsLayer {
                                 alpha = animateFront

@@ -22,8 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.Pose
 import com.example.poleplanner.pose_detail_view.DetailEvent
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.DetailState
+import com.example.poleplanner.pose_detail_view.DetailViewModel
 
 @Composable
 fun PoseDetailScreen(
@@ -38,7 +38,6 @@ fun PoseDetailScreen(
             detailVM.onEvent(DetailEvent.ChangePose(pose!!))
             if (state.descriptionOpen) detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
             if (state.notesOpen) detailVM.onEvent(DetailEvent.NotesChangeVisibility)
-
         }
         if (pose != null) {
             val scrollState = rememberScrollState()

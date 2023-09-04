@@ -36,6 +36,7 @@ fun PoseOfDayScreen (
                 .align(Alignment.CenterHorizontally),
             color = MaterialTheme.colorScheme.primary
         )
+        Text(dayState.lastDrawDate.toString())
         CardAnimation(dayState, dayVM, navController)
     }
 }

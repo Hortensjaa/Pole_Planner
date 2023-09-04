@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 class DayViewModel (
     val poseDao: PoseDao,
@@ -23,7 +23,7 @@ class DayViewModel (
 
     private val _state = MutableStateFlow(DayState())
     private val _pose = MutableStateFlow<Pose?>(null)
-    private val _lastDraw = MutableStateFlow<LocalDate>(LocalDate.MIN)
+    private val _lastDraw = MutableStateFlow<LocalDateTime>(LocalDateTime.MIN)
     private val _covered = MutableStateFlow(true)
 
     val state = combine(_state, _pose, _lastDraw, _covered) { state, pose, lastDraw, covered ->
@@ -62,6 +62,7 @@ class DayViewModel (
 
             is DayEvent.UncoverPose -> {
                 _state.update { it.copy(covered = false) }
+                _state.update { it.copy(lastDrawDate = LocalDateTime.now()) }
             }
 
             is DayEvent.CoverPose -> {

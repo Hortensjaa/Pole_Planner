@@ -13,7 +13,7 @@ data class Day (
     @PrimaryKey(autoGenerate = true) val dayId: Int = 0,
     val dateTime: LocalDateTime = LocalDateTime.MIN,
     val poseOfDayName: String = "placeholder pose",
-    val covered: Boolean = true
+    var covered: Boolean = true
 ) : Parcelable {
 
     val createdDateFormatted : String

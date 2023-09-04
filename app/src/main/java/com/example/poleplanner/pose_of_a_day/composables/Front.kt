@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.pose_of_a_day.DayViewModel
-import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.ProgressRow
 import com.example.poleplanner.ui.theme.TagBox
 import com.example.poleplanner.ui.theme.Typography
@@ -37,7 +36,7 @@ fun Front(
     poseName: String = "ph pose"
 ) {
     var pose by remember { mutableStateOf<Pose?>(null) }
-    LaunchedEffect(poseName) {
+    LaunchedEffect(Unit) {
         pose = dayVM.getPoseByName(poseName)
     }
     Column(modifier = modifier.padding(20.dp)) {
@@ -79,7 +78,7 @@ fun Front(
             ) {
                 Text(
                     text = pose!!.difficulty.toString(),
-                    color = AlmostWhite,
+                    color = MaterialTheme.colorScheme.background,
                     style = Typography.titleMedium
                 )
                 ProgressRow(

@@ -1,7 +1,6 @@
 package com.example.poleplanner.data_structure
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -30,11 +29,8 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
                 var i = 0
                 for ((pose, tags) in InitialData.poses_with_tags) {
                     ptdao.insertPoseWithTags(pose, tags)
-                    Log.d("sfssf ${i}", pose.toString() + tags.toString())
                     i++
                 }
-
-                Log.d("sfssf", it.poseTagDao.getTagsWithPoses().toString())
             }
         }
     }

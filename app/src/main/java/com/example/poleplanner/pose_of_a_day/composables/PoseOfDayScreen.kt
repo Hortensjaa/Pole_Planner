@@ -4,21 +4,26 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import com.example.poleplanner.pose_of_a_day.DayState
 import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.ui.theme.Typography
 
 
 @Composable
 fun PoseOfDayScreen (
-    dayState: DayState,
+//    dayState: DayState,
     dayVM: DayViewModel,
     navController: NavController
 ) {
@@ -36,7 +41,14 @@ fun PoseOfDayScreen (
                 .align(Alignment.CenterHorizontally),
             color = MaterialTheme.colorScheme.primary
         )
-        Text(dayState.lastDrawDate.toString())
-        CardAnimation(dayState, dayVM, navController)
+        var bool by remember { mutableStateOf(false) }
+        Button(onClick = { bool = !bool }) {
+            LaunchedEffect(bool) {
+                dayVM.getNewPose()
+            }
+            Text("wylosuj figure dnia")
+        }
+//        Text(dayState.lastDrawDate.toString())
+//        CardAnimation(dayVM, navController)
     }
 }

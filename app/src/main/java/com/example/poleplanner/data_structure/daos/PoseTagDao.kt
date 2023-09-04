@@ -7,13 +7,14 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.data_structure.models.Pose
-import com.example.poleplanner.data_structure.references.PoseTagCrossRef
-import com.example.poleplanner.data_structure.references.PoseWithTags
 import com.example.poleplanner.data_structure.models.Progress
 import com.example.poleplanner.data_structure.models.Tag
+import com.example.poleplanner.data_structure.references.PoseTagCrossRef
+import com.example.poleplanner.data_structure.references.PoseWithTags
 import com.example.poleplanner.data_structure.references.TagWithPoses
 import kotlinx.coroutines.flow.Flow
 
+// todo: tu trzeba posprzątać XD
 @Dao
 interface PoseTagDao {
 

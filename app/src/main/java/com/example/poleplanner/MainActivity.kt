@@ -47,7 +47,10 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return DayViewModel(database.poseDao, database.poseTagDao) as T
+                    return DayViewModel(
+                        database.poseDao,
+                        database.poseTagDao,
+                        database.dayDao) as T
                 }
             }
         }
@@ -61,14 +64,14 @@ class MainActivity : ComponentActivity() {
                 NavDrawer(poseVM, navController) {
                     val posesState by poseVM.state.collectAsState()
                     val detailState by detailVM.state.collectAsState()
-                    val dayState by dayVM.state.collectAsState()
+//                    val dayState by dayVM.state.collectAsState()
                     Navigation(
                         navController = navController,
                         posesState = posesState,
                         poseVM = poseVM,
                         detailState = detailState,
                         detailVM = detailVM,
-                        dayState = dayState,
+//                        dayState = dayState,
                         dayVM = dayVM
                     )
                 }

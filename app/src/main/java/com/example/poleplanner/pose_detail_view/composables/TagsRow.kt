@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.ui.theme.TagBox
 
 @Composable

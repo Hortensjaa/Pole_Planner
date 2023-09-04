@@ -1,4 +1,4 @@
-package com.example.poleplanner.data_structure
+package com.example.poleplanner.data_structure.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

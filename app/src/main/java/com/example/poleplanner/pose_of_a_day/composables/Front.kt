@@ -22,8 +22,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.ui.theme.AlmostWhite
 import com.example.poleplanner.ui.theme.ProgressRow

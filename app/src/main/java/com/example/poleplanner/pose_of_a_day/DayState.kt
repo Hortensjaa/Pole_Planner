@@ -1,6 +1,6 @@
 package com.example.poleplanner.pose_of_a_day
 
-import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.models.Pose
 import java.time.LocalDateTime
 
 data class DayState (

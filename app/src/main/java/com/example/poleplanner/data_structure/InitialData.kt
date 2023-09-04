@@ -1,5 +1,9 @@
 package com.example.poleplanner.data_structure
 
+import com.example.poleplanner.data_structure.models.Difficulty
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Tag
+
 object InitialData {
     val stat = Tag(tagName = "Statyczne")
     val dyn = Tag(tagName = "Dynamiczne")

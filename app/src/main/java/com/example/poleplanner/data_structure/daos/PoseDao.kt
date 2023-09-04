@@ -1,4 +1,4 @@
-package com.example.poleplanner.data_structure
+package com.example.poleplanner.data_structure.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -6,6 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.poleplanner.data_structure.models.Difficulty
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Progress
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -50,7 +53,8 @@ interface PoseDao {
             "ORDER BY poseName ASC ")
     fun filterDifficultyAndProgress(
         diff: Difficulty,
-        prog: Progress): Flow<List<Pose>>
+        prog: Progress
+    ): Flow<List<Pose>>
 
     @Query("SELECT * FROM pose " +
             "WHERE saved = :isSaved " +

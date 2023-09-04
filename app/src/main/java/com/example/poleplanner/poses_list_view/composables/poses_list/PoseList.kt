@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.poses_list_view.PosesViewModel
 
 @Composable

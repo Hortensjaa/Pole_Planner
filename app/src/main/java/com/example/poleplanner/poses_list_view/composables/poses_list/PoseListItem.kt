@@ -29,8 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.PosesViewModel

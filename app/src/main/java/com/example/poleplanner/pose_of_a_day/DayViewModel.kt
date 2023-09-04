@@ -2,10 +2,10 @@ package com.example.poleplanner.pose_of_a_day
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.data_structure.PoseDao
-import com.example.poleplanner.data_structure.PoseTagDao
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.daos.PoseDao
+import com.example.poleplanner.data_structure.daos.PoseTagDao
+import com.example.poleplanner.data_structure.models.Tag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

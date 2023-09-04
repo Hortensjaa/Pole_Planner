@@ -6,6 +6,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.poleplanner.data_structure.daos.PoseDao
+import com.example.poleplanner.data_structure.daos.PoseTagDao
+import com.example.poleplanner.data_structure.daos.TagDao
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Tag
+import com.example.poleplanner.data_structure.references.PoseTagCrossRef
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

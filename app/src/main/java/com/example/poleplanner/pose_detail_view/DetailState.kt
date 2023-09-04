@@ -1,6 +1,6 @@
 package com.example.poleplanner.pose_detail_view
 
-import com.example.poleplanner.data_structure.Pose
+import com.example.poleplanner.data_structure.models.Pose
 
 data class DetailState(
     val pose: Pose = Pose("Placeholder pose"),

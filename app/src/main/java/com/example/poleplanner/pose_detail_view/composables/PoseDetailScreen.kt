@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.data_structure.Pose
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Pose
+import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 import com.example.poleplanner.pose_detail_view.DetailViewModel

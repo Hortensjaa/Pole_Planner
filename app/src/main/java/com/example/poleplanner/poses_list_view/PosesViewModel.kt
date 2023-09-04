@@ -2,11 +2,11 @@ package com.example.poleplanner.poses_list_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.poleplanner.data_structure.Difficulty
-import com.example.poleplanner.data_structure.PoseDao
-import com.example.poleplanner.data_structure.PoseTagDao
-import com.example.poleplanner.data_structure.Progress
-import com.example.poleplanner.data_structure.Tag
+import com.example.poleplanner.data_structure.models.Difficulty
+import com.example.poleplanner.data_structure.daos.PoseDao
+import com.example.poleplanner.data_structure.daos.PoseTagDao
+import com.example.poleplanner.data_structure.models.Progress
+import com.example.poleplanner.data_structure.models.Tag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

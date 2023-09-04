@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.data_structure.Progress
+import com.example.poleplanner.data_structure.models.Progress
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.ui.theme.ProgressActionRow

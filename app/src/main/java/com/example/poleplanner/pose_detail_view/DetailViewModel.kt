@@ -1,11 +1,13 @@
 package com.example.poleplanner.pose_detail_view
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.daos.PoseDao
 import com.example.poleplanner.data_structure.daos.PoseTagDao
+import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,11 +35,6 @@ class DetailViewModel (
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailState())
 
-    suspend fun getPoseByName(name: String): Pose {
-        return withContext(Dispatchers.IO) {
-            poseDao.getByName(name)
-        }
-    }
     suspend fun getTags(poseName: String): List<Tag> {
         return withContext(Dispatchers.IO) {
             PTdao.getTagsForPose(poseName)
@@ -71,8 +68,13 @@ class DetailViewModel (
             }
 
             is DetailEvent.ChangePose -> {
-                viewModelScope.launch {
-                    _state.update { it.copy(pose = event.pose) }
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val pose = poseDao.getByName(event.poseName)
+                        _state.update { it.copy(pose = pose) }
+                    } catch (e: Exception) {
+                        Log.d("change_pose", e.message.toString())
+                    }
                 }
             }
 

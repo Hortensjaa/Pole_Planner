@@ -17,18 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.pose_detail_view.DetailEvent
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.DetailState
+import com.example.poleplanner.pose_detail_view.DetailViewModel
 
 
 @Composable
 fun NotesContent (
-    notes: String = "",
     detailVM: DetailViewModel,
     state: DetailState,
     scrollState: ScrollState
 ) {
-    var updatedNotes by remember { mutableStateOf(notes) }
+    //fixme: zdebugować te usuwające się notatki
+    var updatedNotes by remember { mutableStateOf("") }
+    LaunchedEffect(state.pose) {
+        updatedNotes = state.pose.notes
+    }
     ContentHideButton(
         text = "Notatki",
         action = { detailVM.onEvent(DetailEvent.NotesChangeVisibility) },
@@ -46,14 +49,16 @@ fun NotesContent (
     }
     if (state.notesOpen) {
         if (!state.notesEditing) {
-            Text(
-                text = notes,
-                color = Color.Black,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.White)
-                    .padding(10.dp)
-            )
+            Column {
+                Text(
+                    text = state.pose.notes,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.White)
+                        .padding(10.dp)
+                )
+            }
         } else {
             Column {
                 BasicTextField(

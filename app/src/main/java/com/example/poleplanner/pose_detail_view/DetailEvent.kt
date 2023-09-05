@@ -1,12 +1,11 @@
 package com.example.poleplanner.pose_detail_view
 
-import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Progress
 
 sealed interface DetailEvent {
 
     data class ChangePose(
-        val pose: Pose
+        val poseName: String,
     ): DetailEvent
 
     object ChangeSave: DetailEvent

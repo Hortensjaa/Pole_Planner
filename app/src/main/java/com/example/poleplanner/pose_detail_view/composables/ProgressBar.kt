@@ -11,14 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.models.Progress
-import com.example.poleplanner.pose_detail_view.DetailEvent
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.ui.theme.ProgressActionRow
 
 @Composable
 fun ProgressBar(
     progress: Progress = Progress.DONE,
-    detailVM: DetailViewModel
+    action: (p : Progress) -> Unit
 ) {
     Column (
         verticalArrangement = Arrangement.Center,
@@ -29,7 +27,7 @@ fun ProgressBar(
     ) {
         ProgressActionRow(
             progress = progress,
-            action = { p -> detailVM.onEvent(DetailEvent.SaveProgress(p)) })
+            action = { p -> action(p) })
         Text(
             text = progress.toString(),
             color = MaterialTheme.colorScheme.primary)

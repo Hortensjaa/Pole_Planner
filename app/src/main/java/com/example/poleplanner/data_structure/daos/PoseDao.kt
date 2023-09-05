@@ -15,7 +15,10 @@ import kotlinx.coroutines.flow.Flow
 interface PoseDao {
 
     @Query("SELECT * FROM pose WHERE poseName=:name")
-    fun getByName(name: String): Pose
+    suspend fun getByName(name: String): Pose
+
+    @Query("SELECT * FROM pose WHERE poseName=:name")
+    fun getByNameAsync(name: String): Flow<Pose>
 
     @Query("SELECT saved FROM pose WHERE poseName=:name")
     fun getSaveByName(name: String): Flow<Boolean>

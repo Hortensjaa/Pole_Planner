@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
@@ -32,35 +31,33 @@ fun PoseDetailScreen(
     state: DetailState
 ) {
     if (poseName != null) {
-        var pose by remember { mutableStateOf<Pose?>(null) }
         var poseTags by remember { mutableStateOf<List<Tag>>(emptyList()) }
-        LaunchedEffect(poseName) {
-            pose = detailVM.getPoseByName(poseName)
-            detailVM.onEvent(DetailEvent.ChangePose(pose!!))
+        LaunchedEffect(Unit) {
+            detailVM.onEvent(DetailEvent.ChangePose(poseName))
             if (state.descriptionOpen) detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
             if (state.notesOpen) detailVM.onEvent(DetailEvent.NotesChangeVisibility)
             poseTags = detailVM.getTags(poseName)
         }
-        if (pose != null) {
-            val scrollState = rememberScrollState()
-            Column (
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
-                    .verticalScroll(scrollState)
-            ) {
-                TagsRow(poseTags)
-                NameBar(pose!!.poseName, pose!!.saved) {
-                    detailVM.onEvent(DetailEvent.ChangeSave)
+        val scrollState = rememberScrollState()
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
+                .verticalScroll(scrollState)
+        ) {
+            TagsRow(poseTags)
+            NameBar(state.pose.poseName, state.pose.saved) {
+                detailVM.onEvent(DetailEvent.ChangeSave)
+            }
+                Photo(photoResId = state.pose.photoResId)
+                ProgressBar(state.pose.progress) {
+                    p -> detailVM.onEvent(DetailEvent.SaveProgress(p))
                 }
-                Photo(photoResId = pose!!.photoResId)
-                ProgressBar(pose!!.progress, detailVM)
-                DescriptionContent(pose!!.description, state, scrollState) {
+                DescriptionContent(state.pose.description, state, scrollState) {
                     detailVM.onEvent(DetailEvent.DescriptionChangeVisibility)
                 }
-                NotesContent(pose!!.notes, detailVM, state, scrollState)
-            }
+                NotesContent(detailVM, state, scrollState)
         }
     }
 }

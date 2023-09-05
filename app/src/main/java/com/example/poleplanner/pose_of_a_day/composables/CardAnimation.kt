@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +25,7 @@ import androidx.navigation.NavController
 import com.example.poleplanner.data_structure.models.Day
 import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.pose_of_a_day.DayViewModel
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 // source:
@@ -44,13 +43,12 @@ fun CardAnimation(
         val day = dayVM.getLastDay()
         lastDay = day
         covered = lastDay!!.covered
-        if (lastDay!!.dateTime.minute != LocalDateTime.now().minute) { // fixme: zmienić na dzień
+        if (lastDay!!.date != LocalDate.now()) {
             dayVM.getNewPose()
             lastDay = dayVM.getLastDay()
             covered = lastDay!!.covered
         }
     }
-    Text(text = lastDay.toString())
 
     val rotation by animateFloatAsState(
         targetValue = if (covered) 180f else 0f,

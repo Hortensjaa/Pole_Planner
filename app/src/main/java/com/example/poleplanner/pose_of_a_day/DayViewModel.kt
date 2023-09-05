@@ -11,7 +11,7 @@ import com.example.poleplanner.data_structure.models.Tag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class DayViewModel (
     private val poseDao: PoseDao,
@@ -26,7 +26,7 @@ class DayViewModel (
             val newDay = newPose?.let {
             Day(
                 poseOfDayName = newPose.poseName,
-                dateTime = LocalDateTime.now(),
+                date = LocalDate.now(),
                 covered = true
             )
         }
@@ -38,12 +38,7 @@ class DayViewModel (
 
     suspend fun getLastDay(): Day {
         return withContext(Dispatchers.IO) {
-            val lastDay = dayDao.getLastDay()
-            if (lastDay != null) {
-                lastDay
-            } else {
-                Day()
-            }
+            dayDao.getLastDay() ?: Day()
         }
     }
 
@@ -65,4 +60,6 @@ class DayViewModel (
             PTdao.getTagsForPose(poseName)
         }
     }
+
+
 }

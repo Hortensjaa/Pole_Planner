@@ -64,14 +64,12 @@ class MainActivity : ComponentActivity() {
                 NavDrawer(poseVM, navController) {
                     val posesState by poseVM.state.collectAsState()
                     val detailState by detailVM.state.collectAsState()
-//                    val dayState by dayVM.state.collectAsState()
                     Navigation(
                         navController = navController,
                         posesState = posesState,
                         poseVM = poseVM,
                         detailState = detailState,
                         detailVM = detailVM,
-//                        dayState = dayState,
                         dayVM = dayVM
                     )
                 }

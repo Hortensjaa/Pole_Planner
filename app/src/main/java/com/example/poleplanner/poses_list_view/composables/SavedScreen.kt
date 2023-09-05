@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.composables.filters_sheet.FiltersSheet
 import com.example.poleplanner.poses_list_view.composables.poses_list.PoseList
 
@@ -18,12 +18,12 @@ import com.example.poleplanner.poses_list_view.composables.poses_list.PoseList
 @Composable
 fun SavedScreen(
         state: AllPosesState,
-        viewModel: PosesViewModel,
+        posesOnEvent: (PoseEvent) -> Unit,
         navController: NavController,
 ) {
         FiltersSheet(
                 state = state,
-                viewModel = viewModel,
+                posesOnEvent = posesOnEvent,
                 content =
                 {
                         Column (
@@ -33,8 +33,8 @@ fun SavedScreen(
                                         .padding(horizontal = 10.dp)
                         )
                         {
-                                SearchBar(viewModel, state.searchText)
-                                PoseList(viewModel, navController, state.poses)
+                                SearchBar(posesOnEvent, state.searchText)
+                                PoseList(posesOnEvent, navController, state.posesWithTags)
                         }
                 }
         )

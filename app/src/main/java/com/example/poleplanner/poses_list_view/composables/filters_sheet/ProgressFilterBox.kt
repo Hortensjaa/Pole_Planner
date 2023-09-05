@@ -15,12 +15,11 @@ import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.models.Progress
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
-import com.example.poleplanner.poses_list_view.PosesViewModel
 
 @Composable
 fun ProgressFilterBox (
     state: AllPosesState,
-    viewModel: PosesViewModel
+    posesOnEvent: (PoseEvent) -> Unit,
 ){
     Row(
         modifier = Modifier
@@ -41,8 +40,8 @@ fun ProgressFilterBox (
                 Checkbox(
                     checked = (progress in state.progressFilters),
                     onCheckedChange = {
-                        if (it) viewModel.onEvent(PoseEvent.AddProgressFilter(progress))
-                        else viewModel.onEvent(PoseEvent.DeleteProgressFilter(progress))
+                        if (it) posesOnEvent(PoseEvent.AddProgressFilter(progress))
+                        else posesOnEvent(PoseEvent.DeleteProgressFilter(progress))
                     }
                 )
                 Text(text = progress.toString(), maxLines = 1)

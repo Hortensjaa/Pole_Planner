@@ -23,14 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
-import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.TagBox
 
 // todo: dodawanie tagów do filtra z tego poziomu
 @Composable
 fun TagFiltersRow(
     state: AllPosesState,
-    viewModel: PosesViewModel
+    posesOnEvent: (PoseEvent) -> Unit,
 ) {
     Row (
         verticalAlignment = Alignment.CenterVertically,
@@ -49,7 +48,7 @@ fun TagFiltersRow(
                     tagName ->
                     FilterRowItem(
                         tagName
-                    ) { viewModel.onEvent(PoseEvent.DeleteTagFilter(tagName)) }
+                    ) { posesOnEvent(PoseEvent.DeleteTagFilter(tagName)) }
                 }
             }
             Icon(
@@ -58,7 +57,7 @@ fun TagFiltersRow(
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
                     .align(Alignment.CenterVertically)
-                    .clickable { viewModel.onEvent(PoseEvent.ClearTagFilter) }
+                    .clickable { posesOnEvent(PoseEvent.ClearTagFilter) }
             )
         } else {
             Text(

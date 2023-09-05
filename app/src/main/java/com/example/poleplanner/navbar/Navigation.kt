@@ -4,15 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 import com.example.poleplanner.pose_detail_view.composables.PoseDetailScreen
 import com.example.poleplanner.pose_of_a_day.DayViewModel
 import com.example.poleplanner.pose_of_a_day.composables.PoseOfDayScreen
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.composables.AllScreen
 import com.example.poleplanner.poses_list_view.composables.SavedScreen
+import kotlin.reflect.KFunction1
 
 sealed class Screen(val route: String) {
     object AllPosesScreen : Screen("all_screen")
@@ -25,23 +26,22 @@ sealed class Screen(val route: String) {
 fun Navigation(
     navController: NavHostController,
     posesState: AllPosesState,
-    poseVM: PosesViewModel,
+    posesOnEvent: KFunction1<PoseEvent, Unit>,
     detailState: DetailState,
-    detailVM: DetailViewModel,
-//    dayState: DayState,
+    detailOnEvent: KFunction1<DetailEvent, Unit>,
     dayVM: DayViewModel
 ){
     NavHost(navController = navController, startDestination = Screen.PoseOfDayScreen.route) {
         composable(route = Screen.AllPosesScreen.route) {
-            AllScreen(posesState, poseVM, navController)
+            AllScreen(posesState, posesOnEvent, navController)
         }
         composable(route = Screen.SavedScreen.route) {
-            SavedScreen(posesState, poseVM, navController)
+            SavedScreen(posesState, posesOnEvent, navController)
         }
         composable(route = Screen.DetailScreen.route + "/{poseName}") {
             backStackEntry ->
             val poseName = backStackEntry.arguments?.getString("poseName")
-            PoseDetailScreen(poseName, detailVM, detailState)
+            PoseDetailScreen(poseName, detailOnEvent, detailState)
         }
         composable(route = Screen.PoseOfDayScreen.route) {
             PoseOfDayScreen(dayVM, navController)

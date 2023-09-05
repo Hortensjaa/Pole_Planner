@@ -18,30 +18,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
-import com.example.poleplanner.pose_detail_view.DetailViewModel
 
 
 @Composable
 fun NotesContent (
-    detailVM: DetailViewModel,
+    detailOnEvent: (DetailEvent) -> Unit,
     state: DetailState,
     scrollState: ScrollState
 ) {
     //fixme: zdebugować te usuwające się notatki
     var updatedNotes by remember { mutableStateOf("") }
-    LaunchedEffect(state.pose) {
-        updatedNotes = state.pose.notes
+    LaunchedEffect(state.poseWithTags.pose) {
+        updatedNotes = state.poseWithTags.pose.notes
     }
     ContentHideButton(
         text = "Notatki",
-        action = { detailVM.onEvent(DetailEvent.NotesChangeVisibility) },
+        action = { detailOnEvent(DetailEvent.NotesChangeVisibility) },
         isOpened = state.notesOpen,
         editable = true,
-        editAction = { detailVM.onEvent(DetailEvent.NotesEditChange) },
+        editAction = { detailOnEvent(DetailEvent.NotesEditChange) },
         isEditing = state.notesEditing,
         saveAction = {
-            detailVM.onEvent(DetailEvent.SaveNotes(updatedNotes))
-            detailVM.onEvent(DetailEvent.NotesEditChange)
+            detailOnEvent(DetailEvent.SaveNotes(updatedNotes))
+            detailOnEvent(DetailEvent.NotesEditChange)
         }
     )
     LaunchedEffect(state.notesOpen, updatedNotes, state.notesEditing) {
@@ -51,7 +50,7 @@ fun NotesContent (
         if (!state.notesEditing) {
             Column {
                 Text(
-                    text = state.pose.notes,
+                    text = state.poseWithTags.pose.notes,
                     color = Color.Black,
                     modifier = Modifier
                         .fillMaxWidth()

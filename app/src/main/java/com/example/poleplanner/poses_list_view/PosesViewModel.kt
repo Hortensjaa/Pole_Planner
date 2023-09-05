@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.PoseDao
 import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.data_structure.models.Progress
-import com.example.poleplanner.data_structure.models.Tag
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +15,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.Serializable
 
 class PosesViewModel (
@@ -33,44 +30,43 @@ class PosesViewModel (
     private val _searchText = MutableStateFlow("")
     private val _isSearching = MutableStateFlow(false)
 
-    fun onSearchTextChange(text: String) {
-        _searchText.value = text
-    }
-
     // filtry
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val _posesList = combine(_diffFilters, _tagNamesFilters, _progFilters, _savedOnly) {
+    private val _posesWithTagsList = combine(_diffFilters, _tagNamesFilters, _progFilters, _savedOnly) {
         diffs, tags, prog,  saved ->
         Quadruple(diffs, tags, prog, saved)
-    }.flatMapLatest { 
+    }.flatMapLatest {
         (diffs, tags, prog) ->
         when {
-            _savedOnly.value -> poseDao.filterSaved(tags, tags.size, diffs, prog)
-            else -> poseDao.filterAll(tags, tags.size, diffs, prog)
+            _savedOnly.value ->
+                poseDao.filterPosesWithTagsSaved(tags, tags.size, diffs, prog)
+            else ->
+                poseDao.filterPosesWithTags(tags, tags.size, diffs, prog)
         }
 
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     // wyszukiwarka
-    private val _poses = _searchText
+    private val _poses =
+        _searchText
         .onEach { _isSearching.update { true } }
-        .combine(_posesList) {
+        .combine(_posesWithTagsList) {
                 text, posesSearched ->
             if (text.isBlank()) {
                 posesSearched
             } else {
-                posesSearched.filter { it.matchSearchText(text) }
+                posesSearched.filter { it.pose.matchSearchText(text) }
             }
         }
         .onEach { _isSearching.update { false } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _posesList.value)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _posesWithTagsList.value)
 
     private val _state = MutableStateFlow(AllPosesState())
     val state = myCombine(_state, _diffFilters, _tagNamesFilters, _progFilters, _poses, _searchText, _savedOnly) {
         state, diffFilters, tagNamesFilters, progFilters,  poses, searchText, savedOnly ->
         state.copy(
-            poses = poses,
+            posesWithTags = poses,
             diffFilters = diffFilters,
             tagFilters = tagNamesFilters,
             progressFilters = progFilters,
@@ -78,12 +74,6 @@ class PosesViewModel (
             savedOnly = savedOnly
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
-
-    suspend fun getTags(poseName: String): List<Tag> {
-        return withContext(Dispatchers.IO) {
-            poseDao.getTagsForPose(poseName)
-        }
-    }
 
     fun onEvent(event: PoseEvent) {
         when(event) {
@@ -168,6 +158,12 @@ class PosesViewModel (
                     _tagNamesFilters.value = emptyList()
                     _searchText.value = ""
                     _savedOnly.value = event.savedOnly
+                }
+            }
+
+            is PoseEvent.OnSearchTextChange -> {
+                viewModelScope.launch {
+                    _searchText.value = event.text
                 }
             }
         }

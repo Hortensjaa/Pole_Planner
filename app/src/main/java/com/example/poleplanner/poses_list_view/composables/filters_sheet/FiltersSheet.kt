@@ -16,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PosesViewModel
-import com.example.poleplanner.poses_list_view.composables.filters_sheet.FiltersSheetContent
+import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 
 // todo: zrób coś żeby to nie było takie obrzydliwe
@@ -27,7 +26,7 @@ import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 @Composable
 fun FiltersSheet(
     state: AllPosesState,
-    viewModel: PosesViewModel,
+    posesOnEvent: (PoseEvent) -> Unit,
     content: @Composable () -> Unit
     ) {
     BottomSheetComposeTheme {
@@ -53,7 +52,7 @@ fun FiltersSheet(
                         .fillMaxWidth()
                         .padding(padding.dp)
                     )
-                FiltersSheetContent(state, viewModel)
+                FiltersSheetContent(state, posesOnEvent)
             },
             sheetPeekHeight = (height + 2 * padding).dp,
             sheetShape = RoundedCornerShape(15.dp),

@@ -37,8 +37,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return DetailViewModel(
-                        database.poseDao) as T
+                    return DetailViewModel(database.poseDao) as T
                 }
             }
         }
@@ -67,9 +66,9 @@ class MainActivity : ComponentActivity() {
                     Navigation(
                         navController = navController,
                         posesState = posesState,
-                        poseVM = poseVM,
+                        posesOnEvent = poseVM::onEvent,
                         detailState = detailState,
-                        detailVM = detailVM,
+                        detailOnEvent = detailVM::onEvent,
                         dayVM = dayVM
                     )
                 }

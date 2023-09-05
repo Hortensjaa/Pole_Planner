@@ -15,18 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.poses_list_view.PoseEvent
-import com.example.poleplanner.poses_list_view.PosesViewModel
 
 // source:
 // https://github.com/philipplackner/SearchFieldCompose
 @Composable
 fun SearchBar (
-    viewModel: PosesViewModel,
+    posesOnEvent: (PoseEvent) -> Unit,
     searchText: String = "spin"
 ) {
     OutlinedTextField(
         value = searchText,
-        onValueChange = viewModel::onSearchTextChange,
+        onValueChange = { text -> posesOnEvent(PoseEvent.OnSearchTextChange(text)) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp),
@@ -34,7 +33,7 @@ fun SearchBar (
         leadingIcon = { Icon(Icons.Default.Search, "search") },
         trailingIcon = {
             Icon(Icons.Default.Clear, "delete",
-                modifier = Modifier.clickable { viewModel.onEvent(PoseEvent.ClearSearcher) })
+                modifier = Modifier.clickable { posesOnEvent(PoseEvent.ClearSearcher) })
         },
         label = { Text("wpisz nazwę figury") },
         colors = OutlinedTextFieldDefaults.colors(

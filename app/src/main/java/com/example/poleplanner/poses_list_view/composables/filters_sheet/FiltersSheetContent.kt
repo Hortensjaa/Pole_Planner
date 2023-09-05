@@ -7,21 +7,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PosesViewModel
+import com.example.poleplanner.poses_list_view.PoseEvent
 
 
 @Composable
 fun FiltersSheetContent(
     state: AllPosesState,
-    viewModel: PosesViewModel
+    posesOnEvent: (PoseEvent) -> Unit,
 ) {
     Column(
     modifier = Modifier
         .background(color = MaterialTheme.colorScheme.secondary)
         .padding()
     ) {
-        TagFiltersRow(state, viewModel)
-        DiffFilterBox(state, viewModel)
-        ProgressFilterBox(state, viewModel)
+        TagFiltersRow(state, posesOnEvent)
+        DiffFilterBox(state, posesOnEvent)
+        ProgressFilterBox(state, posesOnEvent)
     }
 }

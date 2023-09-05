@@ -11,6 +11,7 @@ import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Progress
 import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.data_structure.references.PoseTagCrossRef
+import com.example.poleplanner.data_structure.references.PoseWithTags
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,6 +19,14 @@ interface PoseDao {
 
     @Query("SELECT * FROM pose WHERE poseName=:name")
     suspend fun getByName(name: String): Pose
+
+    @Transaction
+    @Query("SELECT * FROM pose p " +
+            "LEFT JOIN PoseTagCrossRef ptc ON p.poseName = ptc.poseName " +
+            "LEFT JOIN tag t ON ptc.tagName = t.tagName " +
+            "WHERE p.poseName = :name")
+    suspend fun getPoseWithTagsByName(name: String): PoseWithTags
+
 
     @Query("SELECT saved FROM pose WHERE poseName=:name")
     fun getSaveByName(name: String): Flow<Boolean>
@@ -85,23 +94,36 @@ interface PoseDao {
             "ORDER BY tagName ASC)")
     fun getTagsForPose(poseName: String): List<Tag>
 
+    // filtrowanie list z tagami
     @Transaction
     @Query("SELECT DISTINCT p.* FROM pose p " +
+            "INNER JOIN PoseTagCrossRef ptc ON p.poseName = ptc.poseName " +
+            "INNER JOIN tag t ON ptc.tagName = t.tagName " +
+            "ORDER BY p.poseName ASC")
+    fun getAllPosesWithTags(): Flow<List<PoseWithTags>>
+
+    @Transaction
+    @Query("SELECT DISTINCT p.* FROM pose p " +
+            "LEFT  JOIN PoseTagCrossRef ptc ON p.poseName = ptc.poseName " +
+            "LEFT  JOIN tag t ON ptc.tagName = t.tagName " +
             "WHERE (" +
             "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
             "   WHERE ptc.poseName = p.poseName " +
             "   AND ptc.tagName IN (:tagNames)) = :tagCount " +
-            "AND difficulty IN (:diffs)" +
-            "AND progress IN (:progress)" +
+            "AND difficulty IN (:diffs) " +
+            "AND progress IN (:progress) " +
             "ORDER BY poseName ASC")
-    fun filterAll(
+    fun filterPosesWithTags(
         tagNames: Collection<String>,
         tagCount: Int,
         diffs: Collection<Difficulty>,
-        progress: Collection<Progress>): Flow<List<Pose>>
+        progress: Collection<Progress>
+    ): Flow<List<PoseWithTags>>
 
     @Transaction
     @Query("SELECT DISTINCT p.* FROM pose p " +
+            "LEFT  JOIN PoseTagCrossRef ptc ON p.poseName = ptc.poseName " +
+            "LEFT  JOIN tag t ON ptc.tagName = t.tagName " +
             "WHERE (" +
             "   SELECT COUNT(*) FROM PoseTagCrossRef ptc " +
             "   WHERE ptc.poseName = p.poseName " +
@@ -110,11 +132,12 @@ interface PoseDao {
             "AND progress IN (:progress) " +
             "AND saved = :savedOnly " +
             "ORDER BY poseName ASC")
-    fun filterSaved(
+    fun filterPosesWithTagsSaved(
         tagNames: Collection<String>,
         tagCount: Int,
         diffs: Collection<Difficulty>,
         progress: Collection<Progress>,
-        savedOnly: Boolean = true): Flow<List<Pose>>
+        savedOnly: Boolean = true
+    ): Flow<List<PoseWithTags>>
 
 }

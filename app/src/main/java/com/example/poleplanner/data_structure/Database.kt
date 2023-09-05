@@ -20,6 +20,15 @@ import kotlinx.coroutines.launch
 class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
+        loadData()
+    }
+
+    override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+        super.onDestructiveMigration(db)
+        loadData()
+    }
+
+    private fun loadData() {
         val database = AppDatabase.getInstance(context)
         database.let {
             GlobalScope.launch {
@@ -37,7 +46,7 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
 
 @Database(
     entities = [Pose::class, Tag::class, PoseTagCrossRef::class, Day::class],
-    version = 1)
+    version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -63,6 +72,7 @@ abstract class AppDatabase : RoomDatabase() {
                 "app_database"
             )
                 .addCallback(AppDatabaseCallback(context))
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }

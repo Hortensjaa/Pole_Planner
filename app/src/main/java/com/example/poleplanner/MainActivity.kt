@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return PosesViewModel(database.poseDao, database.poseTagDao) as T
+                    return PosesViewModel(database.poseDao) as T
                 }
             }
         }
@@ -38,8 +38,7 @@ class MainActivity : ComponentActivity() {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     return DetailViewModel(
-                        database.poseDao,
-                        database.poseTagDao) as T
+                        database.poseDao) as T
                 }
             }
         }
@@ -51,7 +50,6 @@ class MainActivity : ComponentActivity() {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     return DayViewModel(
                         database.poseDao,
-                        database.poseTagDao,
                         database.dayDao) as T
                 }
             }

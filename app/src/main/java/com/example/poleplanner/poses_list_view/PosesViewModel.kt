@@ -2,9 +2,8 @@ package com.example.poleplanner.poses_list_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.data_structure.daos.PoseDao
-import com.example.poleplanner.data_structure.daos.PoseTagDao
+import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.data_structure.models.Progress
 import com.example.poleplanner.data_structure.models.Tag
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +21,7 @@ import kotlinx.coroutines.withContext
 import java.io.Serializable
 
 class PosesViewModel (
-    val poseDao: PoseDao,
-    private val PTdao: PoseTagDao
+    val poseDao: PoseDao
 ) : ViewModel() {
 
     private val _diffFilters = MutableStateFlow<Collection<Difficulty>>(Difficulty.values().toList())
@@ -47,8 +45,8 @@ class PosesViewModel (
     }.flatMapLatest { 
         (diffs, tags, prog) ->
         when {
-            _savedOnly.value -> PTdao.filterSaved(tags, tags.size, diffs, prog)
-            else -> PTdao.filterAll(tags, tags.size, diffs, prog)
+            _savedOnly.value -> poseDao.filterSaved(tags, tags.size, diffs, prog)
+            else -> poseDao.filterAll(tags, tags.size, diffs, prog)
         }
 
         }
@@ -83,7 +81,7 @@ class PosesViewModel (
 
     suspend fun getTags(poseName: String): List<Tag> {
         return withContext(Dispatchers.IO) {
-            PTdao.getTagsForPose(poseName)
+            poseDao.getTagsForPose(poseName)
         }
     }
 

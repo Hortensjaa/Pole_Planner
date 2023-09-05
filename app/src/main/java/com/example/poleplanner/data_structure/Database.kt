@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.poleplanner.data_structure.daos.DayDao
 import com.example.poleplanner.data_structure.daos.PoseDao
-import com.example.poleplanner.data_structure.daos.PoseTagDao
 import com.example.poleplanner.data_structure.daos.TagDao
 import com.example.poleplanner.data_structure.models.Day
 import com.example.poleplanner.data_structure.models.Pose
@@ -32,11 +31,10 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
         val database = AppDatabase.getInstance(context)
         database.let {
             GlobalScope.launch {
-
-                val ptdao = it.poseTagDao
+                val dao = it.poseDao
                 var i = 0
                 for ((pose, tags) in InitialData.poses_with_tags) {
-                    ptdao.insertPoseWithTags(pose, tags)
+                    dao.insertPoseWithTags(pose, tags)
                     i++
                 }
             }
@@ -52,7 +50,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val poseDao: PoseDao
     abstract val tagDao: TagDao
-    abstract val poseTagDao: PoseTagDao
     abstract val dayDao: DayDao
 
     companion object {

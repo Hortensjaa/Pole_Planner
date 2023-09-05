@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.PoseDao
-import com.example.poleplanner.data_structure.daos.PoseTagDao
 import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
 import kotlinx.coroutines.CoroutineScope
@@ -18,8 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailViewModel (
-    private val poseDao: PoseDao,
-    private val PTdao: PoseTagDao
+    private val poseDao: PoseDao
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
@@ -37,7 +35,7 @@ class DetailViewModel (
 
     suspend fun getTags(poseName: String): List<Tag> {
         return withContext(Dispatchers.IO) {
-            PTdao.getTagsForPose(poseName)
+            poseDao.getTagsForPose(poseName)
         }
     }
 

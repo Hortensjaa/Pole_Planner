@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.DayDao
 import com.example.poleplanner.data_structure.daos.PoseDao
-import com.example.poleplanner.data_structure.daos.PoseTagDao
 import com.example.poleplanner.data_structure.models.Day
 import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
@@ -15,7 +14,6 @@ import java.time.LocalDate
 
 class DayViewModel (
     private val poseDao: PoseDao,
-    private val PTdao: PoseTagDao,
     private val dayDao: DayDao
 ) : ViewModel() {
 
@@ -57,7 +55,7 @@ class DayViewModel (
 
     suspend fun getTags(poseName: String): List<Tag> {
         return withContext(Dispatchers.IO) {
-            PTdao.getTagsForPose(poseName)
+            poseDao.getTagsForPose(poseName)
         }
     }
 

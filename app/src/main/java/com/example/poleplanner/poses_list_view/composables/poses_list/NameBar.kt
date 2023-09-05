@@ -11,6 +11,11 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -27,6 +32,12 @@ fun NameBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        var poseSaved by remember {
+            mutableStateOf(saved)
+        }
+        LaunchedEffect(saved) {
+            poseSaved = saved
+        }
         AutoResizedText(
             text = poseName,
             color = MaterialTheme.colorScheme.background,
@@ -35,11 +46,14 @@ fun NameBar(
                 .padding(10.dp)
         )
         Icon(
-            imageVector = if (saved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            imageVector = if (poseSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = "Save pose",
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { action() },
+                .clickable {
+                    action()
+                    poseSaved = !poseSaved
+                },
             tint = MaterialTheme.colorScheme.background,
         )
     }

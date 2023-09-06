@@ -36,7 +36,10 @@ fun DescriptionContent (
         isOpened = state.descriptionOpen
     )
     LaunchedEffect(state.descriptionOpen) {
-        scrollState.animateScrollTo(scrollToPosition.roundToInt())
+        if (state.descriptionOpen)
+            scrollState.animateScrollTo(scrollToPosition.roundToInt())
+        else
+            scrollState.animateScrollTo(0)
     }
     if (state.descriptionOpen) {
         Text(

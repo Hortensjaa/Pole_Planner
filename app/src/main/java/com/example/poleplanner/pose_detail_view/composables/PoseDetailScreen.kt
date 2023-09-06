@@ -25,12 +25,12 @@ fun PoseDetailScreen(
     state: DetailState
 ) {
     if (poseName != null) {
+        val scrollState = rememberScrollState(0)
         LaunchedEffect(Unit) {
             detailOnEvent(DetailEvent.ChangePose(poseName))
             if (state.descriptionOpen) detailOnEvent(DetailEvent.DescriptionChangeVisibility)
             if (state.notesOpen) detailOnEvent(DetailEvent.NotesChangeVisibility)
         }
-        val scrollState = rememberScrollState(0)
         Column (
             modifier = Modifier
                 .fillMaxSize()

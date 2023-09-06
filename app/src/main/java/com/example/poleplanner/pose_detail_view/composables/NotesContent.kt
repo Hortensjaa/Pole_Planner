@@ -44,7 +44,10 @@ fun NotesContent (
         }
     )
     LaunchedEffect(state.notesOpen, updatedNotes, state.notesEditing) {
-        scrollState.animateScrollTo(scrollState.maxValue)
+        if (!state.notesOpen)
+            scrollState.animateScrollTo(0)
+        else
+            scrollState.animateScrollTo(scrollState.maxValue)
     }
     if (state.notesOpen) {
         if (!state.notesEditing) {

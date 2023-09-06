@@ -20,6 +20,9 @@ interface PoseDao {
     @Query("SELECT * FROM pose WHERE poseName=:name")
     suspend fun getByName(name: String): Pose
 
+    @Query("SELECT * FROM tag ORDER BY tagName ASC")
+    fun getAllTags(): Flow<List<Tag>>
+
     @Transaction
     @Query("SELECT * FROM pose p " +
             "LEFT JOIN PoseTagCrossRef ptc ON p.poseName = ptc.poseName " +

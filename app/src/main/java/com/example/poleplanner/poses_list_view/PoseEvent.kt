@@ -26,6 +26,10 @@ sealed interface PoseEvent {
         val tag: String
     ): PoseEvent
 
+    data class ChangeTagFilter(
+        val tag: String
+    ): PoseEvent
+
     data class AddProgressFilter(
         val prog: Progress
     ): PoseEvent

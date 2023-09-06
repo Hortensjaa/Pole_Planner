@@ -20,7 +20,7 @@ fun FiltersSheetContent(
         .background(color = MaterialTheme.colorScheme.secondary)
         .padding()
     ) {
-        TagFiltersRow(state, posesOnEvent)
+        AllTagsBox(state, posesOnEvent)
         DiffFilterBox(state, posesOnEvent)
         ProgressFilterBox(state, posesOnEvent)
     }

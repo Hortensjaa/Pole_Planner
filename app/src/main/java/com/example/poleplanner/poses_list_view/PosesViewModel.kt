@@ -30,6 +30,13 @@ class PosesViewModel (
     private val _searchText = MutableStateFlow("")
     private val _isSearching = MutableStateFlow(false)
 
+    // lista tagów
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val _allTags = combine(_tagNamesFilters) {
+        tags -> tags
+    }.flatMapLatest { poseDao.getAllTags() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
     // filtry
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _posesWithTagsList = combine(_diffFilters, _tagNamesFilters, _progFilters, _savedOnly) {
@@ -42,8 +49,7 @@ class PosesViewModel (
                 poseDao.filterPosesWithTagsSaved(tags, tags.size, diffs, prog)
             else ->
                 poseDao.filterPosesWithTags(tags, tags.size, diffs, prog)
-        }
-
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
@@ -63,15 +69,18 @@ class PosesViewModel (
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _posesWithTagsList.value)
 
     private val _state = MutableStateFlow(AllPosesState())
-    val state = myCombine(_state, _diffFilters, _tagNamesFilters, _progFilters, _poses, _searchText, _savedOnly) {
-        state, diffFilters, tagNamesFilters, progFilters,  poses, searchText, savedOnly ->
+    val state = myCombine(
+        _state, _diffFilters, _tagNamesFilters, _progFilters, _poses, _searchText, _savedOnly, _allTags
+    ) {
+        state, diffFilters, tagNamesFilters, progFilters,  poses, searchText, savedOnly, allTags ->
         state.copy(
             posesWithTags = poses,
             diffFilters = diffFilters,
             tagFilters = tagNamesFilters,
             progressFilters = progFilters,
             searchText = searchText,
-            savedOnly = savedOnly
+            savedOnly = savedOnly,
+            allTags = allTags
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AllPosesState())
 
@@ -118,6 +127,18 @@ class PosesViewModel (
                         _tagNamesFilters.value = _tagNamesFilters.value.toMutableList().apply {
                             remove(event.tag)
                         }
+                    }
+                }
+            }
+
+            is PoseEvent.ChangeTagFilter -> {
+                viewModelScope.launch {
+                    if (event.tag in _tagNamesFilters.value) {
+                        _tagNamesFilters.value = _tagNamesFilters.value.toMutableList().apply {
+                            remove(event.tag)
+                        }
+                    } else {
+                        _tagNamesFilters.value += event.tag
                     }
                 }
             }
@@ -173,7 +194,7 @@ class PosesViewModel (
 // source:
 // https://stackoverflow.com/questions/65356805
 @Suppress("UNCHECKED_CAST")
-private fun <T1, T2, T3, T4, T5, T6, T7, R> myCombine(
+private fun <T1, T2, T3, T4, T5, T6, T7, T8, R> myCombine(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -181,8 +202,9 @@ private fun <T1, T2, T3, T4, T5, T6, T7, R> myCombine(
     flow5: Flow<T5>,
     flow6: Flow<T6>,
     flow7: Flow<T7>,
-    transform: suspend (T1, T2, T3, T4, T5, T6, T7) -> R
-): Flow<R> = combine(flow, flow2, flow3, flow4, flow5, flow6, flow7) { args: Array<*> ->
+    flow8: Flow<T8>,
+    transform: suspend (T1, T2, T3, T4, T5, T6, T7, T8) -> R
+): Flow<R> = combine(flow, flow2, flow3, flow4, flow5, flow6, flow7, flow8) { args: Array<*> ->
     transform(
         args[0] as T1,
         args[1] as T2,
@@ -190,7 +212,8 @@ private fun <T1, T2, T3, T4, T5, T6, T7, R> myCombine(
         args[3] as T4,
         args[4] as T5,
         args[5] as T6,
-        args[6] as T7
+        args[6] as T7,
+        args[7] as T8
     )
 }
 

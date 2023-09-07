@@ -26,7 +26,6 @@ fun NotesContent (
     state: DetailState,
     scrollState: ScrollState
 ) {
-    //fixme: zdebugować te usuwające się notatki
     var updatedNotes by remember { mutableStateOf("") }
     LaunchedEffect(state.poseWithTags.pose) {
         updatedNotes = state.poseWithTags.pose.notes

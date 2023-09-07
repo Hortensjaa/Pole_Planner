@@ -62,10 +62,8 @@ fun AllTagsItem(
             modifier = Modifier
                 .padding(5.dp)
                 .clickable { action() }
-                // ramka
                 .background(color = frame)
                 .padding(2.dp)
-                // wnętrze
                 .background(color = filling)
                 .padding(vertical = 3.dp, horizontal = 5.dp)
         )

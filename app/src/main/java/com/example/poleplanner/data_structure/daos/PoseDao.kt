@@ -117,10 +117,10 @@ interface PoseDao {
             "AND progress IN (:progress) " +
             "ORDER BY poseName ASC")
     fun filterPosesWithTags(
-        tagNames: Collection<String>,
-        tagCount: Int,
-        diffs: Collection<Difficulty>,
-        progress: Collection<Progress>
+        tagNames: Collection<String> = listOf(),
+        tagCount: Int = 0,
+        diffs: Collection<Difficulty> = Difficulty.values().asList(),
+        progress: Collection<Progress> = Progress.values().asList()
     ): Flow<List<PoseWithTags>>
 
     @Transaction
@@ -136,10 +136,10 @@ interface PoseDao {
             "AND saved = :savedOnly " +
             "ORDER BY poseName ASC")
     fun filterPosesWithTagsSaved(
-        tagNames: Collection<String>,
-        tagCount: Int,
-        diffs: Collection<Difficulty>,
-        progress: Collection<Progress>,
+        tagNames: Collection<String> = listOf(),
+        tagCount: Int = 0,
+        diffs: Collection<Difficulty> = Difficulty.values().asList(),
+        progress: Collection<Progress> = Progress.values().asList(),
         savedOnly: Boolean = true
     ): Flow<List<PoseWithTags>>
 

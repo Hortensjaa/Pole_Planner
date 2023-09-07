@@ -13,6 +13,7 @@ import com.example.poleplanner.data_structure.models.Day
 import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
 import com.example.poleplanner.data_structure.references.PoseTagCrossRef
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,7 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
         loadData()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun loadData() {
         val database = AppDatabase.getInstance(context)
         database.let {
@@ -73,4 +75,13 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
         }
     }
+
+    fun getPoseDaoInstance(): PoseDao {
+        return poseDao
+    }
+
+    fun getDayDaoInstance(): DayDao {
+        return dayDao
+    }
+
 }

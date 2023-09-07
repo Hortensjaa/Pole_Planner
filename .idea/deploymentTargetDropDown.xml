@@ -2,36 +2,36 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
+      <entry key="DaysTest">
         <State />
       </entry>
-      <entry key="FiltersBar">
+      <entry key="EditingFieldsTest">
         <State />
       </entry>
-      <entry key="Greeting">
+      <entry key="FilteringTest">
         <State />
       </entry>
-      <entry key="PoseList">
-        <State />
-      </entry>
-      <entry key="PoseListItem">
+      <entry key="TagsTest">
         <State />
       </entry>
       <entry key="app">
         <State>
-          <targetSelectedWithDropDown>
+          <runningDeviceTargetSelectedWithDropDown>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\lilka\.android\avd\Pixel_7_Pro_API_34.avd" />
+                  <value value="C:\Users\lilka\.android\avd\Pixel_3_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-09-05T13:19:24.715217100Z" />
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-09-07T14:26:18.558085400Z" />
         </State>
+      </entry>
+      <entry key="testFilterTags()">
+        <State />
       </entry>
     </value>
   </component>

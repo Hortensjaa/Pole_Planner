@@ -5,20 +5,11 @@
       <entry key="DaysTest">
         <State />
       </entry>
-      <entry key="EditingFieldsTest">
-        <State />
-      </entry>
-      <entry key="FilteringTest">
-        <State />
-      </entry>
-      <entry key="TagsTest">
-        <State />
-      </entry>
-      <entry key="app">
+      <entry key="DetailViewModelTest">
         <State>
-          <runningDeviceTargetSelectedWithDropDown>
+          <targetSelectedWithDropDown>
             <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
+              <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
@@ -26,11 +17,20 @@
                 </Key>
               </deviceKey>
             </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-09-07T14:26:18.558085400Z" />
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-09-08T12:40:30.147805400Z" />
         </State>
       </entry>
-      <entry key="testFilterTags()">
+      <entry key="EditingFieldsTest">
+        <State />
+      </entry>
+      <entry key="TagsTest">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
+      <entry key="changeSaveEvent_updatesStateAndCallsDao()">
         <State />
       </entry>
     </value>

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.PoseDao
 import com.example.poleplanner.data_structure.references.PoseWithTags
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel (
-    private val poseDao: PoseDao
+    private val poseDao: PoseDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
@@ -35,7 +37,7 @@ class DetailViewModel (
         when(event) {
 
             is DetailEvent.ChangeSave -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (_state.value.poseWithTags.pose.saved) {
                         poseDao.unsavePose(_state.value.poseWithTags.pose)
                     } else {
@@ -45,20 +47,27 @@ class DetailViewModel (
             }
 
             is DetailEvent.DescriptionChangeVisibility -> {
-                _state.update { it.copy(descriptionOpen = !it.descriptionOpen) }
+                viewModelScope.launch(dispatcher) {
+                    _state.update { it.copy(descriptionOpen = !it.descriptionOpen) }
+                }
+
             }
 
             is DetailEvent.NotesChangeVisibility -> {
-                _state.update { it.copy(notesOpen = !it.notesOpen) }
+                viewModelScope.launch(dispatcher) {
+                    _state.update { it.copy(notesOpen = !it.notesOpen) }
+                }
             }
 
             is DetailEvent.NotesEditChange -> {
-                _state.update { it.copy(notesOpen = true) }
-                _state.update { it.copy(notesEditing = !it.notesEditing) }
+                viewModelScope.launch(dispatcher) {
+                    _state.update { it.copy(notesOpen = true) }
+                    _state.update { it.copy(notesEditing = !it.notesEditing) }
+                }
             }
 
             is DetailEvent.ChangePose -> {
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(dispatcher).launch {
                     try {
                         val poseWithTags = poseDao.getPoseWithTagsByName(event.poseName)
                         _state.update { it.copy(poseWithTags = poseWithTags) }
@@ -69,13 +78,13 @@ class DetailViewModel (
             }
 
             is DetailEvent.SaveNotes -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     poseDao.setNotes(_state.value.poseWithTags.pose, event.notes)
                 }
             }
 
             is DetailEvent.SaveProgress -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     poseDao.setProgress(_state.value.poseWithTags.pose, event.progress)
                 }
             }

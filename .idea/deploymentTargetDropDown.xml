@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DaysTest">
-        <State />
-      </entry>
       <entry key="DetailViewModelTest">
         <State>
           <targetSelectedWithDropDown>
@@ -21,16 +18,32 @@
           <timeTargetWasSelectedWithDropDown value="2023-09-08T12:40:30.147805400Z" />
         </State>
       </entry>
-      <entry key="EditingFieldsTest">
+      <entry key="FilteringTest">
         <State />
       </entry>
-      <entry key="TagsTest">
-        <State />
+      <entry key="PosesViewModelTest">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\lilka\.android\avd\Pixel_7_Pro_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-09-10T13:45:04.957798400Z" />
+        </State>
       </entry>
       <entry key="app">
         <State />
       </entry>
       <entry key="changeSaveEvent_updatesStateAndCallsDao()">
+        <State />
+      </entry>
+      <entry key="tagsFiltersEvents_updatesState()">
         <State />
       </entry>
     </value>

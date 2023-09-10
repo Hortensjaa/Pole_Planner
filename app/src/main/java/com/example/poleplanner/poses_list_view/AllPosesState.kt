@@ -11,7 +11,7 @@ data class AllPosesState(
 
     val diffFilters: Collection<Difficulty> = Difficulty.values().toList(),
     val tagFilters: Collection<String> = emptyList(),
-    val progressFilters: Collection<Progress> = emptyList(),
+    val progressFilters: Collection<Progress> = Progress.values().toList(),
     val searchText: String = "",
 
     val savedOnly: Boolean = false

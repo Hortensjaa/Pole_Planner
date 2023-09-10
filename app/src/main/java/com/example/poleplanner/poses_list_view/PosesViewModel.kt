@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.PoseDao
 import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.data_structure.models.Progress
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +20,8 @@ import kotlinx.coroutines.launch
 import java.io.Serializable
 
 class PosesViewModel (
-    val poseDao: PoseDao
+    val poseDao: PoseDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _diffFilters = MutableStateFlow<Collection<Difficulty>>(Difficulty.values().toList())
@@ -88,7 +91,7 @@ class PosesViewModel (
         when(event) {
 
             is PoseEvent.ChangeSave -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.pose.saved) {
                         poseDao.unsavePose(event.pose)
                     } else {
@@ -98,13 +101,13 @@ class PosesViewModel (
             }
 
             is PoseEvent.AddDiffFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     _diffFilters.value += event.diff
                 }
             }
 
             is PoseEvent.DeleteDiffFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.diff in _diffFilters.value) {
                         _diffFilters.value = _diffFilters.value.toMutableList().apply {
                             remove(event.diff)
@@ -114,7 +117,7 @@ class PosesViewModel (
             }
             
             is PoseEvent.AddTagFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.tag !in _tagNamesFilters.value) {
                         _tagNamesFilters.value += event.tag
                     }
@@ -122,7 +125,7 @@ class PosesViewModel (
             }
 
             is PoseEvent.DeleteTagFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.tag in _tagNamesFilters.value) {
                         _tagNamesFilters.value = _tagNamesFilters.value.toMutableList().apply {
                             remove(event.tag)
@@ -131,8 +134,14 @@ class PosesViewModel (
                 }
             }
 
+            is PoseEvent.ClearTagFilter -> {
+                viewModelScope.launch(dispatcher) {
+                    _tagNamesFilters.value = emptyList()
+                }
+            }
+
             is PoseEvent.ChangeTagFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.tag in _tagNamesFilters.value) {
                         _tagNamesFilters.value = _tagNamesFilters.value.toMutableList().apply {
                             remove(event.tag)
@@ -144,7 +153,7 @@ class PosesViewModel (
             }
 
             is PoseEvent.AddProgressFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.prog !in _progFilters.value) {
                         _progFilters.value += event.prog
                     }
@@ -152,7 +161,7 @@ class PosesViewModel (
             }
 
             is PoseEvent.DeleteProgressFilter -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     if (event.prog in _progFilters.value) {
                         _progFilters.value = _progFilters.value.toMutableList().apply {
                             remove(event.prog)
@@ -161,30 +170,25 @@ class PosesViewModel (
                 }
             }
 
-            is PoseEvent.ClearTagFilter -> {
-                viewModelScope.launch {
-                    _tagNamesFilters.value = emptyList()
+            is PoseEvent.OnSearchTextChange -> {
+                viewModelScope.launch(dispatcher) {
+                    _searchText.value = event.text
                 }
             }
 
             is PoseEvent.ClearSearcher -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     _searchText.value = ""
                 }
             }
 
             is PoseEvent.ClearState -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     _diffFilters.value = Difficulty.values().toList()
+                    _progFilters.value = Progress.values().toList()
                     _tagNamesFilters.value = emptyList()
                     _searchText.value = ""
                     _savedOnly.value = event.savedOnly
-                }
-            }
-
-            is PoseEvent.OnSearchTextChange -> {
-                viewModelScope.launch {
-                    _searchText.value = event.text
                 }
             }
         }

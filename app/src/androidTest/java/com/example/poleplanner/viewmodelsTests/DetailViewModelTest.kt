@@ -1,4 +1,4 @@
-package com.example.poleplanner
+package com.example.poleplanner.viewmodelsTests
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.poleplanner.data_structure.daos.PoseDao

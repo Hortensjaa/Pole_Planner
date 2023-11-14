@@ -21,6 +21,9 @@
       <entry key="FilteringTest">
         <State />
       </entry>
+      <entry key="PoseAddingScreen">
+        <State />
+      </entry>
       <entry key="PosesViewModelTest">
         <State>
           <targetSelectedWithDropDown>
@@ -38,10 +41,20 @@
         </State>
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="changeSaveEvent_updatesStateAndCallsDao()">
-        <State />
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\lilka\.android\avd\Pixel_7_Pro_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-09-11T08:50:15.439674100Z" />
+        </State>
       </entry>
       <entry key="tagsFiltersEvents_updatesState()">
         <State />

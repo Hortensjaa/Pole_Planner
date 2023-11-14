@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.poses_list_view.composables.filters_sheet.FiltersSheet
@@ -24,6 +25,7 @@ fun SavedScreen(
         FiltersSheet(
                 state = state,
                 posesOnEvent = posesOnEvent,
+                fabAction = { navController.navigate(Screen.PoseAddingScreen.route) },
                 content =
                 {
                         Column (

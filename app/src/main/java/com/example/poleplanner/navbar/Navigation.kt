@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.poleplanner.pose_adding_view.composables.PoseAddingScreen
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 import com.example.poleplanner.pose_detail_view.composables.PoseDetailScreen
@@ -20,6 +21,7 @@ sealed class Screen(val route: String) {
     object SavedScreen: Screen("saved_screen")
     object DetailScreen: Screen("detail_screen")
     object PoseOfDayScreen: Screen("pose_of_day")
+    object PoseAddingScreen: Screen("add_pose_screen")
 }
 
 @Composable
@@ -45,6 +47,9 @@ fun Navigation(
         }
         composable(route = Screen.PoseOfDayScreen.route) {
             PoseOfDayScreen(dayVM, navController)
+        }
+        composable(route = Screen.PoseAddingScreen.route) {
+            PoseAddingScreen()
         }
     }
 }

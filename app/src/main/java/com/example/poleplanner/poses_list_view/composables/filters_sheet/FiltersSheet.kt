@@ -6,8 +6,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FabPosition
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +24,7 @@ import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 
-// todo: zrób coś żeby to nie było takie obrzydliwe
+
 // source:
 // https://github.com/philipplackner/BottomSheetCompose
 @OptIn(ExperimentalMaterialApi::class)
@@ -27,6 +32,7 @@ import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 fun FiltersSheet(
     state: AllPosesState,
     posesOnEvent: (PoseEvent) -> Unit,
+    fabAction: () -> Unit,
     content: @Composable () -> Unit
     ) {
     BottomSheetComposeTheme {
@@ -56,6 +62,18 @@ fun FiltersSheet(
             },
             sheetPeekHeight = (height + 2 * padding).dp,
             sheetShape = RoundedCornerShape(15.dp),
+            floatingActionButton =
+            {
+                FloatingActionButton(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    onClick = { fabAction() },
+                    modifier = Modifier.padding(bottom = 5.dp)
+                ) {
+                    Icon(Icons.Default.Add, "Add pose")
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End
         ) {
             content()
         }

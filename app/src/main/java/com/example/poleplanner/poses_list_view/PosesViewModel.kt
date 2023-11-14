@@ -37,7 +37,7 @@ class PosesViewModel (
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _allTags = combine(_tagNamesFilters) {
         tags -> tags
-    }.flatMapLatest { poseDao.getAllTags() }
+    }.flatMapLatest { poseDao.getAllTagsFlow() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     // filtry

@@ -54,7 +54,7 @@ class PosesViewModelTest {
         Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
 
-        coEvery { poseDao.getAllTags() } returns fakeTags
+        coEvery { poseDao.getAllTagsFlow() } returns fakeTags
         coEvery { poseDao.filterPosesWithTags(any(), any(), any(), any())
             } returns fakePosesWithTags
         coEvery { poseDao.filterPosesWithTagsSaved(any(), any(), any(), any())

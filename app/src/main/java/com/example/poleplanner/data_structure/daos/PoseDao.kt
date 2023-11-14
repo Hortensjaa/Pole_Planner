@@ -21,7 +21,10 @@ interface PoseDao {
     suspend fun getByName(name: String): Pose
 
     @Query("SELECT * FROM tag ORDER BY tagName ASC")
-    fun getAllTags(): Flow<List<Tag>>
+    fun getAllTagsFlow(): Flow<List<Tag>>
+
+    @Query("SELECT * FROM tag ORDER BY tagName ASC")
+    fun getAllTags(): List<Tag>
 
     @Transaction
     @Query("SELECT * FROM pose p " +

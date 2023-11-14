@@ -1,5 +1,6 @@
 package com.example.poleplanner.data_structure.models
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.poleplanner.R
@@ -15,11 +16,14 @@ data class Pose(
         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +
         "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt " +
         "in culpa qui officia deserunt mollit anim id est laborum.",
-    val photoResId: Int = R.drawable.pd, // future: opcja dodania własnego zdjęcia zamiast rysunku
+    val photoResId: Int = R.drawable.pd,
     val difficulty: Difficulty = Difficulty.BEGINNER,
+    val addedByUser: Boolean = false,
+
     var saved: Boolean = false,
     var progress: Progress = Progress.NOT_YET,
-    var notes: String = ""
+    var notes: String = "",
+    var userPhoto: Uri = Uri.EMPTY
 ) {
     fun matchSearchText(text: String): Boolean {
         val poseWords = poseName.split(" ")

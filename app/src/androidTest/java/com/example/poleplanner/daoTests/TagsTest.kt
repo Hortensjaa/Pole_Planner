@@ -48,7 +48,7 @@ class TagsTest {
             poseDao.insertTag(tag2)
             poseDao.insertTag(tag3)
 
-            val allTags = poseDao.getAllTags().first()
+            val allTags = poseDao.getAllTagsFlow().first()
 
             Assert.assertEquals(3, allTags.size)
             Assert.assertEquals( tag2.tagName, allTags[0].tagName)

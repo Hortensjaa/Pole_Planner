@@ -12,11 +12,15 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun DescriptionField (
+    onValueChange: (String) -> Unit
 ) {
-    var text1 by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     OutlinedTextField(
-        value = text1,
-        onValueChange = { text1 = it },
+        value = text,
+        onValueChange = {
+            text = it
+            onValueChange(it)
+        },
         label = { Text("Opis") },
         minLines = 3,
         maxLines = 10,

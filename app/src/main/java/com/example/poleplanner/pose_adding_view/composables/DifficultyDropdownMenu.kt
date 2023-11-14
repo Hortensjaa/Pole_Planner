@@ -20,7 +20,7 @@ import com.example.poleplanner.data_structure.models.Difficulty
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DifficultyDropdownMenu (
-
+    onValueChange: (Difficulty) -> Unit
 ) {
     val options = Difficulty.values().toList()
     var expanded by remember { mutableStateOf(false) }
@@ -50,6 +50,7 @@ fun DifficultyDropdownMenu (
                     text = { Text(selectionOption.toString()) },
                     onClick = {
                         selectedOptionText = selectionOption
+                        onValueChange(selectionOption)
                         expanded = false
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,

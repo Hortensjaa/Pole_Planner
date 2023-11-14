@@ -23,14 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.R
 
-@Preview
+
 @Composable
 fun ImageBox (
-
+    onValueChange: (Uri) -> Unit
 ) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -43,6 +42,7 @@ fun ImageBox (
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
+        uri?.let { onValueChange(it) }
     }
     Column(
         modifier = Modifier
@@ -76,7 +76,7 @@ fun ImageBox (
                             .clickable { launcher.launch("image/*") }
                     )
                 }
-                Text("asjkasjkasjk")
+                Text("ładowanie obrazu nie powiodło się")
             }
         }
     }

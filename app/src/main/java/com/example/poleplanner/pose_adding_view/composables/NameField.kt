@@ -6,20 +6,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun NameField (
-//    state: PoseAddingState,
-//    onEvent: PoseAddingEvent
+    onValueChange: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     OutlinedTextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = {
+            text = it
+            onValueChange(it)
+        },
         label = { Text("Nazwa") },
         modifier = Modifier
             .padding(vertical = 10.dp)

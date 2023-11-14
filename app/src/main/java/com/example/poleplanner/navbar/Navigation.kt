@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.poleplanner.pose_adding_view.PoseAddingEvent
 import com.example.poleplanner.pose_adding_view.composables.PoseAddingScreen
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
@@ -31,6 +32,7 @@ fun Navigation(
     posesOnEvent: KFunction1<PoseEvent, Unit>,
     detailState: DetailState,
     detailOnEvent: KFunction1<DetailEvent, Unit>,
+    addingOnEvent: KFunction1<PoseAddingEvent, Unit>,
     dayVM: DayViewModel
 ){
     NavHost(navController = navController, startDestination = Screen.PoseOfDayScreen.route) {
@@ -49,7 +51,7 @@ fun Navigation(
             PoseOfDayScreen(dayVM, navController)
         }
         composable(route = Screen.PoseAddingScreen.route) {
-            PoseAddingScreen()
+            PoseAddingScreen(addingOnEvent, navController)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.poleplanner.pose_adding_view.composables
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,17 +10,35 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.poleplanner.data_structure.models.Difficulty
+import com.example.poleplanner.navbar.Screen
+import com.example.poleplanner.pose_adding_view.PoseAddingEvent
 
 
+// todo:
+// przesuwanie scrolla
+// odfocusowywanie przy kliknieciu poza obszar
+// opcja usuwania figur dodanych przez użytkownika
+// rozwiązać sprawę tagów
 @Composable
 fun PoseAddingScreen(
-//    state: PoseAddingState,
-//    onEvent: PoseAddingEvent
+    addingOnEvent: (PoseAddingEvent) -> Unit,
+    navController: NavController
 ) {
+    var name by remember { mutableStateOf("") }
+    var difficulty by remember { mutableStateOf(Difficulty.BEGINNER) }
+    var description by remember { mutableStateOf("") }
+    var photo by remember { mutableStateOf(Uri.EMPTY) }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -36,15 +55,15 @@ fun PoseAddingScreen(
                 .fillMaxWidth()
                 .padding(vertical = 10.dp)
         )
-        NameField(
-//            state,
-//            onEvent
-        )
-        ImageBox()
-        DifficultyDropdownMenu()
+        NameField(onValueChange = { newName -> name = newName })
+        ImageBox(onValueChange = { newPhoto -> photo = newPhoto })
+        DifficultyDropdownMenu(onValueChange = { newDiff -> difficulty = newDiff })
         TagsCheckboxes()
-        DescriptionField()
-        Button(onClick = { }) {
+        DescriptionField(onValueChange = { newDesc -> description = newDesc })
+        Button(onClick = {
+            addingOnEvent(PoseAddingEvent.SavePose(name, description, difficulty, photo))
+            navController.navigate("${Screen.DetailScreen.route}/${name}")
+        }) {
             Text("Zapisz")
         }
     }

@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
+
+// todo:
+// opcja usuwania i edytowania figur dodanych przez użytkownika
+// wyswietlanie zdjec
 @Composable
 fun PoseDetailScreen(
     poseName: String?,

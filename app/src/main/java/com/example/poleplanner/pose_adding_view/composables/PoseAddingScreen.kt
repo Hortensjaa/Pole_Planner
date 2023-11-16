@@ -29,7 +29,6 @@ import java.util.Locale
 
 
 // todo:
-// opcja usuwania figur dodanych przez użytkownika
 // rozwiązać sprawę tagów
 @Composable
 fun PoseAddingScreen(
@@ -72,9 +71,11 @@ fun PoseAddingScreen(
         DifficultyDropdownMenu(onValueChange = { newDiff -> difficulty = newDiff })
         TagsCheckboxes()
         DescriptionField(onValueChange = { newDesc -> description = newDesc })
-        Button(onClick = {
-            addingOnEvent(PoseAddingEvent.SavePose(name, description, difficulty, photo))
-            navController.navigate("${Screen.DetailScreen.route}/${name}")
+        Button(
+            enabled = (name != ""),
+            onClick = {
+                addingOnEvent(PoseAddingEvent.SavePose(name, description, difficulty, photo))
+                navController.navigate("${Screen.DetailScreen.route}/${name}")
         }) {
             Text("Zapisz")
         }

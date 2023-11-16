@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.poleplanner.navbar.MenuItemsList
+import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.poses_list_view.PosesViewModel
 import com.example.poleplanner.ui.theme.NavigationDrawerComposeTheme
 import kotlinx.coroutines.launch
@@ -22,6 +24,7 @@ fun NavDrawer(
     NavigationDrawerComposeTheme {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
+        val curScreen = navController.currentBackStackEntryAsState().value?.destination?.route
 
         Scaffold(
             scaffoldState = scaffoldState,
@@ -32,7 +35,11 @@ fun NavDrawer(
                             scaffoldState.drawerState.open()
                         }
                     },
-                    backAction = { navController.popBackStack() }
+                    backAction = {
+                        if (Screen.DetailScreen.route in curScreen.toString()) {
+                            navController.navigate(Screen.AllPosesScreen.route)
+                        } else navController.popBackStack()
+                    }
                 )
             },
             drawerGesturesEnabled = scaffoldState.drawerState.isOpen,

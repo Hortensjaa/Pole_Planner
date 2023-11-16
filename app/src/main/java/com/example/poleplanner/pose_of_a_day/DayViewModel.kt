@@ -17,7 +17,7 @@ class DayViewModel (
     private val dayDao: DayDao
 ) : ViewModel() {
 
-
+    // fixme: zamknąć to w onEvent
     suspend fun getNewPose() {
         return withContext(Dispatchers.IO) {
             val newPose = poseDao.getRandomPose()

@@ -41,6 +41,7 @@ class PosesViewModelTest {
         PoseWithTags(Pose("pose1"), listOf(Tag("tag1"), Tag("tag2"))),
         PoseWithTags(Pose("pose2"), listOf(Tag("tag2"))),
         PoseWithTags(Pose("pose3", saved = true), listOf(Tag("tag2"))),
+        PoseWithTags(Pose("pose4", saved = true), listOf(Tag())),
     ))
 
     @MockK
@@ -159,7 +160,6 @@ class PosesViewModelTest {
         }
 
         viewModel.onEvent(PoseEvent.AddTagFilter(tag1.tagName))
-        viewModel.onEvent(PoseEvent.AddTagFilter(tag2.tagName))
         viewModel.onEvent(PoseEvent.AddTagFilter(tag2.tagName))
         advanceUntilIdle()
 

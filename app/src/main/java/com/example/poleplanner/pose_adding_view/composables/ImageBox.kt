@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,11 +71,9 @@ fun ImageBox (
                     Image(bitmap = btm.asImageBitmap(),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(400.dp)
                             .clickable { launcher.launch("image/*") }
                     )
                 }
-                Text("ładowanie obrazu nie powiodło się")
             }
         }
     }

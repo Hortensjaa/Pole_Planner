@@ -22,7 +22,7 @@ import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
 
-// todo: opcja usuwania i edytowania figur dodanych przez użytkownika
+// todo: pokazywanie gdzieś poziomu trudności (i edytowanie go)
 // todo: wyswietlanie zdjec
 @Composable
 fun PoseDetailScreen(
@@ -60,9 +60,12 @@ fun PoseDetailScreen(
             ProgressBar(state.poseWithTags.pose.progress) {
                 p -> detailOnEvent(DetailEvent.SaveProgress(p))
             }
-            DescriptionContent(state.poseWithTags.pose.description, state, scrollState) {
-                detailOnEvent(DetailEvent.DescriptionChangeVisibility)
-            }
+            DescriptionContent(
+                detailOnEvent,
+                state.poseWithTags.pose.addedByUser,
+                state,
+                scrollState
+            )
             NotesContent(detailOnEvent, state, scrollState)
         }
     } else {

@@ -17,6 +17,10 @@ sealed interface DetailEvent {
     ): DetailEvent
 
     object DescriptionChangeVisibility : DetailEvent
+    object DescriptionEditChange : DetailEvent
+    data class SaveDescription(
+        val description: String
+    ): DetailEvent
 
     data class SaveProgress(
         val progress: Progress

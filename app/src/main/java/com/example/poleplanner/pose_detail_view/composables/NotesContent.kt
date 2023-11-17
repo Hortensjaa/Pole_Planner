@@ -30,6 +30,7 @@ fun NotesContent (
     LaunchedEffect(state.poseWithTags.pose) {
         updatedNotes = state.poseWithTags.pose.notes
     }
+
     ContentHideButton(
         text = "Notatki",
         action = { detailOnEvent(DetailEvent.NotesChangeVisibility) },

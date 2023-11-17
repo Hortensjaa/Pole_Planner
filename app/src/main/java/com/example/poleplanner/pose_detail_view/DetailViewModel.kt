@@ -59,13 +59,6 @@ class DetailViewModel (
                 }
             }
 
-            is DetailEvent.NotesEditChange -> {
-                viewModelScope.launch(dispatcher) {
-                    _state.update { it.copy(notesOpen = true) }
-                    _state.update { it.copy(notesEditing = !it.notesEditing) }
-                }
-            }
-
             is DetailEvent.ChangePose -> {
                 CoroutineScope(dispatcher).launch {
                     try {
@@ -80,6 +73,25 @@ class DetailViewModel (
                             Log.d("no_pose_found", e.message.toString())
                         }
                     }
+                }
+            }
+
+            DetailEvent.DescriptionEditChange ->
+                viewModelScope.launch(dispatcher) {
+                    _state.update { it.copy(descriptionOpen = true) }
+                    _state.update { it.copy(descriptionEditing = !it.descriptionEditing) }
+            }
+
+            is DetailEvent.NotesEditChange -> {
+                viewModelScope.launch(dispatcher) {
+                    _state.update { it.copy(notesOpen = true) }
+                    _state.update { it.copy(notesEditing = !it.notesEditing) }
+                }
+            }
+
+            is DetailEvent.SaveDescription -> {
+                viewModelScope.launch(dispatcher) {
+                    poseDao.setDescription(_state.value.poseWithTags.pose, event.description)
                 }
             }
 

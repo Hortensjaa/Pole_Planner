@@ -23,7 +23,7 @@ data class Pose(
     var saved: Boolean = false,
     var progress: Progress = Progress.NOT_YET,
     var notes: String = "",
-    var userPhoto: Uri = Uri.EMPTY
+    var userPhoto: Uri = Uri.EMPTY // future: opcja dodawania kilku zdjęć
 ) {
     fun matchSearchText(text: String): Boolean {
         val poseWords = poseName.split(" ")

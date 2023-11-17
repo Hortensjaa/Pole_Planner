@@ -20,9 +20,8 @@ import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
 
-// todo:
-// opcja usuwania i edytowania figur dodanych przez użytkownika
-// wyswietlanie zdjec
+// todo: opcja usuwania i edytowania figur dodanych przez użytkownika
+// todo: wyswietlanie zdjec
 @Composable
 fun PoseDetailScreen(
     poseName: String?,

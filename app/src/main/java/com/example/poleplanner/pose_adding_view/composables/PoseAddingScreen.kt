@@ -28,8 +28,7 @@ import com.example.poleplanner.pose_adding_view.PoseAddingEvent
 import java.util.Locale
 
 
-// todo:
-// rozwiązać sprawę tagów
+// todo: rozwiązać sprawę tagów
 @Composable
 fun PoseAddingScreen(
     addingOnEvent: (PoseAddingEvent) -> Unit,

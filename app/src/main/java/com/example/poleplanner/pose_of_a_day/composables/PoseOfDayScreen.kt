@@ -36,8 +36,6 @@ fun PoseOfDayScreen (
             color = MaterialTheme.colorScheme.primary
         )
         CardAnimation(dayVM, navController)
-        Button(onClick = { /*TODO*/ }) {
-            
-        }
+        Button(onClick = {  }) {}
     }
 }

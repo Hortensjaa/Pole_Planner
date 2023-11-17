@@ -38,8 +38,7 @@ fun DifficultyDropdownMenu (
             value = selectedOptionText.toString(),
             onValueChange = {},
             label = { Text("Trudność") },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
         )
         ExposedDropdownMenu(
             expanded = expanded,

@@ -22,7 +22,7 @@ import com.example.poleplanner.ui.theme.Typography
 @Preview
 @Composable
 fun NameBar (
-    poseName: String = "Pose placeholder",
+    poseName: String = "Placeholder",
     saved: Boolean = false,
     action: () -> Unit = {}
 ) {

@@ -73,7 +73,6 @@ class DetailViewModel (
                         _state.update { it.copy(poseWithTags = poseWithTags) }
                     } catch (e: Exception) {
                         Log.d("pose_with_no_tags", e.message.toString())
-                    } finally {
                         try {
                             val pose = poseDao.getByName(event.poseName)
                             _state.update { it.copy(poseWithTags = PoseWithTags(pose, listOf())) }

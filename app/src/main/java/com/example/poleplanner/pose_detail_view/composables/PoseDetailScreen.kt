@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
@@ -26,7 +28,8 @@ import com.example.poleplanner.pose_detail_view.DetailState
 fun PoseDetailScreen(
     poseName: String?,
     detailOnEvent: (DetailEvent) -> Unit,
-    state: DetailState
+    state: DetailState,
+    navController: NavController,
 ) {
     if (poseName != null) {
         val scrollState = rememberScrollState(0)
@@ -43,9 +46,16 @@ fun PoseDetailScreen(
                 .verticalScroll(scrollState)
         ) {
             TagsRow(state.poseWithTags.tags)
-            NameBar(state.poseWithTags.pose.poseName, state.poseWithTags.pose.saved) {
-                detailOnEvent(DetailEvent.ChangeSave)
-            }
+            NameBar(
+                state.poseWithTags.pose.poseName,
+                state.poseWithTags.pose.saved,
+                state.poseWithTags.pose.addedByUser,
+                favAction = { detailOnEvent(DetailEvent.ChangeSave) },
+                deleteAction = {
+                    detailOnEvent(DetailEvent.DeletePose)
+                    navController.navigate(Screen.AllPosesScreen.route)
+                }
+            )
             Photo(photoResId = state.poseWithTags.pose.photoResId)
             ProgressBar(state.poseWithTags.pose.progress) {
                 p -> detailOnEvent(DetailEvent.SaveProgress(p))

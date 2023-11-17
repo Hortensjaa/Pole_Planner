@@ -94,6 +94,12 @@ class DetailViewModel (
                     poseDao.setProgress(_state.value.poseWithTags.pose, event.progress)
                 }
             }
+
+            DetailEvent.DeletePose -> {
+                viewModelScope.launch(dispatcher) {
+                    poseDao.deleteByName(_state.value.poseWithTags.pose.poseName)
+                }
+            }
         }
     }
 }

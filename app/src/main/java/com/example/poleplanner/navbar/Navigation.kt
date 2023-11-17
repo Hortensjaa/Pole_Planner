@@ -45,7 +45,7 @@ fun Navigation(
         composable(route = Screen.DetailScreen.route + "/{poseName}") {
             backStackEntry ->
             val poseName = backStackEntry.arguments?.getString("poseName")
-            PoseDetailScreen(poseName, detailOnEvent, detailState)
+            PoseDetailScreen(poseName, detailOnEvent, detailState, navController)
         }
         composable(route = Screen.PoseOfDayScreen.route) {
             PoseOfDayScreen(dayVM, navController)

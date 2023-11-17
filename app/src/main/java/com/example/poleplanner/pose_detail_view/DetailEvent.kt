@@ -22,4 +22,6 @@ sealed interface DetailEvent {
         val progress: Progress
     ): DetailEvent
 
+    object DeletePose : DetailEvent
+
 }

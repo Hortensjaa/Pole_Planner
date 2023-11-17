@@ -20,6 +20,9 @@ interface PoseDao {
     @Query("SELECT * FROM pose WHERE poseName=:name")
     suspend fun getByName(name: String): Pose
 
+    @Query("DELETE FROM pose WHERE poseName=:name")
+    suspend fun deleteByName(name: String)
+
     @Query("SELECT * FROM tag ORDER BY tagName ASC")
     fun getAllTagsFlow(): Flow<List<Tag>>
 
@@ -37,8 +40,10 @@ interface PoseDao {
     @Query("SELECT saved FROM pose WHERE poseName=:name")
     fun getSaveByName(name: String): Flow<Boolean>
 
-    @Query("SELECT * FROM pose ORDER BY RANDOM() LIMIT 1")
-    fun getRandomPose(): Pose?
+    @Query("SELECT * FROM pose " +
+            "WHERE addedByUser = :f " +
+            "ORDER BY RANDOM() LIMIT 1")
+    fun getRandomPose(f: Boolean = false): Pose?
 
     // aktualizacja
     @Update

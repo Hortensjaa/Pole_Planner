@@ -23,9 +23,9 @@ Moduł ten zawiera podfoldery:
 - [**models**](https://github.com/Hortensjaa/Pole_Planner/tree/master/app/src/main/java/com/example/poleplanner/data_structure/models): Definicje struktur danych używanych w bazie.
 - [**references**](https://github.com/Hortensjaa/Pole_Planner/tree/master/app/src/main/java/com/example/poleplanner/data_structure/references): Referencje tworzące relacje między strukturami danych.
 oraz pliki zawierające 
-(konwertery)[https://github.com/Hortensjaa/Pole_Planner/blob/master/app/src/main/java/com/example/poleplanner/data_structure/InitialData.kt], 
-(dane początkowe)[https://github.com/Hortensjaa/Pole_Planner/tree/master/app/src/main/java/com/example/poleplanner/data_structure/InitialData.kt],
-domyślnie znajdujące się w bazie, oraz (implementację samej bazy.)[https://github.com/Hortensjaa/Pole_Planner/blob/master/app/src/main/java/com/example/poleplanner/data_structure/Database.kt]
+[konwertery](https://github.com/Hortensjaa/Pole_Planner/blob/master/app/src/main/java/com/example/poleplanner/data_structure/InitialData.kt), 
+[dane początkowe](https://github.com/Hortensjaa/Pole_Planner/tree/master/app/src/main/java/com/example/poleplanner/data_structure/InitialData.kt),
+domyślnie znajdujące się w bazie, oraz [implementację samej bazy](https://github.com/Hortensjaa/Pole_Planner/blob/master/app/src/main/java/com/example/poleplanner/data_structure/Database.kt).
 
 ### Navbar
 

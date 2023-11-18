@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,13 +33,17 @@ fun PoseDetailScreen(
     state: DetailState,
     navController: NavController,
 ) {
+    var openDeleteDialog = remember { mutableStateOf(false) }
+
     if (poseName != null) {
         val scrollState = rememberScrollState(0)
+
         LaunchedEffect(Unit) {
             detailOnEvent(DetailEvent.ChangePose(poseName))
             if (state.descriptionOpen) detailOnEvent(DetailEvent.DescriptionChangeVisibility)
             if (state.notesOpen) detailOnEvent(DetailEvent.NotesChangeVisibility)
         }
+
         Column (
             modifier = Modifier
                 .fillMaxSize()
@@ -45,26 +51,32 @@ fun PoseDetailScreen(
                 .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
                 .verticalScroll(scrollState)
         ) {
+            if (openDeleteDialog.value) {
+                DeleteDialog(
+                    deleteAction = {
+                        openDeleteDialog.value = false
+                        detailOnEvent(DetailEvent.DeletePose)
+                        navController.navigate(Screen.AllPosesScreen.route)
+                    },
+                    dismissAction = { openDeleteDialog.value = false }
+                )
+            }
             TagsRow(state.poseWithTags.tags)
             NameBar(
                 state.poseWithTags.pose.poseName,
                 state.poseWithTags.pose.saved,
                 state.poseWithTags.pose.addedByUser,
                 favAction = { detailOnEvent(DetailEvent.ChangeSave) },
-                deleteAction = {
-                    detailOnEvent(DetailEvent.DeletePose)
-                    navController.navigate(Screen.AllPosesScreen.route)
-                }
+                deleteAction = { openDeleteDialog.value = true }
             )
-            Photo(photoResId = state.poseWithTags.pose.photoResId)
+            Photo(state.poseWithTags.pose.photoResId)
             ProgressBar(state.poseWithTags.pose.progress) {
                 p -> detailOnEvent(DetailEvent.SaveProgress(p))
             }
             DescriptionContent(
                 detailOnEvent,
                 state.poseWithTags.pose.addedByUser,
-                state,
-                scrollState
+                state, scrollState
             )
             NotesContent(detailOnEvent, state, scrollState)
         }

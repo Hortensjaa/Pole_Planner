@@ -13,3 +13,5 @@ val DarkerPink = Color(0xFF3D282F)
 
 val AlmostWhite = Color(0xFFF5E7EB)
 val Beige = Color(0xFFD19B8A)
+
+val veryLightGrey = Color(0xFFE9E7E7)

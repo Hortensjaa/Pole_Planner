@@ -1,10 +1,8 @@
 package com.example.poleplanner.pose_detail_view.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,8 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.poleplanner.navbar.Screen
@@ -24,8 +20,7 @@ import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
 
-// todo: pokazywanie gdzieś poziomu trudności (i edytowanie go)
-// todo: wyswietlanie zdjec
+// todo: wyswietlanie kilku zdjec i mozliwosc zmiany dodanego przez uzytkownika
 @Composable
 fun PoseDetailScreen(
     poseName: String?,
@@ -33,7 +28,7 @@ fun PoseDetailScreen(
     state: DetailState,
     navController: NavController,
 ) {
-    var openDeleteDialog = remember { mutableStateOf(false) }
+    val openDeleteDialog = remember { mutableStateOf(false) }
 
     if (poseName != null) {
         val scrollState = rememberScrollState(0)
@@ -69,7 +64,11 @@ fun PoseDetailScreen(
                 favAction = { detailOnEvent(DetailEvent.ChangeSave) },
                 deleteAction = { openDeleteDialog.value = true }
             )
-            Photo(state.poseWithTags.pose.photoResId)
+            PhotoBox(
+                state.poseWithTags.pose.difficulty,
+                state.poseWithTags.pose.photoResId,
+                state.poseWithTags.pose.userPhoto
+            )
             ProgressBar(state.poseWithTags.pose.progress) {
                 p -> detailOnEvent(DetailEvent.SaveProgress(p))
             }
@@ -83,16 +82,4 @@ fun PoseDetailScreen(
     } else {
         Text("Nie znaleziono figury")
     }
-}
-
-@Composable
-fun Photo (
-    photoResId: Int
-) {
-    Image(
-        painter = painterResource(id = photoResId),
-        contentDescription = null,
-        modifier = Modifier.fillMaxWidth(),
-        contentScale = ContentScale.Crop
-    )
 }

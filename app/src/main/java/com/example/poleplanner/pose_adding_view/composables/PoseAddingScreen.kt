@@ -75,7 +75,7 @@ fun PoseAddingScreen(
             onClick = {
                 addingOnEvent(PoseAddingEvent.SavePose(name, description, difficulty, photo))
                 navController.navigate("${Screen.DetailScreen.route}/${name}")
-        }) {
+            }) {
             Text("Zapisz")
         }
     }

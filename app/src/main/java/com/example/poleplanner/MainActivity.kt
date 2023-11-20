@@ -1,5 +1,9 @@
 package com.example.poleplanner
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +24,30 @@ import com.example.poleplanner.ui.theme.PolePlannerTheme
 
 
 class MainActivity : ComponentActivity() {
+
+//    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            val data: Intent? = result.data
+//            val selectedUri: Uri = data?.data ?: return@registerForActivityResult
+//            val takeFlags = data.flags.and(
+//                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+//            takeFlags.let {
+//                contentResolver.takePersistableUriPermission(selectedUri, it)
+//            }
+//        }
+//    }
+
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("WrongConstant")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            val selectedUri: Uri = data?.data ?: return
+            val takeFlags = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            contentResolver.takePersistableUriPermission(selectedUri, takeFlags)
+        }
+    }
+
     private val database by lazy {
         AppDatabase.getInstance(this)
     }

@@ -37,10 +37,8 @@ fun PhotoBox(
 )  {
     Box {
         if (photoUri == Uri.EMPTY) {
-            Log.d("dskkldssd", "photo resId")
             Photo(photoResId = photoResId)
         } else {
-            Log.d("dskkldssd", "photo uri")
             Photo(photoUri = photoUri)
         }
         Text(
@@ -50,7 +48,7 @@ fun PhotoBox(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(5.dp)
-                .alpha(0.85f)
+                .alpha(0.8f)
                 .background(color = veryLightGrey)
                 .padding(5.dp)
                 .align(Alignment.BottomEnd)
@@ -72,8 +70,19 @@ fun Photo (
             contentScale = ContentScale.Crop
         )
     } else {
-        Log.d("dskkldssd", "uri 2")
         val context = LocalContext.current
+        try {
+            if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images
+                    .Media.getBitmap(context.contentResolver, photoUri)
+                } else {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver, photoUri)
+                    ImageDecoder.decodeBitmap(source)
+                }
+        } catch (e: Exception) {
+            e.message?.let { Log.d("Photo", it) }
+        }
 
         val bitmap: Bitmap? =
             if (Build.VERSION.SDK_INT < 28) {
@@ -88,6 +97,13 @@ fun Photo (
         if (bitmap != null) {
             Image(
                 bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Image(
+                painter = painterResource(id = photoResId),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop

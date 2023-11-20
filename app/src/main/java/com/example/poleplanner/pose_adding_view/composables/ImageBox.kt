@@ -43,6 +43,7 @@ fun ImageBox (
         imageUri = uri
         uri?.let { onValueChange(it) }
     }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,7 +55,15 @@ fun ImageBox (
                 contentDescription = null,
                 modifier = Modifier
                     .size(400.dp)
-                    .clickable { launcher.launch("image/*") }
+                    .clickable { launcher.launch("image/*")
+//                        if (launcher != null) {
+//                            Log.d("snsakdsnkj", "nie ma zdjecia")
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+//                                type = "image/*"
+//                            }
+//                            launcher.launch(intent)
+//                        }
+                    }
             )
         } else {
             imageUri?.let {
@@ -71,7 +80,15 @@ fun ImageBox (
                     Image(bitmap = btm.asImageBitmap(),
                         contentDescription = null,
                         modifier = Modifier
-                            .clickable { launcher.launch("image/*") }
+                            .clickable { launcher.launch("image/*")
+//                                if (launcher != null) {
+//                                    Log.d("snsakdsnkj", "jest zdjecie")
+//                                    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+//                                        type = "image/*"
+//                                }
+//                                launcher.launch(intent)
+//                            }
+                }
                     )
                 }
             }

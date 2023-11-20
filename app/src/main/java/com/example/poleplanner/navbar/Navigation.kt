@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.poleplanner.pose_adding_view.PoseAddingEvent
+import com.example.poleplanner.pose_adding_view.composables.PermissionsScreen
 import com.example.poleplanner.pose_adding_view.composables.PoseAddingScreen
 import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
@@ -23,6 +24,7 @@ sealed class Screen(val route: String) {
     object DetailScreen: Screen("detail_screen")
     object PoseOfDayScreen: Screen("pose_of_day")
     object PoseAddingScreen: Screen("add_pose_screen")
+    object PermissionsScreen: Screen("permissions")
 }
 
 @Composable
@@ -49,6 +51,9 @@ fun Navigation(
         }
         composable(route = Screen.PoseOfDayScreen.route) {
             PoseOfDayScreen(dayVM, navController)
+        }
+        composable(route = Screen.PermissionsScreen.route) {
+            PermissionsScreen(navController)
         }
         composable(route = Screen.PoseAddingScreen.route) {
             PoseAddingScreen(addingOnEvent, navController)

@@ -2,6 +2,7 @@ package com.example.poleplanner.navbar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.SportsGymnastics
@@ -37,6 +38,12 @@ data class MenuItemsList(
             contentDescription = "Codziennie nowa figurka",
             icon = Icons.Default.SportsGymnastics,
             onClick = { navController.navigate(Screen.PoseOfDayScreen.route) }
+        ),
+        MenuItem(
+            title = "Kolekcje",
+            contentDescription = "Grupuj swoje ulubione figury w kolekcje i zapisuj tworzone układy",
+            icon = Icons.Default.CollectionsBookmark,
+            onClick = {}
         ),
         MenuItem(
             title = "Plan treningów",

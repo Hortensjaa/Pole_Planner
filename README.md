@@ -83,7 +83,7 @@ Testy te sprawdzają poprawność działania interfejsów komunikacji z bazą da
 Dane są mockowane w celu sprawdzenia poprawności logiki biznesowej oraz interakcji między warstwą prezentacji a warstwą danych.
 
 
-## InstrukcjeI instalacji
+## Instrukcje instalacji
 
 Aby zainstalować aplikację:
 

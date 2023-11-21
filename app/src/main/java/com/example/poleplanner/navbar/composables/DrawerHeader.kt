@@ -18,6 +18,6 @@ fun DrawerHeader() {
             .padding(vertical = 20.dp, horizontal = 20.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Your pole planner", fontSize = 30.sp)
+        Text(text = "Pole planner", fontSize = 30.sp)
     }
 }

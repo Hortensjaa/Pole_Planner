@@ -83,10 +83,21 @@ Testy te sprawdzają poprawność działania interfejsów komunikacji z bazą da
 Dane są mockowane w celu sprawdzenia poprawności logiki biznesowej oraz interakcji między warstwą prezentacji a warstwą danych.
 
 
-## Instrukcje Instalacji
+## InstrukcjeI instalacji
 
 Aby zainstalować aplikację:
 
 1. Sklonuj repozytorium: `git clone https://github.com/Hortensjaa/Pole_Planner`
 2. Otwórz projekt w Android Studio.
 3. Skompiluj i uruchom aplikację na emulatorze lub fizycznym urządzeniu.
+
+## Plany rozwoju aplikacji
+Na aktualnym etapie projekt jest działającą aplikacją, która zapewnia podstawowe funkcjonalności ujęte w założeniach. 
+Nie mniej jednak mam wiele pomysłów na jej dalsze rozbudowywanie, które planuję zaimplementować w przyszłości (lista aktualizowana na bieżąco, więc część została już zaimplementowana):
+- [x] możliwość dodawania własnych figur, z własnymi zdjęciami
+- [x] losowanie "figury dnia"
+- [ ] opcja dodawania swojego zdjęcia do figury istniejącej w bazie
+- [ ] możliwość grupowania figur w numerowane kolekcje (układy taneczne)
+- [ ] kalendarz do umożliwiający planowanie treningów
+- [ ] wersja aplikacji na system iOS (preferowany przez przytłaczającą większość społeczności pole dance...)
+

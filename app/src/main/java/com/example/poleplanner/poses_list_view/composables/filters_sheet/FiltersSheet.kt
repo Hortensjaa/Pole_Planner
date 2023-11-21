@@ -9,17 +9,16 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.poleplanner.poses_list_view.AllPosesState
 import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
@@ -50,15 +49,15 @@ fun FiltersSheet(
             scaffoldState = scaffoldState,
             sheetContent =
             {
-                Text(
-                    text = "FILTRY",
-                    color = MaterialTheme.colorScheme.primary,
-                    lineHeight = height.sp,
-                    textAlign = TextAlign.Center,
+                Icon(
+                    imageVector = Icons.Default.FilterAlt,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
                         .padding(padding.dp)
-                    )
+                )
                 FiltersSheetContent(state, posesOnEvent)
             },
             sheetPeekHeight = (height + 2 * padding).dp,

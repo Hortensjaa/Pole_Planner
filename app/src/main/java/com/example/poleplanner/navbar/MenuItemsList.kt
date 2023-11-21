@@ -43,13 +43,15 @@ data class MenuItemsList(
             title = "Kolekcje",
             contentDescription = "Grupuj swoje ulubione figury w kolekcje i zapisuj tworzone układy",
             icon = Icons.Default.CollectionsBookmark,
-            onClick = {}
+            onClick = {},
+            disabled = true
         ),
         MenuItem(
             title = "Plan treningów",
             contentDescription = "Zapisuj, co ćwiczyłaś ostatnio i planuj przyszłe treningi",
             icon = Icons.Default.CalendarMonth,
-            onClick = {}
+            onClick = {},
+            disabled = true
         )
     )
 }

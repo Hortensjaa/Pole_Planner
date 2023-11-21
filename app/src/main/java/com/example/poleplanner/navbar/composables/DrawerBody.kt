@@ -1,6 +1,5 @@
 package com.example.poleplanner.navbar.composables
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -29,24 +29,26 @@ fun DrawerBody(
 ) {
     LazyColumn(modifier) {
         items(items) { item ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onItemClick(item)
-                    }
-                    .padding(16.dp)
+            TextButton (
+                enabled = !item.disabled,
+                onClick = { onItemClick(item) }
             ) {
-                Icon(
-                    imageVector = item.icon,
-                    contentDescription = item.contentDescription
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = item.title,
-                    style = itemTextStyle,
-                    modifier = Modifier.weight(1f)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.contentDescription
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = item.title,
+                        style = itemTextStyle,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         }
     }

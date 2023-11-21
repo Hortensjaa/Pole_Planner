@@ -6,5 +6,6 @@ data class MenuItem(
     val title: String,
     val contentDescription: String,
     val icon: ImageVector,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
+    val disabled: Boolean = false
 )

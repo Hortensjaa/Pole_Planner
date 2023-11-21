@@ -41,20 +41,7 @@
         </State>
       </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="adb-KJPBAU8D8TCAWGM7-kgRQrI._adb-tls-connect._tcp" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-11-20T22:13:23.121645800Z" />
-        </State>
+        <State />
       </entry>
       <entry key="tagsFiltersEvents_updatesState()">
         <State />

@@ -28,6 +28,7 @@ import com.example.poleplanner.R
 
 @Composable
 fun ImageBox (
+    galleryPermissions: Boolean = false,
     onValueChange: (Uri) -> Unit
 ) {
     var imageUri by remember {
@@ -44,6 +45,12 @@ fun ImageBox (
         uri?.let { onValueChange(it) }
     }
 
+    val modifier =
+        if (galleryPermissions)
+            Modifier.clickable { launcher.launch("image/*")  }
+        else Modifier
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,17 +60,8 @@ fun ImageBox (
             Image(
                 painter = painterResource(id = R.drawable.pd),
                 contentDescription = null,
-                modifier = Modifier
+                modifier = modifier
                     .size(400.dp)
-                    .clickable { launcher.launch("image/*")
-//                        if (launcher != null) {
-//                            Log.d("snsakdsnkj", "nie ma zdjecia")
-//                            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-//                                type = "image/*"
-//                            }
-//                            launcher.launch(intent)
-//                        }
-                    }
             )
         } else {
             imageUri?.let {
@@ -79,16 +77,7 @@ fun ImageBox (
                 bitmap.value?.let { btm ->
                     Image(bitmap = btm.asImageBitmap(),
                         contentDescription = null,
-                        modifier = Modifier
-                            .clickable { launcher.launch("image/*")
-//                                if (launcher != null) {
-//                                    Log.d("snsakdsnkj", "jest zdjecie")
-//                                    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-//                                        type = "image/*"
-//                                }
-//                                launcher.launch(intent)
-//                            }
-                }
+                        modifier = modifier
                     )
                 }
             }

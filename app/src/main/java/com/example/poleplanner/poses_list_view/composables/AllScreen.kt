@@ -25,7 +25,7 @@ fun AllScreen(
     FiltersSheet (
         state = state,
         posesOnEvent = posesOnEvent,
-        fabAction = { navController.navigate(Screen.PermissionsScreen.route) },
+        fabAction = { navController.navigate(Screen.PoseAddingScreen.route) },
         content =
         {
             Column (

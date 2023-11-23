@@ -91,12 +91,14 @@ class MainActivity : ComponentActivity() {
                 NavDrawer(poseVM, navController) {
                     val posesState by poseVM.state.collectAsState()
                     val detailState by detailVM.state.collectAsState()
+                    val addingState by addingVM.state.collectAsState()
                     Navigation(
                         navController = navController,
                         posesState = posesState,
                         posesOnEvent = poseVM::onEvent,
                         detailState = detailState,
                         detailOnEvent = detailVM::onEvent,
+                        addingState = addingState,
                         addingOnEvent = addingVM::onEvent,
                         dayVM = dayVM
                     )

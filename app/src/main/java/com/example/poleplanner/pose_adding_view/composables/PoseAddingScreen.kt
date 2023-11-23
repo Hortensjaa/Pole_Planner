@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.navbar.Screen
 import com.example.poleplanner.pose_adding_view.PoseAddingEvent
+import com.example.poleplanner.pose_adding_view.PoseAddingState
 import java.util.Locale
 
 
@@ -41,6 +42,7 @@ import java.util.Locale
 @Composable
 fun PoseAddingScreen(
     addingOnEvent: (PoseAddingEvent) -> Unit,
+    addingState: PoseAddingState,
     navController: NavController
 ) {
     val galleryPermissions = remember { mutableStateOf(false) }
@@ -92,6 +94,7 @@ fun PoseAddingScreen(
                             galleryPermissions.value = true
                             Log.d("permissions_granted", "permission granted")
                         }
+
                         else -> {
                             if (Build.VERSION.SDK_INT >= 33)
                                 launcher.launch(Manifest.permission.READ_MEDIA_IMAGES)
@@ -107,7 +110,7 @@ fun PoseAddingScreen(
             )
         }
         DifficultyDropdownMenu(onValueChange = { newDiff -> difficulty = newDiff })
-        TagsCheckboxes()
+        TagsCheckboxes(addingState, addingOnEvent)
         DescriptionField(onValueChange = { newDesc -> description = newDesc })
         Button(
             enabled = (name != ""),

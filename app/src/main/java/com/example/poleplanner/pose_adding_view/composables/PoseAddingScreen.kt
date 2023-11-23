@@ -38,7 +38,6 @@ import com.example.poleplanner.pose_adding_view.PoseAddingState
 import java.util.Locale
 
 
-// todo: rozwiązać sprawę tagów
 @Composable
 fun PoseAddingScreen(
     addingOnEvent: (PoseAddingEvent) -> Unit,

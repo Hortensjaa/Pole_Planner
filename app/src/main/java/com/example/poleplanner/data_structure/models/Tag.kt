@@ -3,7 +3,7 @@ package com.example.poleplanner.data_structure.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// todo: dodawanie własnych hashtagów
+// future: dodawanie własnych hashtagów
 @Entity
 data class Tag (
 //    @PrimaryKey(autoGenerate = true) val tagId: Int = 0,

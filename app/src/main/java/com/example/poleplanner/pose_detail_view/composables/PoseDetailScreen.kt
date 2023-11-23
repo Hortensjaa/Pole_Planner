@@ -20,7 +20,7 @@ import com.example.poleplanner.pose_detail_view.DetailEvent
 import com.example.poleplanner.pose_detail_view.DetailState
 
 
-// todo: wyswietlanie kilku zdjec i mozliwosc zmiany dodanego przez uzytkownika
+// future: wyswietlanie kilku zdjec i mozliwosc zmiany dodanego przez uzytkownika
 @Composable
 fun PoseDetailScreen(
     poseName: String?,

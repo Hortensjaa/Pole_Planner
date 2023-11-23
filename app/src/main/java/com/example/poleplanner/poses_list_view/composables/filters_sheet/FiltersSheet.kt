@@ -26,7 +26,7 @@ import com.example.poleplanner.ui.theme.BottomSheetComposeTheme
 
 // source:
 // https://github.com/philipplackner/BottomSheetCompose
-// todo: dodać filtr po figurach dodanych przez uzytkownika
+// future: dodać filtr po figurach dodanych przez uzytkownika
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FiltersSheet(

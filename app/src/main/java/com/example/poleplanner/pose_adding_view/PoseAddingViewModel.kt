@@ -50,6 +50,7 @@ class PoseAddingViewModel (
                         addedByUser = true
                     )
                     poseDao.insertPoseWithTags(pose, _selectedTags.value)
+                    _selectedTags.value = emptyList()
                 }
             }
 

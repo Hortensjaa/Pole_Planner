@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PoseEvent
 import com.example.poleplanner.ui.theme.TagsListItem
 
 
@@ -17,7 +16,7 @@ import com.example.poleplanner.ui.theme.TagsListItem
 @Composable
 fun AllTagsBox(
     state: AllPosesState,
-    posesOnEvent: (PoseEvent) -> Unit,
+    action: (String) -> Unit
 ) {
     FlowRow (
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -27,7 +26,7 @@ fun AllTagsBox(
     ){
         state.allTags.forEach {
             TagsListItem(it.tagName, (it.tagName in state.tagFilters)) {
-                posesOnEvent(PoseEvent.ChangeTagFilter(it.tagName))
+                action(it.tagName)
             }
         }
     }

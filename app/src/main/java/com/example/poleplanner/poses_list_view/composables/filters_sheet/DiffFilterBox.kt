@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.poleplanner.data_structure.models.Difficulty
 import com.example.poleplanner.poses_list_view.AllPosesState
-import com.example.poleplanner.poses_list_view.PoseEvent
 
 @Composable
 fun DiffFilterBox (
     state: AllPosesState,
-    posesOnEvent: (PoseEvent) -> Unit,
+    addingAction: (Difficulty) -> Unit,
+    deleteAction: (Difficulty) -> Unit
 ){
     Row(
         modifier = Modifier
@@ -40,8 +40,8 @@ fun DiffFilterBox (
                 Checkbox(
                     checked = (diff in state.diffFilters),
                     onCheckedChange = {
-                        if (it) posesOnEvent(PoseEvent.AddDiffFilter(diff))
-                        else posesOnEvent(PoseEvent.DeleteDiffFilter(diff))
+                        if (it) addingAction(diff)
+                        else deleteAction(diff)
                     }
                 )
                 Text(text = diff.toString(), maxLines = 1)

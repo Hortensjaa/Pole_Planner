@@ -20,8 +20,21 @@ fun FiltersSheetContent(
         .background(color = MaterialTheme.colorScheme.secondary)
         .padding()
     ) {
-        AllTagsBox(state, posesOnEvent)
-        DiffFilterBox(state, posesOnEvent)
-        ProgressFilterBox(state, posesOnEvent)
+        AllTagsBox(state) {
+            t -> posesOnEvent(PoseEvent.ChangeTagFilter(t))
+        }
+        DiffFilterBox(
+            state = state,
+            addingAction = { d -> posesOnEvent(PoseEvent.AddDiffFilter(d)) },
+            deleteAction = { d -> posesOnEvent(PoseEvent.DeleteDiffFilter(d)) },
+        )
+        ProgressFilterBox(
+            state = state,
+            addingAction = { p -> posesOnEvent(PoseEvent.AddProgressFilter(p)) },
+            deleteAction = { p -> posesOnEvent(PoseEvent.DeleteProgressFilter(p)) }
+        )
+        AddedFilterBox(state.addedByUserOnly) {
+            posesOnEvent(PoseEvent.ChangeAddedFilter)
+        }
     }
 }

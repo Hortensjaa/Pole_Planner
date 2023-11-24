@@ -44,11 +44,11 @@ sealed interface PoseEvent {
 
     object ClearTagFilter: PoseEvent
 
+    object ChangeAddedFilter: PoseEvent
+
     object ClearSearcher: PoseEvent
 
     data class OnSearchTextChange(
         val text: String
     ): PoseEvent
-
-    // todo: filtrowanie po progressie
 }

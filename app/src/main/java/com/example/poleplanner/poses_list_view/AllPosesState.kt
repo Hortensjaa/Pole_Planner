@@ -14,5 +14,7 @@ data class AllPosesState(
     val progressFilters: Collection<Progress> = Progress.values().toList(),
     val searchText: String = "",
 
-    val savedOnly: Boolean = false
+    val savedOnly: Boolean = false,
+
+    val addedByUserOnly: Boolean = false
 )

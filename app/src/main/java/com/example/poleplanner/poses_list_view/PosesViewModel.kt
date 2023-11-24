@@ -1,5 +1,6 @@
 package com.example.poleplanner.poses_list_view
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poleplanner.data_structure.daos.PoseDao
@@ -27,6 +28,7 @@ class PosesViewModel (
     private val _diffFilters = MutableStateFlow<Collection<Difficulty>>(Difficulty.values().toList())
     private val _progFilters = MutableStateFlow<Collection<Progress>>(Progress.values().toList())
     private val _tagNamesFilters = MutableStateFlow<Collection<String>>(emptyList())
+    private var _addedOnly = MutableStateFlow(false)
     private var _savedOnly = MutableStateFlow(false)
 
     // wyszukiwarka
@@ -42,16 +44,16 @@ class PosesViewModel (
 
     // filtry
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val _posesWithTagsList = combine(_diffFilters, _tagNamesFilters, _progFilters, _savedOnly) {
-        diffs, tags, prog,  saved ->
-        Quadruple(diffs, tags, prog, saved)
+    private val _posesWithTagsList = combine(_diffFilters, _tagNamesFilters, _progFilters, _addedOnly, _savedOnly) {
+        diffs, tags, prog, added, saved ->
+        Quintuple(diffs, tags, prog, added, saved)
     }.flatMapLatest {
-        (diffs, tags, prog) ->
+        (diffs, tags, prog, added) ->
         when {
             _savedOnly.value ->
-                poseDao.filterPosesWithTagsSaved(tags, tags.size, diffs, prog)
+                poseDao.filterPosesWithTagsSaved(tags, tags.size, diffs, prog, listOf(added, true))
             else ->
-                poseDao.filterPosesWithTags(tags, tags.size, diffs, prog)
+                poseDao.filterPosesWithTags(tags, tags.size, diffs, prog, listOf(added, true))
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -73,15 +75,16 @@ class PosesViewModel (
 
     private val _state = MutableStateFlow(AllPosesState())
     val state = myCombine(
-        _state, _diffFilters, _tagNamesFilters, _progFilters, _poses, _searchText, _savedOnly, _allTags
+        _state, _diffFilters, _tagNamesFilters, _progFilters, _poses, _searchText, _addedOnly, _savedOnly, _allTags
     ) {
-        state, diffFilters, tagNamesFilters, progFilters,  poses, searchText, savedOnly, allTags ->
+        state, diffFilters, tagNamesFilters, progFilters,  poses, searchText, addedOnly, savedOnly, allTags ->
         state.copy(
             posesWithTags = poses,
             diffFilters = diffFilters,
             tagFilters = tagNamesFilters,
             progressFilters = progFilters,
             searchText = searchText,
+            addedByUserOnly = addedOnly,
             savedOnly = savedOnly,
             allTags = allTags
         )
@@ -188,7 +191,15 @@ class PosesViewModel (
                     _progFilters.value = Progress.values().toList()
                     _tagNamesFilters.value = emptyList()
                     _searchText.value = ""
+                    _addedOnly.value = false
                     _savedOnly.value = event.savedOnly
+                }
+            }
+
+            PoseEvent.ChangeAddedFilter -> {
+                viewModelScope.launch(dispatcher) {
+                    _addedOnly.value = !_addedOnly.value
+                    Log.d("added_ony", _addedOnly.value.toString())
                 }
             }
         }
@@ -198,7 +209,7 @@ class PosesViewModel (
 // source:
 // https://stackoverflow.com/questions/65356805
 @Suppress("UNCHECKED_CAST")
-private fun <T1, T2, T3, T4, T5, T6, T7, T8, R> myCombine(
+private fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> myCombine(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -207,8 +218,9 @@ private fun <T1, T2, T3, T4, T5, T6, T7, T8, R> myCombine(
     flow6: Flow<T6>,
     flow7: Flow<T7>,
     flow8: Flow<T8>,
-    transform: suspend (T1, T2, T3, T4, T5, T6, T7, T8) -> R
-): Flow<R> = combine(flow, flow2, flow3, flow4, flow5, flow6, flow7, flow8) { args: Array<*> ->
+    flow9: Flow<T9>,
+    transform: suspend (T1, T2, T3, T4, T5, T6, T7, T8, T9) -> R
+): Flow<R> = combine(flow, flow2, flow3, flow4, flow5, flow6, flow7, flow8, flow9) { args: Array<*> ->
     transform(
         args[0] as T1,
         args[1] as T2,
@@ -217,13 +229,14 @@ private fun <T1, T2, T3, T4, T5, T6, T7, T8, R> myCombine(
         args[4] as T5,
         args[5] as T6,
         args[6] as T7,
-        args[7] as T8
+        args[7] as T8,
+        args[8] as T9,
     )
 }
 
 // source:
 // https://gist.github.com/alifhasnain/8b7109d7310b6ac64c9a13d4d80d5d33
-data class Quadruple<A,B,C,D>(var first: A, var second: B, var third: C, var fourth: D):
+data class Quintuple<A,B,C,D, E>(var first: A, var second: B, var third: C, var fourth: D, var fifth: E):
     Serializable {
-    override fun toString(): String = "($first, $second, $third, $fourth)"
+    override fun toString(): String = "($first, $second, $third, $fourth, $fifth)"
 }

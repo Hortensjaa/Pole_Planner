@@ -72,7 +72,7 @@ interface PoseDao {
     // zapisywanie opisu
     @Transaction
     suspend fun setDescription(pose: Pose, text: String) {
-        pose.description = text
+        pose.poseDescription = text
         update(pose)
     }
 

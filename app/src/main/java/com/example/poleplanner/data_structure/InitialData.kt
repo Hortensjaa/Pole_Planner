@@ -5,12 +5,12 @@ import com.example.poleplanner.data_structure.models.Pose
 import com.example.poleplanner.data_structure.models.Tag
 
 object InitialData {
-    val stat = Tag(tagName = "Statyczne")
-    val dyn = Tag(tagName = "Dynamiczne")
-    val split = Tag(tagName = "Szpagaty")
-    val inv = Tag(tagName = "Inverty")
-    val duet = Tag(tagName = "Duety")
-    val spin = Tag(tagName = "Spiny")
+    private val stat = Tag(tagName = "Statyczne")
+    private val dyn = Tag(tagName = "Dynamiczne")
+    private val split = Tag(tagName = "Szpagaty")
+    private val inv = Tag(tagName = "Inverty")
+    private val duet = Tag(tagName = "Duety")
+    private val spin = Tag(tagName = "Spiny")
 
     val tags:
             List<Tag> = listOf(stat, dyn, split, inv, duet, spin)
@@ -18,12 +18,12 @@ object InitialData {
     val poses_with_tags:
         Map<Pose, List<Tag>> =
             mapOf(
-                Pose(poseName = "Gemini", description = "Description 1", difficulty = Difficulty.INTERMEDIATE)
+                Pose(poseName = "Gemini", poseDescription = "Description 1", difficulty = Difficulty.INTERMEDIATE)
                     to listOf(stat),
-                Pose(poseName = "Aysha", description = "Description 2", difficulty = Difficulty.INTERMEDIATE)
+                Pose(poseName = "Aysha", poseDescription = "Description 2", difficulty = Difficulty.INTERMEDIATE)
                         to listOf(dyn),
                 Pose(poseName = "Invert", difficulty = Difficulty.ADVANCED) to listOf(dyn, spin),
-                Pose(poseName = "Ballerina", description = "Description 4") to listOf(dyn),
+                Pose(poseName = "Ballerina", poseDescription = "Description 4") to listOf(dyn),
                 Pose(poseName = "Brass Monkey") to listOf(stat),
                 Pose(poseName = "Fireman spin") to listOf(split, stat, duet),
                 Pose(poseName = "Jade") to listOf(stat),

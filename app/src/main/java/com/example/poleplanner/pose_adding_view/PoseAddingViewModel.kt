@@ -44,7 +44,7 @@ class PoseAddingViewModel (
                 viewModelScope.launch(dispatcher) {
                     val pose = Pose(
                         poseName = event.name,
-                        description = event.description,
+                        poseDescription = event.description,
                         difficulty = event.diff,
                         userPhoto = event.photo,
                         addedByUser = true

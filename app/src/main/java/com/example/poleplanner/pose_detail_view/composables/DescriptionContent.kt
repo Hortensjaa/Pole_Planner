@@ -32,7 +32,7 @@ fun DescriptionContent (
 ) {
     var updatedDescription by remember { mutableStateOf("") }
     LaunchedEffect(state.poseWithTags.pose) {
-        updatedDescription = state.poseWithTags.pose.description
+        updatedDescription = state.poseWithTags.pose.poseDescription
     }
 
     var scrollToPosition by remember { mutableStateOf(0F) }
@@ -48,7 +48,7 @@ fun DescriptionContent (
             detailOnEvent(DetailEvent.DescriptionEditChange)
         }
     )
-    LaunchedEffect(state.descriptionOpen) {
+    LaunchedEffect(state.descriptionOpen, updatedDescription, state.descriptionEditing) {
         if (state.descriptionOpen)
             scrollState.animateScrollTo(scrollToPosition.roundToInt())
         else
@@ -57,7 +57,7 @@ fun DescriptionContent (
     if (state.descriptionOpen) {
         if (!state.descriptionEditing) {
             Text(
-                text = updatedDescription,
+                text = state.poseWithTags.pose.poseDescription,
                 color = Color.Black,
                 modifier = Modifier
                     .fillMaxWidth()

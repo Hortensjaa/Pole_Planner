@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class Tag (
 //    @PrimaryKey(autoGenerate = true) val tagId: Int = 0,
     @PrimaryKey val tagName: String = "Statyczne",
-    val description: String =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+    val tagDescription: String =
+        "Tag: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
         "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis " +
         "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +

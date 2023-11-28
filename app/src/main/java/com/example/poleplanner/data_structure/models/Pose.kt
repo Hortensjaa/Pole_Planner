@@ -9,8 +9,8 @@ import com.example.poleplanner.R
 data class Pose(
 //    @PrimaryKey(autoGenerate = true) val poseId: Int = 0,
     @PrimaryKey val poseName: String,
-    var description: String =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+    var poseDescription: String =
+        "Pose: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
         "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis " +
         "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +

@@ -39,7 +39,7 @@ class PosesViewModelTest {
     private val fakeTags = flowOf(listOf(Tag("tag1"), Tag("tag2")))
     private val fakePosesWithTags = flowOf(listOf(
         PoseWithTags(Pose("pose1"), listOf(Tag("tag1"), Tag("tag2"))),
-        PoseWithTags(Pose("pose2"), listOf(Tag("tag2"))),
+        PoseWithTags(Pose("pose2", addedByUser = true), listOf(Tag("tag2"))),
         PoseWithTags(Pose("pose3", saved = true), listOf(Tag("tag2"))),
         PoseWithTags(Pose("pose4", saved = true), listOf(Tag())),
     ))
@@ -56,9 +56,9 @@ class PosesViewModelTest {
         MockKAnnotations.init(this)
 
         coEvery { poseDao.getAllTagsFlow() } returns fakeTags
-        coEvery { poseDao.filterPosesWithTags(any(), any(), any(), any())
+        coEvery { poseDao.filterPosesWithTags(any(), any(), any(), any(), any())
             } returns fakePosesWithTags
-        coEvery { poseDao.filterPosesWithTagsSaved(any(), any(), any(), any())
+        coEvery { poseDao.filterPosesWithTagsSaved(any(), any(), any(), any(), any())
             } returns fakePosesWithTags.filter { it.first().pose.saved }
         viewModel = PosesViewModel(poseDao, dispatcher)
     }
@@ -143,6 +143,25 @@ class PosesViewModelTest {
         Assert.assertEquals(
             stateBefore.progressFilters.size,
             currentState!!.progressFilters.size)
+    }
+
+    @Test
+    fun addedFilterEvents_updatesState() = runTest {
+        val stateBefore = viewModel.state.value
+        Assert.assertFalse(stateBefore.addedByUserOnly)
+        var currentState: AllPosesState?
+
+        backgroundScope.launch {
+            viewModel.state.collect { state ->
+                currentState = state
+            }
+        }
+        viewModel.onEvent(PoseEvent.ChangeAddedFilter)
+        advanceUntilIdle()
+
+        currentState = viewModel.state.value
+        Assert.assertNotNull(currentState)
+        Assert.assertTrue(currentState!!.addedByUserOnly)
     }
 
     @Test
